@@ -24,9 +24,12 @@ export async function POST(req: Request) {
 
     // 0. API Configuration Check
     const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-    if (!apiKey || apiKey === 'AIzaSyDUDPdKF93YK6Q3nM8WNqV8ubvVDI1A7H4') {
+    const isDummy = apiKey === 'AIzaSyDUDPdKF93YK6Q3nM8WNqV8ubvVDI1A7H4';
+
+    if (!apiKey || isDummy) {
+      const keyStatus = !apiKey ? "UNDEFINED (Not Found)" : `DUMMY (${apiKey.substring(0, 10)}...)`;
       return new Response(JSON.stringify({
-        error: "Configuration Error: Google API Key is missing or using the default dummy value. Please set GOOGLE_GENERATIVE_AI_API_KEY in Vercel Settings."
+        error: `Configuration Error: Vercel sees the key as: ${keyStatus}. Please set GOOGLE_GENERATIVE_AI_API_KEY in Vercel Settings and Redeploy.`
       }), { status: 500 });
     }
 
