@@ -70,16 +70,24 @@ export async function POST(req: Request) {
     ${context}
   `;
 
-  const result = await streamText({
-    // Using 'gemini-2.0-flash-001'
-    model: google('gemini-2.0-flash-001'),
-    system: systemPrompt,
-    messages: messages.map((m: { role: string; content: string }) => ({
-      role: m.role,
-      content: m.content
-    })),
-  });
 
-  // Reverting to text stream for stability (toDataStreamResponse caused build error)
-  return result.toTextStreamResponse();
+  try {
+    const result = await streamText({
+      model: google('gemini-1.5-flash'), // Changed to stable model
+      system: systemPrompt,
+      messages: messages.map((m: { role: string; content: string }) => ({
+        role: m.role,
+        content: m.content
+      })),
+    });
+
+    return result.toTextStreamResponse();
+  } catch (error) {
+    console.error("StreamText Error:", error);
+    return new Response(JSON.stringify({ error: "Failed to generate response. Check API Key or Quota." }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 }
+
