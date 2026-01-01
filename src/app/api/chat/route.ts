@@ -34,7 +34,8 @@ export async function POST(req: Request) {
     }
 
     // Lazy load RAG safely
-    if (!isRagInitialized) {
+    // TEMPORARILY DISABLED
+    if (false && !isRagInitialized) {
       try {
         await initializeRAG();
         isRagInitialized = true;
@@ -48,7 +49,8 @@ export async function POST(req: Request) {
     let context = "";
 
     // 1. Retrieval
-    if (isRagInitialized && lastUserMessage) {
+    // TEMPORARILY DISABLED
+    if (false && isRagInitialized && lastUserMessage) {
       try {
         const queryEmbedding = await generateEmbedding(lastUserMessage);
         const relevantChunks = findMostSimilar(queryEmbedding, 5); // Reduced to 5 for speed
