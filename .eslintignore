@@ -1,0 +1,7 @@
+
+# Valid comments:
+# Ignore all JS files (debug scripts)
+*.js
+# Ignore next/vercel specific
+.next/
+node_modules/
