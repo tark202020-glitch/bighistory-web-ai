@@ -110,7 +110,19 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                 })
             });
 
-            if (!response.ok) throw new Error(response.statusText);
+
+            if (!response.ok) {
+                let errorMessage = `Server Error (${response.status})`;
+                try {
+                    const errorData = await response.json();
+                    if (errorData.error) errorMessage = errorData.error;
+                } catch (e) {
+                    // Fallback to text if json fails
+                    errorMessage = await response.text() || response.statusText;
+                }
+                throw new Error(errorMessage);
+            }
+
             if (!response.body) throw new Error('No response body');
 
             // Add placeholder for assistant message
@@ -151,13 +163,14 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                 });
             }
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('Chat error:', error);
             setMessages(prev => [...prev, {
                 id: Date.now().toString(),
                 role: 'assistant',
-                content: '오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+                content: `🚨 오류 발생: ${error.message || '알 수 없는 오류가 발생했습니다.'}`
             }]);
+
         } finally {
             setIsLoading(false);
             setSystemStatus('');
