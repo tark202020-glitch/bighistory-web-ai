@@ -11,7 +11,7 @@ export const maxDuration = 60;
 
 // Create a custom Google provider instance with the explicit API Key
 const google = createGoogleGenerativeAI({
-  apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY || 'AIzaSyDUDPdKF93YK6Q3nM8WNqV8ubvVDI1A7H4',
+  apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
 });
 
 // Ensure RAG is initialized (lazy load)
