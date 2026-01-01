@@ -1,0 +1,28 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Testing
+coverage
+
+# Next.js
+.next/
+out/
+build
+
+# Vercel
+.vercel
+
+# Git
+.git
+.gitignore
+
+# Misc
+.DS_Store
+*.log
+*.sst
+
+# Large Data (PDFs too big for Vercel Function)
+# We rely on vectors.json for the actual content
+data/*.pdf
