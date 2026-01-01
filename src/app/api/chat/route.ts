@@ -17,63 +17,63 @@ const google = createGoogleGenerativeAI({
 // Ensure RAG is initialized (lazy load)
 let isRagInitialized = false;
 
+
 export async function POST(req: Request) {
-  const messages = await req.json().then(body => body.messages);
-
-  if (!isRagInitialized) {
-    // This will load from disk or parse/embed if first time
-    await initializeRAG();
-    isRagInitialized = true;
-  }
-
-  // Get the last user message to use as a search query
-  const lastUserMessage = messages.slice().reverse().find((m: { role: string; content: string }) => m.role === 'user')?.content || "";
-
-  console.log(`Processing Query: "${lastUserMessage.substring(0, 50)}..."`);
-
-  // 1. Convert Query to Embedding
-  let context = "";
   try {
-    if (lastUserMessage) {
-      const queryEmbedding = await generateEmbedding(lastUserMessage);
+    const { messages } = await req.json();
 
-      // 2. Retrieve Top 5-10 Relevant Chunks
-      const relevantChunks = findMostSimilar(queryEmbedding, 7); // Top 7 pages
-
-      console.log(`Found ${relevantChunks.length} relevant pages.`);
-
-      // 3. Construct Context with Citations
-      context = relevantChunks.map(chunk =>
-        `[Source: ${chunk.source}, Page: ${chunk.page}]\n${chunk.content}\n---`
-      ).join('\n');
+    // 0. API Configuration Check
+    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+    if (!apiKey || apiKey === 'AIzaSyDUDPdKF93YK6Q3nM8WNqV8ubvVDI1A7H4') {
+      return new Response(JSON.stringify({
+        error: "Configuration Error: Google API Key is missing or using the default dummy value. Please set GOOGLE_GENERATIVE_AI_API_KEY in Vercel Settings."
+      }), { status: 500 });
     }
-  } catch (e) {
-    console.error("Retrieval failed:", e);
-    context = "Error retrieving context. Please answer based on general knowledge.";
-  }
 
-  // Read system prompt from file
-  const configPath = path.join(process.cwd(), 'config', 'ai-character.md');
-  let baseSystemPrompt = "";
-  try {
-    baseSystemPrompt = fs.readFileSync(configPath, 'utf-8');
-  } catch (error) {
-    console.error("Failed to read ai-character.md:", error);
-    // Fallback if file read fails (optional)
-    baseSystemPrompt = "You are a helpful assistant.";
-  }
+    // Lazy load RAG safely
+    if (!isRagInitialized) {
+      try {
+        await initializeRAG();
+        isRagInitialized = true;
+      } catch (ragError) {
+        console.error("RAG Initialization Failed (Non-fatal):", ragError);
+        // Continue without RAG
+      }
+    }
 
-  const systemPrompt = `
-    ${baseSystemPrompt}
+    const lastUserMessage = messages.slice().reverse().find((m: { role: string; content: string }) => m.role === 'user')?.content || "";
+    let context = "";
 
-    Retrieved Context:
-    ${context}
-  `;
+    // 1. Retrieval
+    if (isRagInitialized && lastUserMessage) {
+      try {
+        const queryEmbedding = await generateEmbedding(lastUserMessage);
+        const relevantChunks = findMostSimilar(queryEmbedding, 5); // Reduced to 5 for speed
 
+        if (relevantChunks.length > 0) {
+          context = relevantChunks.map(chunk =>
+            `[Source: ${chunk.source}, Page: ${chunk.page}]\n${chunk.content}\n---`
+          ).join('\n');
+        }
+      } catch (e) {
+        console.error("Retrieval failed:", e);
+      }
+    }
 
-  try {
+    // 2. System Prompt
+    const configPath = path.join(process.cwd(), 'config', 'ai-character.md');
+    let baseSystemPrompt = "You are a helpful assistant.";
+    try {
+      if (fs.existsSync(configPath)) {
+        baseSystemPrompt = fs.readFileSync(configPath, 'utf-8');
+      }
+    } catch (e) { /* ignore */ }
+
+    const systemPrompt = `${baseSystemPrompt}\n\nRetrieved Context:\n${context}`;
+
+    // 3. Generate Stream
     const result = await streamText({
-      model: google('gemini-1.5-flash'), // Changed to stable model
+      model: google('gemini-1.5-flash'),
       system: systemPrompt,
       messages: messages.map((m: { role: string; content: string }) => ({
         role: m.role,
@@ -82,9 +82,10 @@ export async function POST(req: Request) {
     });
 
     return result.toTextStreamResponse();
-  } catch (error) {
-    console.error("StreamText Error:", error);
-    return new Response(JSON.stringify({ error: "Failed to generate response. Check API Key or Quota." }), {
+
+  } catch (error: any) {
+    console.error("API Route Error:", error);
+    return new Response(JSON.stringify({ error: `Server Error: ${error.message}` }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
