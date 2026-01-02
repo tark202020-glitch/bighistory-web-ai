@@ -28,26 +28,24 @@ export async function GET() {
             searchError = e.message;
         }
 
-        // 2. Test Generation across multiple regions
-        const regions = ['us-central1', 'asia-northeast3', 'us-east4', 'us-west1'];
+        // 2. Test Generation with specific stable models in us-central1
+        const models = ['gemini-1.0-pro', 'gemini-1.5-pro-001', 'gemini-1.5-flash-001'];
         const modelTests: any = {};
+        const vertexClient = createVertex({
+            project,
+            location: 'us-central1', // Stick to default since all regions failed
+            googleAuthOptions: { credentials },
+        });
 
-        for (const region of regions) {
+        for (const model of models) {
             try {
-                // Re-initialize entity for specific region
-                const regionalVertex = createVertex({
-                    project,
-                    location: region,
-                    googleAuthOptions: { credentials },
-                });
-
                 const { text } = await generateText({
-                    model: regionalVertex('gemini-1.5-flash-001'),
+                    model: vertexClient(model),
                     prompt: 'Short test.',
                 });
-                modelTests[region] = { success: true, text };
+                modelTests[model] = { success: true, text };
             } catch (e: any) {
-                modelTests[region] = { success: false, error: e.message };
+                modelTests[model] = { success: false, error: e.message };
             }
         }
 
@@ -62,7 +60,7 @@ export async function GET() {
                 count: results.length,
                 error: searchError
             },
-            regions: modelTests,
+            models: modelTests,
         });
 
     } catch (error: any) {
