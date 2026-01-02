@@ -32,8 +32,9 @@ export async function GET() {
         let genText = "";
         let genError = null;
         try {
+            // Try specific version string
             const { text } = await generateText({
-                model: vertex('gemini-1.5-flash'),
+                model: vertex('gemini-1.5-flash-001'),
                 prompt: '빅히스토리에 대해 한 문장으로 설명해줘.',
             });
             genText = text;
