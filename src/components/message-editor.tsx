@@ -56,43 +56,39 @@ export function MessageEditor({ initialContent, onSave, onCancel }: MessageEdito
     };
 
     return (
-        <div className="bg-white border border-blue-200 rounded-xl p-4 shadow-lg animate-in fade-in zoom-in-95 duration-200">
-            <div className="space-y-2 mb-4">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xl shadow-slate-200/50 animate-fade-in ring-1 ring-slate-100/50">
+            <div className="space-y-3 mb-6">
                 {lines.map((line, index) => (
-                    <div key={index} className="group flex items-start gap-2 relative">
-                        {/* Line Number / Grip Handle (Optional visual) */}
-                        <div className="mt-2 text-gray-300 group-hover:text-gray-400 cursor-grab active:cursor-grabbing">
+                    <div key={index} className="group flex items-start gap-4 relative">
+                        <div className="mt-2.5 text-slate-300 group-hover:text-slate-400 cursor-grab active:cursor-grabbing transition-colors">
                             <GripVertical size={14} />
                         </div>
 
-                        {/* Text Area */}
                         <textarea
                             ref={el => { textareaRefs.current[index] = el }}
                             value={line}
                             onChange={(e) => {
                                 handleLineChange(index, e.target.value);
-                                // Auto-resize immediately on change
                                 e.target.style.height = 'auto';
                                 e.target.style.height = `${e.target.scrollHeight}px`;
                             }}
-                            className="flex-1 min-h-[38px] p-2 bg-gray-50 border border-transparent hover:border-gray-200 focus:border-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-100 rounded-md resize-none overflow-hidden text-sm transition-all outline-none"
+                            className="flex-1 min-h-[44px] p-3 bg-slate-50/50 border border-slate-100 hover:border-slate-200 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100/20 rounded-xl resize-none overflow-hidden text-sm font-medium text-slate-700 transition-all outline-none"
                             rows={1}
                             placeholder="내용을 입력하세요..."
                             autoFocus={index === lines.length - 1 && line === ''}
                         />
 
-                        {/* Actions (Visible on hover or focus) */}
-                        <div className="flex items-center gap-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity focus-within:opacity-100">
+                        <div className="flex items-center gap-1 mt-1.5 opacity-0 group-hover:opacity-100 transition-all focus-within:opacity-100">
                             <button
                                 onClick={() => handleAddLine(index)}
-                                className="p-1.5 text-blue-500 hover:bg-blue-50 rounded-md transition-colors"
+                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                                 title="아랫줄 추가"
                             >
                                 <Plus size={16} />
                             </button>
                             <button
                                 onClick={() => handleDeleteLine(index)}
-                                className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors"
+                                className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                                 title="줄 삭제"
                             >
                                 <Trash2 size={16} />
@@ -102,18 +98,17 @@ export function MessageEditor({ initialContent, onSave, onCancel }: MessageEdito
                 ))}
             </div>
 
-            {/* Footer Actions */}
-            <div className="flex justify-end gap-2 pt-2 border-t border-gray-100">
+            <div className="flex justify-end gap-2.5 pt-4 border-t border-slate-50">
                 <button
                     onClick={onCancel}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-xl transition-all uppercase tracking-widest"
                 >
                     <X size={14} />
                     취소
                 </button>
                 <button
                     onClick={handleSave}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-all hover:shadow-md"
+                    className="flex items-center gap-2 px-5 py-2 text-xs font-black text-white bg-slate-900 hover:bg-black rounded-xl shadow-lg shadow-slate-900/10 transition-all active:scale-95 uppercase tracking-widest"
                 >
                     <Check size={14} />
                     수정 완료
