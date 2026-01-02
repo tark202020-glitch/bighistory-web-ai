@@ -1,4 +1,5 @@
 import { SearchServiceClient } from '@google-cloud/discoveryengine';
+import { GoogleAuth } from 'google-auth-library';
 
 // Configuration
 const PROJECT_ID = process.env.GOOGLE_CLOUD_PROJECT_ID || 'rag-bighistory';
@@ -55,5 +56,60 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
     } catch (error) {
         console.error('Vertex AI Search Error:', error);
         return [];
+    }
+}
+
+/**
+ * Uses Discovery Engine's Managed Answer API (Native RAG)
+ */
+export async function answerQuery(query: string) {
+    try {
+        const auth = new GoogleAuth({
+            credentials,
+            scopes: ['https://www.googleapis.com/auth/cloud-platform']
+        });
+        const authClient = await auth.getClient();
+        const tokenResp = await authClient.getAccessToken();
+        const accessToken = tokenResp.token;
+
+        if (!accessToken) throw new Error("Could not generate Google Access Token");
+
+        const endpoint = `https://discoveryengine.googleapis.com/v1/projects/${PROJECT_ID}/locations/${LOCATION}/collections/${COLLECTION_ID}/dataStores/${DATA_STORE_ID}/servingConfigs/default_search:answer`;
+
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                query: { text: query },
+                answerGenerationSpec: {
+                    ignoreAdversarialQuery: true,
+                    includeCitations: true,
+                    promptSpec: {
+                        preamble: "당신은 '빅히스토리' 전문가입니다. 제공된 검색 결과(Context)를 바탕으로 사용자의 질문에 친절하고 정확하게 답변해주세요. 만약 검색 결과에 답이 없다면, 다른 외부 지식을 사용하지 말고 솔직하게 모른다고 답변해주세요."
+                    },
+                    modelSpec: {
+                        // Using default best model for Answer API
+                    }
+                }
+            })
+        });
+
+        if (!response.ok) {
+            const err = await response.text();
+            throw new Error(`Answer API failed (${response.status}): ${err}`);
+        }
+
+        const data = await response.json();
+        return {
+            answerText: data.answer?.answerText || "답변을 생성할 수 없습니다.",
+            citations: data.answer?.citations || [],
+            steps: data.answer?.steps || []
+        };
+    } catch (error) {
+        console.error('Vertex AI Answer Error:', error);
+        throw error;
     }
 }

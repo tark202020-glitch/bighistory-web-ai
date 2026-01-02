@@ -1,6 +1,6 @@
 import { createVertex } from '@ai-sdk/google-vertex';
-import { streamText } from 'ai';
-import { searchStore } from '@/lib/vertex-search';
+import { createDataStreamResponse, streamText } from 'ai';
+import { searchStore, answerQuery } from '@/lib/vertex-search';
 import fs from 'fs';
 import path from 'path';
 
@@ -73,28 +73,22 @@ Link: ${result.link || 'N/A'}
 
     const systemPrompt = `${baseSystemPrompt}\n\nRetrieved Context:\n${context}`;
 
-    // 3. Generate Stream
-    console.log("Starting streamText with Vertex AI...");
-    console.log("System Prompt Length:", systemPrompt.length);
-
+    // 3. Generate Answer using Managed RAG
+    console.log("Starting Managed Answer API...");
     try {
-      const result = await streamText({
-        model: vertex('gemini-1.5-flash'), // Use Vertex AI provider
-        system: systemPrompt,
-        messages: messages.map((m: { role: string; content: string }) => ({
-          role: m.role,
-          content: m.content
-        })),
-        onFinish: (event) => {
-          console.log("Stream finished. Usage:", JSON.stringify(event.usage));
-        },
-      });
+      const { answerText, citations } = await answerQuery(lastUserMessage);
 
-      console.log("Stream created successfully.");
-      return result.toTextStreamResponse();
-    } catch (streamError) {
-      console.error("Error in streamText:", streamError);
-      throw streamError;
+      console.log("Answer generated successfully.");
+
+      // Return as JSON for now (most robust)
+      return Response.json({
+        role: 'assistant',
+        content: answerText,
+        citations: citations
+      });
+    } catch (error: any) {
+      console.error("Error in Answer API:", error);
+      throw error;
     }
 
   } catch (error: any) {
