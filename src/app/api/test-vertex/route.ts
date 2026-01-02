@@ -54,32 +54,36 @@ export async function GET() {
             locationError = e.message;
         }
 
-        // 3. Try Generation on First Available Location
-        let genResult = null;
-        const validRegion = locations.includes('us-central1') ? 'us-central1' :
-            locations.includes('asia-northeast3') ? 'asia-northeast3' :
-                locations[0]; // Fallback to first available
+        // 3. Robust Generation Test (Try asia-northeast3 first, then us-central1)
+        const priorityRegions = ['asia-northeast3', 'us-central1'];
+        let genAttempts: any = {};
+        let successRegion = null;
 
-        if (validRegion) {
-            const testModel = 'gemini-1.5-flash-001';
-            try {
-                const regionalVertex = createVertex({
-                    project,
-                    location: validRegion,
-                    googleAuthOptions: { credentials },
-                });
-                const { text } = await generateText({
-                    model: regionalVertex(testModel),
-                    prompt: 'Test',
-                });
-                genResult = { success: true, region: validRegion, text };
-            } catch (e: any) {
-                genResult = { success: false, region: validRegion, error: e.message };
+        for (const region of priorityRegions) {
+            if (locations.includes(region) || locations.includes('global')) { // Try if listed or global is present
+                try {
+                    const regionalVertex = createVertex({
+                        project,
+                        location: region,
+                        googleAuthOptions: { credentials },
+                    });
+                    const { text } = await generateText({
+                        model: regionalVertex('gemini-1.5-flash-001'),
+                        prompt: 'Hello from ' + region,
+                    });
+                    genAttempts[region] = { success: true, text };
+                    successRegion = region;
+                    break; // Stop on first success
+                } catch (e: any) {
+                    genAttempts[region] = { success: false, error: e.message };
+                }
+            } else {
+                genAttempts[region] = { success: false, error: "Region not in available locations list" };
             }
         }
 
         return Response.json({
-            status: 'Diagnostic Step 5',
+            status: 'Diagnostic Step 6',
             identity: {
                 client_email: credentials?.client_email,
                 project_id: project
@@ -88,9 +92,9 @@ export async function GET() {
             locations_check: {
                 success: !locationError,
                 available_regions: locations,
-                error: locationError
             },
-            generation_attempt: genResult || "Skipped (No valid region found)"
+            generation_attempts: genAttempts,
+            recommended_region: successRegion || "None found"
         });
 
 
