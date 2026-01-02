@@ -28,23 +28,28 @@ export async function GET() {
             searchError = e.message;
         }
 
-        // 2. Test Generation with multiple models
+        // 2. Test Generation across multiple regions
+        const regions = ['us-central1', 'asia-northeast3', 'us-east4', 'us-west1'];
         const modelTests: any = {};
-        const runModelTest = async (modelName: string) => {
+
+        for (const region of regions) {
             try {
+                // Re-initialize entity for specific region
+                const regionalVertex = createVertex({
+                    project,
+                    location: region,
+                    googleAuthOptions: { credentials },
+                });
+
                 const { text } = await generateText({
-                    model: vertex(modelName),
+                    model: regionalVertex('gemini-1.5-flash-001'),
                     prompt: 'Short test.',
                 });
-                return { success: true, text };
+                modelTests[region] = { success: true, text };
             } catch (e: any) {
-                return { success: false, error: e.message };
+                modelTests[region] = { success: false, error: e.message };
             }
-        };
-
-        modelTests['gemini-1.5-flash-001'] = await runModelTest('gemini-1.5-flash-001');
-        modelTests['gemini-1.5-flash'] = await runModelTest('gemini-1.5-flash');
-        modelTests['gemini-1.0-pro'] = await runModelTest('gemini-1.0-pro');
+        }
 
         return Response.json({
             status: 'Diagnostic Complete',
@@ -57,7 +62,7 @@ export async function GET() {
                 count: results.length,
                 error: searchError
             },
-            models: modelTests,
+            regions: modelTests,
         });
 
     } catch (error: any) {
