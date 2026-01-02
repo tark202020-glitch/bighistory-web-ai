@@ -74,16 +74,28 @@ Link: ${result.link || 'N/A'}
     const systemPrompt = `${baseSystemPrompt}\n\nRetrieved Context:\n${context}`;
 
     // 3. Generate Stream
-    const result = await streamText({
-      model: vertex('gemini-1.5-flash'), // Use Vertex AI provider
-      system: systemPrompt,
-      messages: messages.map((m: { role: string; content: string }) => ({
-        role: m.role,
-        content: m.content
-      })),
-    });
+    console.log("Starting streamText with Vertex AI...");
+    console.log("System Prompt Length:", systemPrompt.length);
 
-    return result.toTextStreamResponse();
+    try {
+      const result = await streamText({
+        model: vertex('gemini-1.5-flash'), // Use Vertex AI provider
+        system: systemPrompt,
+        messages: messages.map((m: { role: string; content: string }) => ({
+          role: m.role,
+          content: m.content
+        })),
+        onFinish: (event) => {
+          console.log("Stream finished. Token count:", event.usage.completionTokens);
+        },
+      });
+
+      console.log("Stream created successfully.");
+      return result.toTextStreamResponse();
+    } catch (streamError) {
+      console.error("Error in streamText:", streamError);
+      throw streamError;
+    }
 
   } catch (error: any) {
     console.error("API Route Error:", error);
