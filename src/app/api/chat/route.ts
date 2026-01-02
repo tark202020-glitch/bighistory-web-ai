@@ -1,17 +1,26 @@
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { createVertex } from '@ai-sdk/google-vertex';
 import { streamText } from 'ai';
-import { initializeRAG } from '@/lib/pdf-loader';
-import { findMostSimilar } from '@/lib/vector-store';
-import { generateEmbedding } from '@/lib/embeddings';
+import { searchStore } from '@/lib/vertex-search';
 import fs from 'fs';
 import path from 'path';
 
 // Allow streaming responses up to 60 seconds
 export const maxDuration = 60;
 
-// Create a custom Google provider instance with the explicit API Key
-const google = createGoogleGenerativeAI({
-  apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+// Configure Vertex AI with credentials from environment
+const project = process.env.GOOGLE_CLOUD_PROJECT_ID || 'rag-bighistory';
+const location = 'us-central1'; // Vertex AI typically uses us-central1 for Gemini
+
+const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
+  ? JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
+  : undefined;
+
+const vertex = createVertex({
+  project,
+  location,
+  googleAuthOptions: {
+    credentials,
+  },
 });
 
 // Ensure RAG is initialized (lazy load)
@@ -22,46 +31,34 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    // 0. API Configuration Check
-    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-    const isDummy = apiKey === 'AIzaSyDUDPdKF93YK6Q3nM8WNqV8ubvVDI1A7H4';
-
-    if (!apiKey || isDummy) {
-      const keyStatus = !apiKey ? "UNDEFINED (Not Found)" : `DUMMY (${apiKey.substring(0, 10)}...)`;
-      return new Response(JSON.stringify({
-        error: `Configuration Error: Vercel sees the key as: ${keyStatus}. Please set GOOGLE_GENERATIVE_AI_API_KEY in Vercel Settings and Redeploy.`
-      }), { status: 500 });
-    }
-
     // Lazy load RAG safely
     // TEMPORARILY DISABLED
-    if (false && !isRagInitialized) {
-      try {
-        await initializeRAG();
-        isRagInitialized = true;
-      } catch (ragError) {
-        console.error("RAG Initialization Failed (Non-fatal):", ragError);
-        // Continue without RAG
-      }
-    }
+
 
     const lastUserMessage = messages.slice().reverse().find((m: { role: string; content: string }) => m.role === 'user')?.content || "";
     let context = "";
 
     // 1. Retrieval
-    // TEMPORARILY DISABLED
-    if (false && isRagInitialized && lastUserMessage) {
+    // 1. Retrieval (Vertex AI Search)
+    if (lastUserMessage) {
       try {
-        const queryEmbedding = await generateEmbedding(lastUserMessage);
-        const relevantChunks = findMostSimilar(queryEmbedding, 5); // Reduced to 5 for speed
+        console.log(`Searching Vertex AI for: ${lastUserMessage}`);
+        const searchResults = await searchStore(lastUserMessage);
 
-        if (relevantChunks.length > 0) {
-          context = relevantChunks.map(chunk =>
-            `[Source: ${chunk.source}, Page: ${chunk.page}]\n${chunk.content}\n---`
+        if (searchResults.length > 0) {
+          context = searchResults.map((result, index) =>
+            `[Result ${index + 1}]
+Title: ${result.title}
+Content: ${result.snippet}
+Link: ${result.link || 'N/A'}
+---`
           ).join('\n');
+          console.log(`Found ${searchResults.length} results from Vertex AI`);
+        } else {
+          console.log("No results found in Vertex AI");
         }
       } catch (e) {
-        console.error("Retrieval failed:", e);
+        console.error("Vertex AI Retrieval failed:", e);
       }
     }
 
@@ -78,7 +75,7 @@ export async function POST(req: Request) {
 
     // 3. Generate Stream
     const result = await streamText({
-      model: google('gemini-1.5-flash'),
+      model: vertex('gemini-1.5-flash'), // Use Vertex AI provider
       system: systemPrompt,
       messages: messages.map((m: { role: string; content: string }) => ({
         role: m.role,

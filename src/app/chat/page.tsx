@@ -1,8 +1,9 @@
 import { ChatInterface } from '@/components/chat-interface';
-import { getDocuments } from '@/lib/pdf-loader';
+// import { getDocuments } from '@/lib/pdf-loader';
 
 export default async function ChatPage() {
-    const documents = await getDocuments();
+    // const documents = await getDocuments();
+    const documents: any[] = [];
 
     // Convert raw documents to the format expected by UI
     // Note: getDocuments now returns [] in the new RAG implementation, 
