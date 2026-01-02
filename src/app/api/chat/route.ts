@@ -86,7 +86,7 @@ Link: ${result.link || 'N/A'}
           content: m.content
         })),
         onFinish: (event) => {
-          console.log("Stream finished. Token count:", event.usage.completionTokens);
+          console.log("Stream finished. Usage:", JSON.stringify(event.usage));
         },
       });
 
