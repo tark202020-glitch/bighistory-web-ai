@@ -54,49 +54,68 @@ export async function GET() {
             locationError = e.message;
         }
 
-        // 3. Raw REST Prediction Test (Bypass SDK)
-        let restTest: any = {};
+        // 3. Deep Diagnostic (Publishers & Beta API)
+        let deepDiag: any = {};
         try {
             const accessToken = await getAccessToken(credentials);
             if (accessToken) {
-                // Use asia-northeast3 (Seoul) as it's often more reliable for Korean projects
-                const targetReg = locations.includes('asia-northeast3') ? 'asia-northeast3' : 'us-central1';
+                const reg = locations.includes('us-central1') ? 'us-central1' : 'asia-northeast3';
 
-                const restResp = await fetch(`https://${targetReg}-aiplatform.googleapis.com/v1/projects/${project}/locations/${targetReg}/publishers/google/models/gemini-1.5-flash:streamGenerateContent`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        contents: [{ role: 'user', parts: [{ text: 'Hi' }] }]
-                    })
-                });
+                // Test A: List Publishers to see if 'google' is visible
+                try {
+                    const pubResp = await fetch(`https://${reg}-aiplatform.googleapis.com/v1/projects/${project}/locations/${reg}/publishers`, {
+                        headers: { 'Authorization': `Bearer ${accessToken}` }
+                    });
+                    if (pubResp.ok) {
+                        const pubData = await pubResp.json();
+                        deepDiag.publishers = pubData.publishers?.map((p: any) => p.name.split('/').pop());
+                    } else {
+                        deepDiag.publishers_error = `Error ${pubResp.status}: ${await pubResp.text()}`;
+                    }
+                } catch (e: any) { deepDiag.publishers_error = e.message; }
 
-                if (restResp.ok) {
-                    restTest = { success: true, region: targetReg, status: restResp.status };
-                } else {
-                    const errText = await restResp.text();
-                    restTest = { success: false, region: targetReg, status: restResp.status, error: errText };
-                }
+                // Test B: Try v1beta1 Prediction (Last Resort)
+                try {
+                    const betaResp = await fetch(`https://${reg}-aiplatform.googleapis.com/v1beta1/projects/${project}/locations/${reg}/publishers/google/models/gemini-1.5-flash:streamGenerateContent`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: 'Hi' }] }] })
+                    });
+                    deepDiag.v1beta1_test = { status: betaResp.status, ok: betaResp.ok };
+                    if (!betaResp.ok) deepDiag.v1beta1_error = await betaResp.text();
+                } catch (e: any) { deepDiag.v1beta1_error = e.message; }
+
+                // Test C: Try explicit v1 model name gemini-1.5-flash-001
+                try {
+                    const fullModelResp = await fetch(`https://${reg}-aiplatform.googleapis.com/v1/projects/${project}/locations/${reg}/publishers/google/models/gemini-1.5-flash-001:streamGenerateContent`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: 'Hi' }] }] })
+                    });
+                    deepDiag.full_model_test = { status: fullModelResp.status, ok: fullModelResp.ok };
+                } catch (e: any) { deepDiag.full_model_test_error = e.message; }
             }
         } catch (e: any) {
-            restTest = { success: false, error: e.message };
+            deepDiag.error = e.message;
         }
 
         return Response.json({
-            status: 'Diagnostic Step 7',
+            status: 'Diagnostic Step 8',
             identity: {
                 client_email: credentials?.client_email,
                 project_id: project
             },
             search: { success: !searchError },
-            locations_check: {
-                success: !locationError,
-                available_regions: locations,
-            },
-            raw_rest_test: restTest,
-            sdk_recommendation: restTest.success ? "REST works, SDK might be the issue" : "REST failed, GCP/IAM is definitely the issue"
+            deep_diagnostic: deepDiag,
+            final_guess: (deepDiag.publishers && !deepDiag.publishers.includes('google'))
+                ? "GCP Project is not linked to Google publishers. Vertex AI API might not be fully initialized."
+                : "Registry is correct, but models are hidden. Check billing or API enablement at https://console.cloud.google.com/vertex-ai"
         });
 
 
