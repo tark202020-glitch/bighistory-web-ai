@@ -62,7 +62,7 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
 /**
  * Uses Discovery Engine's Managed Answer API (Native RAG)
  */
-export async function answerQuery(query: string) {
+export async function answerQuery(query: string, customPreamble?: string) {
     try {
         const auth = new GoogleAuth({
             credentials,
@@ -76,6 +76,8 @@ export async function answerQuery(query: string) {
 
         const endpoint = `https://discoveryengine.googleapis.com/v1/projects/${PROJECT_ID}/locations/${LOCATION}/collections/${COLLECTION_ID}/dataStores/${DATA_STORE_ID}/servingConfigs/default_search:answer`;
 
+        const defaultPreamble = "당신은 '빅히스토리' 전문가입니다. 제공된 검색 결과(Context)를 바탕으로 사용자의 질문에 친절하고 정확하게 답변해주세요. 만약 검색 결과에 답이 없다면, 다른 외부 지식을 사용하지 말고 솔직하게 모른다고 답변해주세요.";
+
         const response = await fetch(endpoint, {
             method: 'POST',
             headers: {
@@ -88,7 +90,7 @@ export async function answerQuery(query: string) {
                     ignoreAdversarialQuery: true,
                     includeCitations: true,
                     promptSpec: {
-                        preamble: "당신은 '빅히스토리' 전문가입니다. 제공된 검색 결과(Context)를 바탕으로 사용자의 질문에 친절하고 정확하게 답변해주세요. 만약 검색 결과에 답이 없다면, 다른 외부 지식을 사용하지 말고 솔직하게 모른다고 답변해주세요."
+                        preamble: customPreamble || defaultPreamble
                     },
                     modelSpec: {
                         // Using default best model for Answer API

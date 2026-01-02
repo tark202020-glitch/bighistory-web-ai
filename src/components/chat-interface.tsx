@@ -101,7 +101,8 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    messages: [...messages, userMessage].map(m => ({ role: m.role, content: m.content }))
+                    messages: [...messages, userMessage].map(m => ({ role: m.role, content: m.content })),
+                    mode: mode
                 })
             });
 

@@ -29,7 +29,7 @@ let isRagInitialized = false;
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, mode } = await req.json();
 
     // Lazy load RAG safely
     // TEMPORARILY DISABLED
@@ -62,21 +62,31 @@ Link: ${result.link || 'N/A'}
       }
     }
 
-    // 2. System Prompt
-    const configPath = path.join(process.cwd(), 'config', 'ai-character.md');
-    let baseSystemPrompt = "You are a helpful assistant.";
-    try {
-      if (fs.existsSync(configPath)) {
-        baseSystemPrompt = fs.readFileSync(configPath, 'utf-8');
+    // 2. Determine Preamble (Prompt)
+    let preamble = "";
+    if (mode === 'lecture') {
+      const promptPath = path.join(process.cwd(), 'doc', 'Course-prompt');
+      try {
+        if (fs.existsSync(promptPath)) {
+          preamble = fs.readFileSync(promptPath, 'utf-8');
+          console.log("Using Course-prompt for Curriculum Generation");
+        }
+      } catch (e) {
+        console.error("Failed to read Course-prompt:", e);
       }
-    } catch (e) { /* ignore */ }
-
-    const systemPrompt = `${baseSystemPrompt}\n\nRetrieved Context:\n${context}`;
+    } else {
+      const configPath = path.join(process.cwd(), 'config', 'ai-character.md');
+      try {
+        if (fs.existsSync(configPath)) {
+          preamble = fs.readFileSync(configPath, 'utf-8');
+        }
+      } catch (e) { /* ignore */ }
+    }
 
     // 3. Generate Answer using Managed RAG
     console.log("Starting Managed Answer API...");
     try {
-      const { answerText, citations } = await answerQuery(lastUserMessage);
+      const { answerText, citations } = await answerQuery(lastUserMessage, preamble || undefined);
 
       console.log("Answer generated successfully.");
 
