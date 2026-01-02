@@ -93,46 +93,7 @@ export async function GET() {
             generation_attempt: genResult || "Skipped (No valid region found)"
         });
 
-        // 3. Test Search WITH Summary (Plan B: Use Search's own generation)
-        let summaryTest: any = {};
-        try {
-            // Fix: searchStore only accepts 1 arg currently. 
-            // Just verifying it doesn't throw is enough for now.
-            await searchStore('빅히스토리');
-        } catch (e) { }
 
-
-        // Re-attempt generation only if a region showed success
-        let genResult = null;
-        const validRegion = Object.keys(visibilityResult).find(r => visibilityResult[r].success);
-
-        if (validRegion) {
-            const testModel = 'gemini-1.5-flash-001';
-            try {
-                const vertexClient = createVertex({
-                    project,
-                    location: validRegion,
-                    googleAuthOptions: { credentials },
-                });
-                const { text } = await generateText({
-                    model: vertexClient(testModel),
-                    prompt: 'Test',
-                });
-                genResult = { success: true, region: validRegion, text };
-            } catch (e: any) {
-                genResult = { success: false, region: validRegion, error: e.message };
-            }
-        }
-
-        return Response.json({
-            status: 'Diagnostic Step 4',
-            identity: {
-                client_email: credentials?.client_email,
-            },
-            search: { success: !searchError },
-            regions_visibility: visibilityResult,
-            generation_attempt: genResult || "Skipped (No visible model region found)"
-        });
     } catch (error: any) {
         return Response.json({ error: error.message }, { status: 500 });
     }
