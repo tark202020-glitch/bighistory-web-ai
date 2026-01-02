@@ -20,7 +20,7 @@ export async function GET() {
         const results = [];
         let searchError = null;
 
-        // 1. Test Search
+        // 1. Test Search (to confirm Auth & Discovery Engine API)
         try {
             const searchRes = await searchStore('빅히스토리');
             results.push(...searchRes);
@@ -28,37 +28,36 @@ export async function GET() {
             searchError = e.message;
         }
 
-        // 2. Test Generation
-        let genText = "";
-        let genError = null;
-        try {
-            // Try specific version string
-            const { text } = await generateText({
-                model: vertex('gemini-1.5-flash-001'),
-                prompt: '빅히스토리에 대해 한 문장으로 설명해줘.',
-            });
-            genText = text;
-        } catch (e: any) {
-            genError = e.message;
-        }
+        // 2. Test Generation with multiple models
+        const modelTests: any = {};
+        const runModelTest = async (modelName: string) => {
+            try {
+                const { text } = await generateText({
+                    model: vertex(modelName),
+                    prompt: 'Short test.',
+                });
+                return { success: true, text };
+            } catch (e: any) {
+                return { success: false, error: e.message };
+            }
+        };
+
+        modelTests['gemini-1.5-flash-001'] = await runModelTest('gemini-1.5-flash-001');
+        modelTests['gemini-1.5-flash'] = await runModelTest('gemini-1.5-flash');
+        modelTests['gemini-1.0-pro'] = await runModelTest('gemini-1.0-pro');
 
         return Response.json({
-            status: 'Test Complete',
+            status: 'Diagnostic Complete',
+            identity: {
+                client_email: credentials?.client_email || 'unknown',
+                project_id: project,
+            },
             search: {
                 success: !searchError,
                 count: results.length,
-                firstResult: results[0] || null,
                 error: searchError
             },
-            generation: {
-                success: !genError,
-                text: genText,
-                error: genError
-            },
-            env: {
-                hasProjectId: !!process.env.GOOGLE_CLOUD_PROJECT_ID,
-                hasCredentials: !!process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
-            }
+            models: modelTests,
         });
 
     } catch (error: any) {
