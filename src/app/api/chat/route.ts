@@ -1,5 +1,5 @@
 import { createVertex } from '@ai-sdk/google-vertex';
-import { createDataStreamResponse, streamText } from 'ai';
+import { streamText } from 'ai';
 import { searchStore, answerQuery } from '@/lib/vertex-search';
 import fs from 'fs';
 import path from 'path';
