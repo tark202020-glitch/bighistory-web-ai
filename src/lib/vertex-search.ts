@@ -3,7 +3,7 @@ import { SearchServiceClient } from '@google-cloud/discoveryengine';
 // Configuration
 const PROJECT_ID = process.env.GOOGLE_CLOUD_PROJECT_ID || 'rag-bighistory';
 const LOCATION = 'global'; // or 'us', 'eu' etc. usually 'global' for basic setups
-const DATA_STORE_ID = 'bighistory-webai_1767350334446';
+const DATA_STORE_ID = '20set-bighistory-20260102_1767348297906';
 const COLLECTION_ID = 'default_collection'; // Default collection
 
 // If using a raw JSON string in env var (common in Vercel)
