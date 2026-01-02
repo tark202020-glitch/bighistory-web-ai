@@ -1,6 +1,7 @@
 import { createVertex } from '@ai-sdk/google-vertex';
 import { generateText } from 'ai';
 import { searchStore } from '@/lib/vertex-search';
+import { GoogleAuth } from 'google-auth-library';
 
 // Configure Vertex AI
 const project = process.env.GOOGLE_CLOUD_PROJECT_ID || 'rag-bighistory';
@@ -92,8 +93,8 @@ export async function GET() {
     }
 }
 
+
 // Helper to get token (rudimentary implementation for test)
-import { GoogleAuth } from 'google-auth-library';
 async function getAccessToken(creds: any) {
     if (!creds) return null;
     const auth = new GoogleAuth({
@@ -105,7 +106,4 @@ async function getAccessToken(creds: any) {
     return token.token;
 }
 
-    } catch (error: any) {
-    return Response.json({ error: error.message }, { status: 500 });
-}
-}
+
