@@ -40,12 +40,12 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
     try {
         const [response] = await client.search(request);
 
-        if (!response.results) {
+        if (!response || response.length === 0) {
             return [];
         }
 
-        return response.results.map(result => {
-            const data = result.document?.derivedStructData;
+        return response.map(result => {
+            const data = result.document?.derivedStructData as any;
             return {
                 title: data?.title || 'No Title',
                 snippet: data?.snippets?.[0]?.snippet || data?.extractive_answers?.[0]?.content || 'No content',
