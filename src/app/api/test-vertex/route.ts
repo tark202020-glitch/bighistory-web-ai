@@ -54,36 +54,38 @@ export async function GET() {
             locationError = e.message;
         }
 
-        // 3. Robust Generation Test (Try asia-northeast3 first, then us-central1)
-        const priorityRegions = ['asia-northeast3', 'us-central1'];
-        let genAttempts: any = {};
-        let successRegion = null;
+        // 3. Raw REST Prediction Test (Bypass SDK)
+        let restTest: any = {};
+        try {
+            const accessToken = await getAccessToken(credentials);
+            if (accessToken) {
+                // Use asia-northeast3 (Seoul) as it's often more reliable for Korean projects
+                const targetReg = locations.includes('asia-northeast3') ? 'asia-northeast3' : 'us-central1';
 
-        for (const region of priorityRegions) {
-            if (locations.includes(region) || locations.includes('global')) { // Try if listed or global is present
-                try {
-                    const regionalVertex = createVertex({
-                        project,
-                        location: region,
-                        googleAuthOptions: { credentials },
-                    });
-                    const { text } = await generateText({
-                        model: regionalVertex('gemini-1.5-flash-001'),
-                        prompt: 'Hello from ' + region,
-                    });
-                    genAttempts[region] = { success: true, text };
-                    successRegion = region;
-                    break; // Stop on first success
-                } catch (e: any) {
-                    genAttempts[region] = { success: false, error: e.message };
+                const restResp = await fetch(`https://${targetReg}-aiplatform.googleapis.com/v1/projects/${project}/locations/${targetReg}/publishers/google/models/gemini-1.5-flash:streamGenerateContent`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        contents: [{ role: 'user', parts: [{ text: 'Hi' }] }]
+                    })
+                });
+
+                if (restResp.ok) {
+                    restTest = { success: true, region: targetReg, status: restResp.status };
+                } else {
+                    const errText = await restResp.text();
+                    restTest = { success: false, region: targetReg, status: restResp.status, error: errText };
                 }
-            } else {
-                genAttempts[region] = { success: false, error: "Region not in available locations list" };
             }
+        } catch (e: any) {
+            restTest = { success: false, error: e.message };
         }
 
         return Response.json({
-            status: 'Diagnostic Step 6',
+            status: 'Diagnostic Step 7',
             identity: {
                 client_email: credentials?.client_email,
                 project_id: project
@@ -93,8 +95,8 @@ export async function GET() {
                 success: !locationError,
                 available_regions: locations,
             },
-            generation_attempts: genAttempts,
-            recommended_region: successRegion || "None found"
+            raw_rest_test: restTest,
+            sdk_recommendation: restTest.success ? "REST works, SDK might be the issue" : "REST failed, GCP/IAM is definitely the issue"
         });
 
 
