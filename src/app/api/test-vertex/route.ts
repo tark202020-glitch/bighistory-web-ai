@@ -66,45 +66,42 @@ export async function GET() {
             // Just verifying it doesn't throw is enough for now.
             await searchStore('빅히스토리');
         } catch (e) { }
-        // We can't easily import the client from utility as it's not exported. 
-        // Let's defer this specific "summary" test to the utility update if needed, 
-        // for now just stick to the region check which is critical.
-    } catch (e) { }
 
-    // Re-attempt generation only if a region showed success
-    let genResult = null;
-    const validRegion = Object.keys(visibilityResult).find(r => visibilityResult[r].success);
 
-    if (validRegion) {
-        const testModel = 'gemini-1.5-flash-001';
-        try {
-            const vertexClient = createVertex({
-                project,
-                location: validRegion,
-                googleAuthOptions: { credentials },
-            });
-            const { text } = await generateText({
-                model: vertexClient(testModel),
-                prompt: 'Test',
-            });
-            genResult = { success: true, region: validRegion, text };
-        } catch (e: any) {
-            genResult = { success: false, region: validRegion, error: e.message };
+        // Re-attempt generation only if a region showed success
+        let genResult = null;
+        const validRegion = Object.keys(visibilityResult).find(r => visibilityResult[r].success);
+
+        if (validRegion) {
+            const testModel = 'gemini-1.5-flash-001';
+            try {
+                const vertexClient = createVertex({
+                    project,
+                    location: validRegion,
+                    googleAuthOptions: { credentials },
+                });
+                const { text } = await generateText({
+                    model: vertexClient(testModel),
+                    prompt: 'Test',
+                });
+                genResult = { success: true, region: validRegion, text };
+            } catch (e: any) {
+                genResult = { success: false, region: validRegion, error: e.message };
+            }
         }
-    }
 
-    return Response.json({
-        status: 'Diagnostic Step 4',
-        identity: {
-            client_email: credentials?.client_email,
-        },
-        search: { success: !searchError },
-        regions_visibility: visibilityResult,
-        generation_attempt: genResult || "Skipped (No visible model region found)"
-    });
-} catch (error: any) {
-    return Response.json({ error: error.message }, { status: 500 });
-}
+        return Response.json({
+            status: 'Diagnostic Step 4',
+            identity: {
+                client_email: credentials?.client_email,
+            },
+            search: { success: !searchError },
+            regions_visibility: visibilityResult,
+            generation_attempt: genResult || "Skipped (No visible model region found)"
+        });
+    } catch (error: any) {
+        return Response.json({ error: error.message }, { status: 500 });
+    }
 }
 
 
