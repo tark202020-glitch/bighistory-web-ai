@@ -54,19 +54,16 @@ export async function GET() {
             locationError = e.message;
         }
 
-        // 3. Project Identity & Answer API Test
+        // 3. Project Identity & Answer API Test (FIXED)
         let altDiag: any = {};
         const projectNumber = '1067407319558';
         try {
             const accessToken = await getAccessToken(credentials);
             if (accessToken) {
-                // Test A: Does list work with Project NUMBER instead of ID?
-                const numListResp = await fetch(`https://us-central1-aiplatform.googleapis.com/v1/projects/${projectNumber}/locations/us-central1/publishers/google/models?pageSize=1`, {
-                    headers: { 'Authorization': `Bearer ${accessToken}` }
-                });
-                altDiag.project_number_test = { status: numListResp.status, ok: numListResp.ok };
+                // Test A: Does list work with Project NUMBER? (Previous: 404)
 
-                // Test B: Discovery Engine 'Answer' API (Since search works, this might too)
+                // Test B: Discovery Engine 'Answer' API (Endpoint reached in Step 10!)
+                // Fixing: Unknown name "modelId" at 'answer_generation_spec.model_spec'
                 const answerResp = await fetch(`https://discoveryengine.googleapis.com/v1/projects/${project}/locations/global/collections/default_collection/dataStores/20set-bighistory-20260102_1767348297906/servingConfigs/default_search:answer`, {
                     method: 'POST',
                     headers: {
@@ -76,29 +73,55 @@ export async function GET() {
                     body: JSON.stringify({
                         query: { text: '빅히스토리에 대해 요약해줘' },
                         answerGenerationSpec: {
-                            modelSpec: { modelId: 'gemini-1.5-flash' },
+                            modelSpec: {
+                                modelVersion: 'gemini-1.5-flash-001/answer_gen_v3.1' // Correct internal version name or leave empty
+                            },
                             promptSpec: { preamble: '검색 결과를 바탕으로 친절하게 답변해줘' },
                             includeCitations: true
                         }
                     })
                 });
                 altDiag.discovery_answer_api = { status: answerResp.status, ok: answerResp.ok };
-                if (!answerResp.ok) altDiag.discovery_answer_error = await answerResp.text();
+                if (!answerResp.ok) {
+                    altDiag.discovery_answer_error = await answerResp.text();
+
+                    // Fallback: Try with EMPTY modelSpec (let GCP choose)
+                    const fallbackResp = await fetch(`https://discoveryengine.googleapis.com/v1/projects/${project}/locations/global/collections/default_collection/dataStores/20set-bighistory-20260102_1767348297906/servingConfigs/default_search:answer`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            query: { text: '안녕' },
+                            answerGenerationSpec: {
+                                includeCitations: true
+                            }
+                        })
+                    });
+                    altDiag.answer_fallback = { status: fallbackResp.status, ok: fallbackResp.ok };
+                    if (fallbackResp.ok) {
+                        const data = await fallbackResp.json();
+                        altDiag.sample_answer = data.answer?.answerText;
+                    }
+                } else {
+                    const data = await answerResp.json();
+                    altDiag.sample_answer = data.answer?.answerText;
+                }
             }
         } catch (e: any) { altDiag.error = e.message; }
 
         return Response.json({
-            status: 'Diagnostic Step 10',
+            status: 'Diagnostic Step 11',
             identity: {
                 client_email: credentials?.client_email,
-                project_id: project,
-                project_number: projectNumber
+                project_id: project
             },
             search: { success: !searchError },
             alternative_diagnostics: altDiag,
-            recommendation: altDiag.discovery_answer_api?.ok
-                ? "Answer API works! We should probably switch to Discovery Engine's native answer feature."
-                : "Both standard Vertex and Discovery Answer failed. This project has a deep model-access block. Check Billing/Organization Policies."
+            recommendation: (altDiag.discovery_answer_api?.ok || altDiag.answer_fallback?.ok)
+                ? "Answer API works! This is the solution. We will use Discovery Engine's generative feature directly."
+                : "Both standard Vertex and Discovery Answer failed. Requesting specialized support or checking IAM: Discovery Engine Editor role."
         });
 
 
