@@ -29,35 +29,69 @@ export async function GET() {
             searchError = e.message;
         }
 
-        // 2. List Available Models (Multi-region check)
-        const checkRegions = ['us-central1', 'asia-northeast3'];
-        const visibilityResult: any = {};
-
-        for (const reg of checkRegions) {
-            try {
-                const accessToken = await getAccessToken(credentials);
-                if (accessToken) {
-                    const listResp = await fetch(`https://${reg}-aiplatform.googleapis.com/v1/projects/${project}/locations/${reg}/publishers/google/models`, {
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    if (listResp.ok) {
-                        const data = await listResp.json();
-                        visibilityResult[reg] = {
-                            success: true,
-                            count: data.models?.length || 0,
-                            examples: data.models?.slice(0, 3).map((m: any) => m.name.split('/').pop())
-                        };
-                    } else {
-                        visibilityResult[reg] = { success: false, status: listResp.status, error: await listResp.text() };
+        // 2. List Accessible Locations (Global Check)
+        let locations = [];
+        let locationError = null;
+        try {
+            const accessToken = await getAccessToken(credentials);
+            if (accessToken) {
+                // Check global endpoint to see active regions
+                const locResp = await fetch(`https://aiplatform.googleapis.com/v1/projects/${project}/locations`, {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
                     }
+                });
+                if (locResp.ok) {
+                    const data = await locResp.json();
+                    locations = data.locations?.map((l: any) => l.locationId) || [];
+                } else {
+                    const err = await locResp.text();
+                    locationError = `Location List failed: ${locResp.status} ${err}`;
                 }
+            }
+        } catch (e: any) {
+            locationError = e.message;
+        }
+
+        // 3. Try Generation on First Available Location
+        let genResult = null;
+        const validRegion = locations.includes('us-central1') ? 'us-central1' :
+            locations.includes('asia-northeast3') ? 'asia-northeast3' :
+                locations[0]; // Fallback to first available
+
+        if (validRegion) {
+            const testModel = 'gemini-1.5-flash-001';
+            try {
+                const regionalVertex = createVertex({
+                    project,
+                    location: validRegion,
+                    googleAuthOptions: { credentials },
+                });
+                const { text } = await generateText({
+                    model: regionalVertex(testModel),
+                    prompt: 'Test',
+                });
+                genResult = { success: true, region: validRegion, text };
             } catch (e: any) {
-                visibilityResult[reg] = { success: false, error: e.message };
+                genResult = { success: false, region: validRegion, error: e.message };
             }
         }
+
+        return Response.json({
+            status: 'Diagnostic Step 5',
+            identity: {
+                client_email: credentials?.client_email,
+                project_id: project
+            },
+            search: { success: !searchError },
+            locations_check: {
+                success: !locationError,
+                available_regions: locations,
+                error: locationError
+            },
+            generation_attempt: genResult || "Skipped (No valid region found)"
+        });
 
         // 3. Test Search WITH Summary (Plan B: Use Search's own generation)
         let summaryTest: any = {};
