@@ -54,68 +54,51 @@ export async function GET() {
             locationError = e.message;
         }
 
-        // 3. Deep Diagnostic (Publishers & Beta API)
-        let deepDiag: any = {};
+        // 3. Project Identity & Answer API Test
+        let altDiag: any = {};
+        const projectNumber = '1067407319558';
         try {
             const accessToken = await getAccessToken(credentials);
             if (accessToken) {
-                const reg = locations.includes('us-central1') ? 'us-central1' : 'asia-northeast3';
+                // Test A: Does list work with Project NUMBER instead of ID?
+                const numListResp = await fetch(`https://us-central1-aiplatform.googleapis.com/v1/projects/${projectNumber}/locations/us-central1/publishers/google/models?pageSize=1`, {
+                    headers: { 'Authorization': `Bearer ${accessToken}` }
+                });
+                altDiag.project_number_test = { status: numListResp.status, ok: numListResp.ok };
 
-                // Test A: List Publishers to see if 'google' is visible
-                try {
-                    const pubResp = await fetch(`https://${reg}-aiplatform.googleapis.com/v1/projects/${project}/locations/${reg}/publishers`, {
-                        headers: { 'Authorization': `Bearer ${accessToken}` }
-                    });
-                    if (pubResp.ok) {
-                        const pubData = await pubResp.json();
-                        deepDiag.publishers = pubData.publishers?.map((p: any) => p.name.split('/').pop());
-                    } else {
-                        deepDiag.publishers_error = `Error ${pubResp.status}: ${await pubResp.text()}`;
-                    }
-                } catch (e: any) { deepDiag.publishers_error = e.message; }
-
-                // Test B: Try v1beta1 Prediction (Last Resort)
-                try {
-                    const betaResp = await fetch(`https://${reg}-aiplatform.googleapis.com/v1beta1/projects/${project}/locations/${reg}/publishers/google/models/gemini-1.5-flash:streamGenerateContent`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: 'Hi' }] }] })
-                    });
-                    deepDiag.v1beta1_test = { status: betaResp.status, ok: betaResp.ok };
-                    if (!betaResp.ok) deepDiag.v1beta1_error = await betaResp.text();
-                } catch (e: any) { deepDiag.v1beta1_error = e.message; }
-
-                // Test C: Try explicit v1 model name gemini-1.5-flash-001
-                try {
-                    const fullModelResp = await fetch(`https://${reg}-aiplatform.googleapis.com/v1/projects/${project}/locations/${reg}/publishers/google/models/gemini-1.5-flash-001:streamGenerateContent`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: 'Hi' }] }] })
-                    });
-                    deepDiag.full_model_test = { status: fullModelResp.status, ok: fullModelResp.ok };
-                } catch (e: any) { deepDiag.full_model_test_error = e.message; }
+                // Test B: Discovery Engine 'Answer' API (Since search works, this might too)
+                const answerResp = await fetch(`https://discoveryengine.googleapis.com/v1/projects/${project}/locations/global/collections/default_collection/dataStores/20set-bighistory-20260102_1767348297906/servingConfigs/default_search:answer`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        query: { text: '빅히스토리에 대해 요약해줘' },
+                        answerGenerationSpec: {
+                            modelSpec: { modelId: 'gemini-1.5-flash' },
+                            promptSpec: { preamble: '검색 결과를 바탕으로 친절하게 답변해줘' },
+                            includeCitations: true
+                        }
+                    })
+                });
+                altDiag.discovery_answer_api = { status: answerResp.status, ok: answerResp.ok };
+                if (!answerResp.ok) altDiag.discovery_answer_error = await answerResp.text();
             }
-        } catch (e: any) {
-            deepDiag.error = e.message;
-        }
+        } catch (e: any) { altDiag.error = e.message; }
 
         return Response.json({
-            status: 'Diagnostic Step 8',
+            status: 'Diagnostic Step 10',
             identity: {
                 client_email: credentials?.client_email,
-                project_id: project
+                project_id: project,
+                project_number: projectNumber
             },
             search: { success: !searchError },
-            deep_diagnostic: deepDiag,
-            final_guess: (deepDiag.publishers && !deepDiag.publishers.includes('google'))
-                ? "GCP Project is not linked to Google publishers. Vertex AI API might not be fully initialized."
-                : "Registry is correct, but models are hidden. Check billing or API enablement at https://console.cloud.google.com/vertex-ai"
+            alternative_diagnostics: altDiag,
+            recommendation: altDiag.discovery_answer_api?.ok
+                ? "Answer API works! We should probably switch to Discovery Engine's native answer feature."
+                : "Both standard Vertex and Discovery Answer failed. This project has a deep model-access block. Check Billing/Organization Policies."
         });
 
 
