@@ -281,8 +281,14 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Verification Sources</p>
                                                                 <div className="flex flex-wrap gap-2 mb-6">
                                                                     {m.citations.map((cite, idx) => {
-                                                                        const sourceTitle = cite.sources?.[0]?.title || `Source ${idx + 1}`;
-                                                                        // Clean up title if it's a path
+                                                                        const sourceData = cite.sources?.[0];
+                                                                        let sourceTitle = sourceData?.title;
+
+                                                                        if (!sourceTitle && sourceData?.uri) {
+                                                                            sourceTitle = sourceData.uri;
+                                                                        }
+
+                                                                        sourceTitle = sourceTitle || `Source ${idx + 1}`;
                                                                         const cleanTitle = sourceTitle.split('/').pop()?.replace('.pdf', '') || sourceTitle;
 
                                                                         return (
@@ -297,7 +303,7 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                 {/* Reference Books (Unique Sources) */}
                                                                 {(() => {
                                                                     const uniqueSources = Array.from(new Set(
-                                                                        m.citations.flatMap(c => c.sources?.map((s: any) => s.title) || [])
+                                                                        m.citations.flatMap(c => c.sources?.map((s: any) => s.title || s.uri) || [])
                                                                     )).filter(Boolean);
 
                                                                     if (uniqueSources.length > 0) {
