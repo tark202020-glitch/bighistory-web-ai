@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { Send, Bot, User } from 'lucide-react';
+import { Send, Bot, User, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MessageEditor } from '@/components/message-editor';
 import { getBookTitle } from '@/lib/book-titles';
@@ -23,7 +23,17 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [savedItems, setSavedItems] = useState<SavedItem[]>([]);
     const [subjectTarget] = useState('초등 고학년 / 흥미 유발');
+    const [expandedCitations, setExpandedCitations] = useState<Set<number>>(new Set());
     const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    const toggleCitation = (idx: number) => {
+        setExpandedCitations(prev => {
+            const next = new Set(prev);
+            if (next.has(idx)) next.delete(idx);
+            else next.add(idx);
+            return next;
+        });
+    };
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -281,86 +291,88 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                         {m.citations && m.citations.length > 0 && (
                                                             <div className="mt-8 pt-6 border-t border-slate-100 animate-fade-in">
                                                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Verification Sources</p>
-                                                                <div className="flex flex-col gap-4 mb-6">
-                                                                    {m.citations.map((cite, idx) => {
-                                                                        // Find the reference matching this citation's referenceId
-                                                                        const refIndex = parseInt(cite.sources?.[0]?.referenceId || '0', 10);
-                                                                        const reference = m.references?.[refIndex];
+                                                                <div className="flex flex-col gap-3 mb-2">
+                                                                    {(() => {
+                                                                        const displayCitations = m.citations.map((cite, idx) => {
+                                                                            const refIndex = parseInt(cite.sources?.[0]?.referenceId || '0', 10);
+                                                                            const reference = m.references?.[refIndex];
 
-                                                                        // Use title or URI from reference, or fallback to citation title
-                                                                        let sourceTitle = reference?.chunkInfo?.documentMetadata?.title || reference?.chunkInfo?.documentMetadata?.uri || cite.sources?.[0]?.title;
+                                                                            let sourceTitle = reference?.chunkInfo?.documentMetadata?.title ||
+                                                                                reference?.chunkInfo?.documentMetadata?.uri ||
+                                                                                cite.sources?.[0]?.title;
 
-                                                                        // If document is a full path, clean it up
-                                                                        if (sourceTitle && sourceTitle.includes('projects/')) {
-                                                                            // e.g. projects/123/.../documents/filename.pdf
-                                                                            const parts = sourceTitle.split('/');
-                                                                            sourceTitle = parts[parts.length - 1];
-                                                                        }
+                                                                            if (sourceTitle && (sourceTitle.includes('projects/') || sourceTitle.includes('gs://'))) {
+                                                                                const parts = sourceTitle.split('/');
+                                                                                sourceTitle = parts[parts.length - 1];
+                                                                            }
 
-                                                                        if (!sourceTitle && cite.sources?.[0]?.uri) {
-                                                                            sourceTitle = cite.sources[0].uri;
-                                                                        }
+                                                                            if (!sourceTitle && cite.sources?.[0]?.uri) sourceTitle = cite.sources[0].uri;
+                                                                            sourceTitle = sourceTitle || `Source ${idx + 1}`;
+                                                                            const cleanTitle = sourceTitle.split('/').pop()?.replace('.pdf', '') || sourceTitle;
 
-                                                                        sourceTitle = sourceTitle || `Source ${idx + 1}`;
-                                                                        const cleanTitle = sourceTitle.split('/').pop()?.replace('.pdf', '') || sourceTitle;
+                                                                            if (!cleanTitle.toLowerCase().includes('main')) return null;
 
-                                                                        // FILTER: Only show '*_Main' files
-                                                                        if (!cleanTitle.toLowerCase().includes('main')) return null;
+                                                                            return {
+                                                                                idx,
+                                                                                bookTitle: getBookTitle(cleanTitle),
+                                                                                snippet: reference?.chunkInfo?.content?.slice(0, 150) + '...',
+                                                                                page: reference?.chunkInfo?.pageSpan?.start || reference?.chunkInfo?.documentMetadata?.page
+                                                                            };
+                                                                        }).filter(Boolean);
 
-                                                                        const bookTitle = getBookTitle(cleanTitle);
-                                                                        const snippet = reference?.chunkInfo?.content?.slice(0, 150) + '...';
+                                                                        if (displayCitations.length === 0) return null;
+
+                                                                        const isExpanded = expandedCitations.has(parseInt(m.id));
+                                                                        const visibleCitations = isExpanded ? displayCitations : displayCitations.slice(0, 3);
+                                                                        const remainingCount = displayCitations.length - 3;
 
                                                                         return (
-                                                                            <div key={idx} className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1.5 hover:border-blue-200 transition-all overflow-hidden group">
-                                                                                <div className="flex items-center gap-2 text-[11px] font-bold text-slate-700">
-                                                                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.5)]" />
-                                                                                    [{bookTitle}] <span className="text-slate-400 font-normal ml-1 text-[10px]">(Chapter Info Unavailable)</span>
+                                                                            <>
+                                                                                <div className="flex items-center gap-2 mb-3 -mt-6">
+                                                                                    {displayCitations.length > 0 && (
+                                                                                        <span className="px-1.5 py-0.5 rounded-full bg-slate-100 text-[10px] font-bold text-slate-500">
+                                                                                            +{displayCitations.length}
+                                                                                        </span>
+                                                                                    )}
                                                                                 </div>
-                                                                                <p className="text-[11px] text-slate-500 pl-3.5 border-l-2 border-slate-100 leading-relaxed break-keep">
-                                                                                    {snippet}
-                                                                                </p>
-                                                                            </div>
+
+                                                                                {visibleCitations.map((cite: any) => (
+                                                                                    <div key={cite.idx} className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1.5 hover:border-blue-200 transition-all overflow-hidden group">
+                                                                                        <div className="flex items-center gap-2 text-[11px] font-bold text-slate-700">
+                                                                                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.5)]" />
+                                                                                            [{cite.bookTitle}]
+                                                                                            {cite.page && <span className="text-slate-400 font-normal ml-1">p.{cite.page}</span>}
+                                                                                        </div>
+                                                                                        <p className="text-[11px] text-slate-500 pl-3.5 border-l-2 border-slate-100 leading-relaxed break-keep">
+                                                                                            {cite.snippet}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                ))}
+
+                                                                                {displayCitations.length > 3 && (
+                                                                                    <button
+                                                                                        onClick={() => toggleCitation(parseInt(m.id))}
+                                                                                        className="flex items-center gap-1 mt-2 px-3 py-1.5 rounded-lg text-[11px] font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors bg-white border border-slate-100 shadow-sm w-fit"
+                                                                                    >
+                                                                                        {isExpanded ? (
+                                                                                            <>
+                                                                                                <ChevronUp className="w-3 h-3" />
+                                                                                                <span>Show less</span>
+                                                                                            </>
+                                                                                        ) : (
+                                                                                            <>
+                                                                                                <span className="text-lg leading-3 mb-1">...</span>
+                                                                                                <span>View {remainingCount} more</span>
+                                                                                            </>
+                                                                                        )}
+                                                                                    </button>
+                                                                                )}
+                                                                            </>
                                                                         );
-                                                                    })}
+                                                                    })()}
                                                                 </div>
 
-                                                                {/* Reference Books (Unique Sources) */}
-                                                                {(() => {
-                                                                    const uniqueSources = Array.from(new Set(
-                                                                        m.citations.flatMap((c: any) => {
-                                                                            const refIndex = parseInt(c.sources?.[0]?.referenceId || '0', 10);
-                                                                            const ref = m.references?.[refIndex];
 
-                                                                            let val = ref?.chunkInfo?.documentMetadata?.title ||
-                                                                                ref?.chunkInfo?.documentMetadata?.uri ||
-                                                                                c.sources?.[0]?.title ||
-                                                                                c.sources?.[0]?.uri;
-
-                                                                            if (val && (val.includes('projects/') || val.includes('gs://'))) {
-                                                                                const parts = val.split('/');
-                                                                                val = parts[parts.length - 1];
-                                                                            }
-                                                                            return val;
-                                                                        })
-                                                                    )).filter(Boolean);
-
-                                                                    if (uniqueSources.length > 0) {
-                                                                        return (
-                                                                            <div className="animate-fade-in">
-                                                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Reference Books</p>
-                                                                                <div className="space-y-1">
-                                                                                    {uniqueSources.map((source: any, i) => (
-                                                                                        <div key={i} className="flex items-center gap-2 text-[11px] text-slate-600 font-medium pl-1">
-                                                                                            <span className="w-1 h-1 rounded-full bg-slate-300" />
-                                                                                            {source.split('/').pop()?.replace('.pdf', '')}
-                                                                                        </div>
-                                                                                    ))}
-                                                                                </div>
-                                                                            </div>
-                                                                        );
-                                                                    }
-                                                                    return null;
-                                                                })()}
 
 
 
