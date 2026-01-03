@@ -25,9 +25,9 @@ export function CanvasCard({ title, onOpen }: CanvasCardProps) {
                 <div className="bg-slate-50 px-4 py-3 flex justify-end border-t border-slate-100">
                     <button
                         onClick={onOpen}
-                        className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg transition-colors shadow-sm shadow-blue-200"
+                        className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg transition-colors shadow-sm shadow-blue-200 uppercase tracking-wider"
                     >
-                        Open Canvas
+                        OPEN
                     </button>
                 </div>
             </div>
