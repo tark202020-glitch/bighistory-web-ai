@@ -282,11 +282,22 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Verification Sources</p>
                                                                 <div className="flex flex-wrap gap-2 mb-6">
                                                                     {m.citations.map((cite, idx) => {
-                                                                        const sourceData = cite.sources?.[0];
-                                                                        let sourceTitle = sourceData?.title;
+                                                                        // Find the reference matching this citation's referenceId
+                                                                        const refId = cite.sources?.[0]?.referenceId;
+                                                                        const reference = (m as any).references?.find((r: any) => r.id === refId);
 
-                                                                        if (!sourceTitle && sourceData?.uri) {
-                                                                            sourceTitle = sourceData.uri;
+                                                                        // Use title or URI from reference, or fallback to citation title
+                                                                        let sourceTitle = reference?.document || reference?.uri || cite.sources?.[0]?.title;
+
+                                                                        // If document is a full path, clean it up
+                                                                        if (sourceTitle && sourceTitle.includes('projects/')) {
+                                                                            // e.g. projects/123/.../documents/filename.pdf
+                                                                            const parts = sourceTitle.split('/');
+                                                                            sourceTitle = parts[parts.length - 1];
+                                                                        }
+
+                                                                        if (!sourceTitle && cite.sources?.[0]?.uri) {
+                                                                            sourceTitle = cite.sources[0].uri;
                                                                         }
 
                                                                         sourceTitle = sourceTitle || `Source ${idx + 1}`;
