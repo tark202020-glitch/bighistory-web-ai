@@ -17,7 +17,7 @@ interface SavedItem {
 }
 
 export const ChatInterface = ({ sources }: { sources: Document[] }) => {
-    const [messages, setMessages] = useState<{ id: string; role: string; content: string; citations?: any[] }[]>([]);
+    const [messages, setMessages] = useState<{ id: string; role: string; content: string; citations?: any[]; references?: any[] }[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [savedItems, setSavedItems] = useState<SavedItem[]>([]);
@@ -284,7 +284,7 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                     {m.citations.map((cite, idx) => {
                                                                         // Find the reference matching this citation's referenceId
                                                                         const refId = cite.sources?.[0]?.referenceId;
-                                                                        const reference = (m as any).references?.find((r: any) => r.id === refId);
+                                                                        const reference = m.references?.find((r: any) => String(r.id) === String(refId));
 
                                                                         // Use title or URI from reference, or fallback to citation title
                                                                         let sourceTitle = reference?.document || reference?.uri || cite.sources?.[0]?.title;
@@ -317,7 +317,7 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                     const uniqueSources = Array.from(new Set(
                                                                         m.citations.flatMap((c: any) => {
                                                                             const refId = c.sources?.[0]?.referenceId;
-                                                                            const ref = (m as any).references?.find((r: any) => r.id === refId);
+                                                                            const ref = m.references?.find((r: any) => String(r.id) === String(refId));
                                                                             let val = ref?.document || ref?.uri || c.sources?.[0]?.title || c.sources?.[0]?.uri;
 
                                                                             if (val && val.includes('projects/')) {
