@@ -83,7 +83,7 @@ Link: ${result.link || 'N/A'}
     // 3. Generate Answer using Managed RAG
     console.log("Starting Managed Answer API...");
     try {
-      const { answerText, citations } = await answerQuery(lastUserMessage, preamble || undefined);
+      const { answerText, citations, references } = await answerQuery(lastUserMessage, preamble || undefined);
 
       console.log("Answer generated successfully.");
 
@@ -91,7 +91,8 @@ Link: ${result.link || 'N/A'}
       return Response.json({
         role: 'assistant',
         content: answerText,
-        citations: citations
+        citations: citations,
+        references: references
       });
     } catch (error: any) {
       console.error("Error in Answer API:", error);

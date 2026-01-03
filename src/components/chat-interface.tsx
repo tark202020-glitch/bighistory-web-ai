@@ -117,7 +117,8 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                 id: Date.now().toString(),
                 role: 'assistant',
                 content: data.content,
-                citations: data.annotations?.find((a: any) => a.type === 'citations')?.data || data.citations
+                citations: data.annotations?.find((a: any) => a.type === 'citations')?.data || data.citations,
+                references: data.references || []
             }]);
 
         } catch (error: any) {
@@ -303,7 +304,17 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                 {/* Reference Books (Unique Sources) */}
                                                                 {(() => {
                                                                     const uniqueSources = Array.from(new Set(
-                                                                        m.citations.flatMap(c => c.sources?.map((s: any) => s.title || s.uri) || [])
+                                                                        m.citations.flatMap((c: any) => {
+                                                                            const refId = c.sources?.[0]?.referenceId;
+                                                                            const ref = (m as any).references?.find((r: any) => r.id === refId);
+                                                                            let val = ref?.document || ref?.uri || c.sources?.[0]?.title || c.sources?.[0]?.uri;
+
+                                                                            if (val && val.includes('projects/')) {
+                                                                                const parts = val.split('/');
+                                                                                val = parts[parts.length - 1];
+                                                                            }
+                                                                            return val;
+                                                                        })
                                                                     )).filter(Boolean);
 
                                                                     if (uniqueSources.length > 0) {
@@ -324,13 +335,6 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                     return null;
                                                                 })()}
 
-                                                                {/* DEBUG: Temporary Citation Dump */}
-                                                                <details className="mt-4 pt-4 border-t border-slate-100">
-                                                                    <summary className="text-[10px] text-red-400 font-bold cursor-pointer">DEBUG DATA (Click if citations are missing)</summary>
-                                                                    <pre className="mt-2 p-2 bg-slate-900 text-green-400 text-[10px] rounded overflow-auto max-h-40">
-                                                                        {JSON.stringify(m.citations, null, 2)}
-                                                                    </pre>
-                                                                </details>
                                                             </div>
                                                         )}
 

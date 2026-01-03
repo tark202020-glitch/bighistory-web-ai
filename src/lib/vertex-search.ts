@@ -108,6 +108,7 @@ export async function answerQuery(query: string, customPreamble?: string) {
         return {
             answerText: data.answer?.answerText || "답변을 생성할 수 없습니다.",
             citations: data.answer?.citations || [],
+            references: data.answer?.references || [],
             steps: data.answer?.steps || []
         };
     } catch (error) {
