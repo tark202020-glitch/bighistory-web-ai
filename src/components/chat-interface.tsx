@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import { Send, Bot, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MessageEditor } from '@/components/message-editor';
+import { getBookTitle } from '@/lib/book-titles';
 
 interface Document {
     id: string;
@@ -280,7 +281,7 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                         {m.citations && m.citations.length > 0 && (
                                                             <div className="mt-8 pt-6 border-t border-slate-100 animate-fade-in">
                                                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Verification Sources</p>
-                                                                <div className="flex flex-wrap gap-2 mb-6">
+                                                                <div className="flex flex-col gap-4 mb-6">
                                                                     {m.citations.map((cite, idx) => {
                                                                         // Find the reference matching this citation's referenceId
                                                                         const refIndex = parseInt(cite.sources?.[0]?.referenceId || '0', 10);
@@ -303,10 +304,21 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                         sourceTitle = sourceTitle || `Source ${idx + 1}`;
                                                                         const cleanTitle = sourceTitle.split('/').pop()?.replace('.pdf', '') || sourceTitle;
 
+                                                                        // FILTER: Only show '*_Main' files
+                                                                        if (!cleanTitle.toLowerCase().includes('main')) return null;
+
+                                                                        const bookTitle = getBookTitle(cleanTitle);
+                                                                        const snippet = reference?.chunkInfo?.content?.slice(0, 150) + '...';
+
                                                                         return (
-                                                                            <div key={idx} className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200/50 text-[10px] font-bold text-slate-500 flex items-center gap-2 hover:bg-slate-100 transition-colors shadow-sm cursor-default" title={sourceTitle}>
-                                                                                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_5px_rgba(59,130,246,0.5)]" />
-                                                                                {cleanTitle}
+                                                                            <div key={idx} className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1.5 hover:border-blue-200 transition-all overflow-hidden group">
+                                                                                <div className="flex items-center gap-2 text-[11px] font-bold text-slate-700">
+                                                                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.5)]" />
+                                                                                    [{bookTitle}] <span className="text-slate-400 font-normal ml-1 text-[10px]">(Chapter Info Unavailable)</span>
+                                                                                </div>
+                                                                                <p className="text-[11px] text-slate-500 pl-3.5 border-l-2 border-slate-100 leading-relaxed break-keep">
+                                                                                    {snippet}
+                                                                                </p>
                                                                             </div>
                                                                         );
                                                                     })}
