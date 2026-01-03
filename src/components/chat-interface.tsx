@@ -156,63 +156,7 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
 
     return (
         <div className="flex h-screen bg-[#f8fafc] text-slate-900 overflow-hidden selection:bg-blue-100 font-sans">
-            {/* Sidebar - Antigravity Style */}
-            <aside className="w-72 bg-[#0f172a] text-white flex flex-col hidden md:flex shadow-2xl relative z-10 transition-all">
-                <div className="p-8 pb-4">
-                    <div className="flex items-center gap-3 mb-2 translate-y-0 hover:-translate-y-0.5 transition-transform cursor-pointer">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
-                            <Bot size={20} className="text-white" />
-                        </div>
-                        <h1 className="text-xl font-bold font-heading tracking-tight">BigHistory AI</h1>
-                    </div>
-                    <div className="h-px w-full bg-gradient-to-r from-slate-700 to-transparent mb-6 opacity-50" />
-                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mb-1">Architecture</p>
-                    <p className="text-[11px] text-slate-500 font-medium">Vertex Managed RAG • Gemini 1.5</p>
-                </div>
 
-                <div className="flex-1 overflow-y-auto px-6 py-4 space-y-8 custom-scrollbar">
-                    {/* Project Detail */}
-                    <div>
-                        <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Current Session</h2>
-                        <div className="p-4 bg-slate-800/30 rounded-2xl border border-slate-700/50 hover:bg-slate-800/50 transition-all cursor-default group">
-                            <p className="text-[10px] font-bold text-slate-500 group-hover:text-blue-400 transition-colors uppercase mb-1">Target Audience</p>
-                            <p className="text-sm text-slate-200 font-semibold">{subjectTarget}</p>
-                        </div>
-                    </div>
-
-                    {/* Saved Library */}
-                    <div className="flex-1 flex flex-col min-h-0">
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Library</h2>
-                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">{savedItems.length}</span>
-                        </div>
-                        <div className="space-y-2.5">
-                            {savedItems.length === 0 ? (
-                                <div className="p-6 text-center border border-dashed border-slate-800 rounded-2xl">
-                                    <p className="text-[11px] text-slate-600 font-medium">No saved insights yet</p>
-                                </div>
-                            ) : (
-                                savedItems.map((item, idx) => (
-                                    <div key={idx} className="group flex items-start gap-3 p-3.5 rounded-2xl hover:bg-white/[0.03] border border-transparent hover:border-white/5 transition-all cursor-pointer">
-                                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-500 group-hover:shadow-[0_0_8px_rgba(59,130,246,0.5)] transition-all" />
-                                        <p className="text-[11px] text-slate-400 group-hover:text-slate-200 leading-relaxed line-clamp-2 transition-colors">{item.content}</p>
-                                    </div>
-                                ))
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="p-6 mt-auto">
-                    <div className="p-4 bg-gradient-to-br from-blue-500/5 to-purple-500/5 border border-white/5 rounded-2xl">
-                        <div className="flex items-center gap-2 mb-1">
-                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">System Online</p>
-                        </div>
-                        <p className="text-[11px] text-slate-500 leading-tight">Grounded on BigHistory Private Dataset</p>
-                    </div>
-                </div>
-            </aside>
 
             {/* Main Chat Area */}
             <main className="flex-1 flex h-full bg-white relative z-0 overflow-hidden">
@@ -425,6 +369,66 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                     onClose={() => setCanvasState(prev => ({ ...prev, isOpen: false }))}
                 />
             </main>
+
+            {/* Right Sidebar - Library (Refactored) */}
+            <aside className="w-72 bg-[#0f172a] text-white flex flex-col hidden md:flex shadow-2xl relative z-10 transition-all border-l border-slate-700/50">
+                <div className="p-8 pb-4">
+                    <div className="flex items-center gap-3 mb-2 translate-y-0 hover:-translate-y-0.5 transition-transform cursor-pointer">
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                            <Bot size={20} className="text-white" />
+                        </div>
+                        <h1 className="text-xl font-bold font-heading tracking-tight">BigHistory AI</h1>
+                    </div>
+                    <div className="h-px w-full bg-gradient-to-r from-slate-700 to-transparent mb-6 opacity-50" />
+                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mb-1">Architecture</p>
+                    <p className="text-[11px] text-slate-500 font-medium">Google Cloud Project : rag-bighistory</p>
+                    <p className="text-[10px] text-slate-600 font-medium mt-1">{new Date().toLocaleDateString()}</p>
+                </div>
+
+                <div className="flex-1 overflow-y-auto px-6 py-4 space-y-8 custom-scrollbar">
+                    {/* Saved Library */}
+                    <div className="flex-1 flex flex-col min-h-0">
+                        <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Library</h2>
+                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">{savedItems.length}</span>
+                        </div>
+                        <div className="space-y-2.5">
+                            {savedItems.length === 0 ? (
+                                <div className="p-6 text-center border border-dashed border-slate-800 rounded-2xl">
+                                    <p className="text-[11px] text-slate-600 font-medium">No saved insights yet</p>
+                                </div>
+                            ) : (
+                                savedItems.map((item, idx) => {
+                                    // Parse title from content (first line or truncated text)
+                                    const title = item.content.split('\n')[0].replace(/^#+\s*/, '') || "Untitled Note";
+                                    return (
+                                        <div
+                                            key={idx}
+                                            onClick={() => setCanvasState({ isOpen: true, content: item.content, title: title })}
+                                            className="group flex items-start gap-3 p-3.5 rounded-2xl hover:bg-white/[0.03] border border-transparent hover:border-white/5 transition-all cursor-pointer"
+                                        >
+                                            <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-500 group-hover:shadow-[0_0_8px_rgba(59,130,246,0.5)] transition-all shrink-0" />
+                                            <p className="text-[11px] text-slate-400 group-hover:text-slate-200 leading-relaxed line-clamp-2 transition-colors font-medium">
+                                                {title}
+                                            </p>
+                                        </div>
+                                    );
+                                })
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="p-6 mt-auto">
+                    <div className="p-4 bg-gradient-to-br from-blue-500/5 to-purple-500/5 border border-white/5 rounded-2xl">
+                        <div className="flex items-center gap-2 mb-1">
+                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">System Online</p>
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-tight">Grounded on BigHistory Private Dataset</p>
+                    </div>
+                </div>
+            </aside>
         </div>
     );
 };
