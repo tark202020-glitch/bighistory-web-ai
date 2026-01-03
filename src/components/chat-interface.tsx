@@ -450,6 +450,7 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                         references={canvasState.references}
                         onClose={() => setCanvasState(prev => ({ ...prev, isOpen: false }))}
                         onDelete={canvasState.itemId ? () => handleDeleteSavedItem(canvasState.itemId!) : undefined}
+                        onSave={fetchSavedItems}
                     />
                 </main>
 

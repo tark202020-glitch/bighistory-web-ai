@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { X, Save, Edit3, FileText, Trash2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { CitationDisplay } from '@/components/citation-display';
 
 interface CanvasPanelProps {
@@ -12,9 +13,10 @@ interface CanvasPanelProps {
     references?: any[];
     onClose: () => void;
     onDelete?: () => void;
+    onSave?: () => void;
 }
 
-export function CanvasPanel({ isOpen, title, content, citations, references, onClose, onDelete }: CanvasPanelProps) {
+export function CanvasPanel({ isOpen, title, content, citations, references, onClose, onDelete, onSave }: CanvasPanelProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [currentContent, setCurrentContent] = useState(content);
     const [isSaving, setIsSaving] = useState(false);
@@ -34,6 +36,7 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
 
             if (!res.ok) throw new Error('Failed to save');
             alert('저장되었습니다.');
+            if (onSave) onSave();
         } catch (error) {
             console.error(error);
             alert('저장 중 오류가 발생했습니다.');
@@ -103,7 +106,7 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
                                 prose-strong:text-slate-900 prose-strong:font-bold
                                 prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
                                 prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6">
-                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
                                     {currentContent}
                                 </ReactMarkdown>
                             </div>
