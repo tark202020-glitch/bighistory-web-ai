@@ -323,6 +323,14 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                     }
                                                                     return null;
                                                                 })()}
+
+                                                                {/* DEBUG: Temporary Citation Dump */}
+                                                                <details className="mt-4 pt-4 border-t border-slate-100">
+                                                                    <summary className="text-[10px] text-red-400 font-bold cursor-pointer">DEBUG DATA (Click if citations are missing)</summary>
+                                                                    <pre className="mt-2 p-2 bg-slate-900 text-green-400 text-[10px] rounded overflow-auto max-h-40">
+                                                                        {JSON.stringify(m.citations, null, 2)}
+                                                                    </pre>
+                                                                </details>
                                                             </div>
                                                         )}
 
