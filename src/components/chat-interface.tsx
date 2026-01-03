@@ -1,10 +1,12 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { Send, Bot, User, ChevronUp } from 'lucide-react';
+import { Send, Bot, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MessageEditor } from '@/components/message-editor';
 import { getBookTitle } from '@/lib/book-titles';
+import { CanvasPanel } from '@/components/canvas-panel';
+import { CanvasCard } from '@/components/canvas-card';
 
 interface Document {
     id: string;
@@ -17,8 +19,23 @@ interface SavedItem {
     created_at?: string;
 }
 
-export const ChatInterface = ({ sources }: { sources: Document[] }) => {
-    const [messages, setMessages] = useState<{ id: string; role: string; content: string; citations?: any[]; references?: any[] }[]>([]);
+interface Citation {
+    sources?: { referenceId?: string; title?: string; uri?: string }[];
+    [key: string]: unknown;
+}
+
+interface Message {
+    id: string;
+    role: string;
+    content: string;
+    citations?: Citation[];
+    references?: any[];
+    type?: 'text' | 'curriculum';
+}
+
+export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) => {
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [canvasState, setCanvasState] = useState<{ isOpen: boolean; content: string; title: string }>({ isOpen: false, content: '', title: '' });
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [savedItems, setSavedItems] = useState<SavedItem[]>([]);
@@ -129,15 +146,17 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                 role: 'assistant',
                 content: data.content,
                 citations: data.annotations?.find((a: any) => a.type === 'citations')?.data || data.citations,
-                references: data.references || []
+                references: data.references || [],
+                type: mode === 'lecture' ? 'curriculum' : 'text'
             }]);
 
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Chat error:', error);
+            const errorMessage = error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.';
             setMessages(prev => [...prev, {
                 id: Date.now().toString(),
                 role: 'assistant',
-                content: `🚨 오류 발생: ${error.message || '알 수 없는 오류가 발생했습니다.'}`
+                content: `🚨 오류 발생: ${errorMessage}`
             }]);
         } finally {
             setIsLoading(false);
@@ -205,9 +224,12 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
             </aside>
 
             {/* Main Chat Area */}
-            <main className="flex-1 flex flex-col h-full bg-white relative z-0">
+            <main className="flex-1 flex h-full bg-white relative z-0 overflow-hidden">
                 {/* Messages Container */}
-                <div className="flex-1 overflow-y-auto pt-8 pb-32 custom-scrollbar">
+                <div className={cn(
+                    "flex flex-col h-full bg-white transition-all duration-300 ease-in-out pt-8 pb-32 overflow-y-auto custom-scrollbar",
+                    canvasState.isOpen ? "w-[45%] border-r border-slate-200" : "flex-1"
+                )}>
                     {messages.length === 0 ? (
                         <div className="flex flex-col items-center justify-center h-full text-center px-8 animate-fade-in">
                             <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center mb-8 shadow-sm border border-slate-100 ring-8 ring-slate-50/50">
@@ -230,232 +252,257 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                             </div>
                         </div>
                     ) : (
-                        <div className="max-w-3xl mx-auto w-full px-6 space-y-12">
-                            {messages.map((m) => (
-                                <div
-                                    key={m.id}
-                                    className={cn(
-                                        "flex flex-col animate-fade-in group",
-                                        m.role === 'user' ? "items-end" : "items-start"
-                                    )}
-                                >
-                                    {m.role === 'user' ? (
-                                        <div className="px-6 py-3.5 rounded-2xl bg-slate-900 text-white shadow-xl shadow-slate-200/50 text-sm font-semibold tracking-tight">
-                                            {m.content}
-                                        </div>
-                                    ) : (
-                                        <div className="w-full">
-                                            <div className="flex items-center gap-2.5 mb-5">
-                                                <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center border border-blue-100 shadow-sm">
-                                                    <Bot size={14} className="text-blue-600" />
-                                                </div>
-                                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Research Logic</span>
-                                            </div>
+                        <div className={cn("mx-auto w-full px-6 space-y-12", canvasState.isOpen ? "max-w-full" : "max-w-3xl")}>
+                            {messages.map((m) => {
+                                let messageContent;
+                                if (editingMessageId === m.id) {
+                                    messageContent = (
+                                        <MessageEditor
+                                            initialContent={m.content}
+                                            onSave={(newContent) => saveEdit(m.id, newContent)}
+                                            onCancel={() => setEditingMessageId(null)}
+                                        />
+                                    );
+                                } else if (m.type === 'curriculum') {
+                                    messageContent = (
+                                        <CanvasCard
+                                            title="맞춤형 커리큘럼 자료"
+                                            onOpen={() => setCanvasState({ isOpen: true, content: m.content, title: '맞춤형 커리큘럼' })}
+                                        />
+                                    );
+                                } else {
+                                    messageContent = (
+                                        <div className="prose prose-slate max-w-none prose-headings:font-heading prose-headings:font-bold prose-p:leading-relaxed prose-strong:text-blue-600 prose-strong:bg-blue-50 prose-strong:px-1 prose-strong:rounded">
+                                            {m.content.split('\n').map((line: string, i: number) => {
+                                                if (line.trim() === '') return <div key={i} className="h-2" />;
+                                                if (line.startsWith('### ')) {
+                                                    return <h3 key={i} className="text-lg text-slate-900 mt-8 mb-3 flex items-center gap-3 first:mt-0">
+                                                        <span className="w-1.5 h-6 bg-blue-500 rounded-full" />
+                                                        {line.replace(/^###\s+/, '')}
+                                                    </h3>;
+                                                }
+                                                if (line.startsWith('## ')) {
+                                                    return <h2 key={i} className="text-2xl text-slate-900 mt-10 mb-5 pb-2 border-b-2 border-slate-100">
+                                                        {line.replace(/^##\s+/, '')}
+                                                    </h2>;
+                                                }
 
-                                            <div className="text-slate-800 leading-[1.7] text-[15px] space-y-5 font-medium">
-                                                {editingMessageId === m.id ? (
-                                                    <MessageEditor
-                                                        initialContent={m.content}
-                                                        onSave={(newContent) => saveEdit(m.id, newContent)}
-                                                        onCancel={() => setEditingMessageId(null)}
-                                                    />
-                                                ) : (
-                                                    <div className="prose prose-slate max-w-none prose-headings:font-heading prose-headings:font-bold prose-p:leading-relaxed prose-strong:text-blue-600 prose-strong:bg-blue-50 prose-strong:px-1 prose-strong:rounded">
-                                                        {m.content.split('\n').map((line: string, i: number) => {
-                                                            if (line.trim() === '') return <div key={i} className="h-2" />;
-                                                            if (line.startsWith('### ')) {
-                                                                return <h3 key={i} className="text-lg text-slate-900 mt-8 mb-3 flex items-center gap-3 first:mt-0">
-                                                                    <span className="w-1.5 h-6 bg-blue-500 rounded-full" />
-                                                                    {line.replace(/^###\s+/, '')}
-                                                                </h3>;
-                                                            }
-                                                            if (line.startsWith('## ')) {
-                                                                return <h2 key={i} className="text-2xl text-slate-900 mt-10 mb-5 pb-2 border-b-2 border-slate-100">
-                                                                    {line.replace(/^##\s+/, '')}
-                                                                </h2>;
-                                                            }
+                                                const boldRegex = /\*\*(.*?)\*\*/g;
+                                                const parts = line.split(boldRegex);
 
-                                                            const boldRegex = /\*\*(.*?)\*\*/g;
-                                                            const parts = line.split(boldRegex);
+                                                return (
+                                                    <p key={i} className="mb-4 text-slate-700">
+                                                        {parts.map((part, pIdx) =>
+                                                            pIdx % 2 === 1 ? <strong key={pIdx} className="text-blue-700 font-bold bg-blue-50 px-1 rounded mx-0.5">{part}</strong> : part
+                                                        )}
+                                                    </p>
+                                                );
+                                            })}
+
+                                            {/* Citations Section */}
+                                            {m.citations && m.citations.length > 0 && (
+                                                <div className="mt-8 pt-6 border-t border-slate-100 animate-fade-in">
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Verification Sources</p>
+                                                    <div className="flex flex-col gap-3 mb-2">
+                                                        {(() => {
+                                                            const displayCitations = m.citations.map((cite, idx) => {
+                                                                const refIndex = parseInt(cite.sources?.[0]?.referenceId || '0', 10);
+                                                                const reference = m.references?.[refIndex];
+
+                                                                let sourceTitle = reference?.chunkInfo?.documentMetadata?.title ||
+                                                                    reference?.chunkInfo?.documentMetadata?.uri ||
+                                                                    cite.sources?.[0]?.title;
+
+                                                                if (sourceTitle && (sourceTitle.includes('projects/') || sourceTitle.includes('gs://'))) {
+                                                                    const parts = sourceTitle.split('/');
+                                                                    sourceTitle = parts[parts.length - 1];
+                                                                }
+
+                                                                if (!sourceTitle && cite.sources?.[0]?.uri) sourceTitle = cite.sources[0].uri;
+                                                                sourceTitle = sourceTitle || `Source ${idx + 1}`;
+                                                                const cleanTitle = sourceTitle.split('/').pop()?.replace('.pdf', '') || sourceTitle;
+
+                                                                if (!cleanTitle.toLowerCase().includes('main')) return null;
+
+                                                                return {
+                                                                    idx,
+                                                                    bookTitle: getBookTitle(cleanTitle),
+                                                                    snippet: reference?.chunkInfo?.content?.slice(0, 150) + '...',
+                                                                    page: reference?.chunkInfo?.pageSpan?.start || reference?.chunkInfo?.documentMetadata?.page
+                                                                };
+                                                            }).filter(Boolean);
+
+                                                            if (displayCitations.length === 0) return null;
+
+                                                            const isExpanded = expandedCitations.has(parseInt(m.id));
+                                                            const visibleCitations = isExpanded ? displayCitations : displayCitations.slice(0, 3);
+                                                            const remainingCount = displayCitations.length - 3;
 
                                                             return (
-                                                                <p key={i} className="mb-4 text-slate-700">
-                                                                    {parts.map((part, pIdx) =>
-                                                                        pIdx % 2 === 1 ? <strong key={pIdx} className="text-blue-700 font-bold bg-blue-50 px-1 rounded mx-0.5">{part}</strong> : part
+                                                                <>
+                                                                    <div className="flex items-center gap-2 mb-3 -mt-6">
+                                                                        {displayCitations.length > 0 && (
+                                                                            <span className="px-1.5 py-0.5 rounded-full bg-slate-100 text-[10px] font-bold text-slate-500">
+                                                                                +{displayCitations.length}
+                                                                            </span>
+                                                                        )}
+                                                                    </div>
+
+                                                                    {visibleCitations.map((cite: any) => (
+                                                                        <div key={cite.idx} className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1.5 hover:border-blue-200 transition-all overflow-hidden group">
+                                                                            <div className="flex items-center gap-2 text-[11px] font-bold text-slate-700">
+                                                                                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.5)]" />
+                                                                                [{cite.bookTitle}]
+                                                                                {cite.page && <span className="text-slate-400 font-normal ml-1">p.{cite.page}</span>}
+                                                                            </div>
+                                                                            <p className="text-[11px] text-slate-500 pl-3.5 border-l-2 border-slate-100 leading-relaxed break-keep">
+                                                                                {cite.snippet}
+                                                                            </p>
+                                                                        </div>
+                                                                    ))}
+
+                                                                    {displayCitations.length > 3 && (
+                                                                        <button
+                                                                            onClick={() => toggleCitation(parseInt(m.id))}
+                                                                            className="flex items-center gap-1 mt-2 px-3 py-1.5 rounded-lg text-[11px] font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors bg-white border border-slate-100 shadow-sm w-fit"
+                                                                        >
+                                                                            {isExpanded ? (
+                                                                                <>
+                                                                                    <ChevronUp className="w-3 h-3" />
+                                                                                    <span>Show less</span>
+                                                                                </>
+                                                                            ) : (
+                                                                                <>
+                                                                                    <span className="text-lg leading-3 mb-1">...</span>
+                                                                                    <span>View {remainingCount} more</span>
+                                                                                </>
+                                                                            )}
+                                                                        </button>
                                                                     )}
-                                                                </p>
+                                                                </>
                                                             );
-                                                        })}
-
-                                                        {/* Citations Section */}
-                                                        {m.citations && m.citations.length > 0 && (
-                                                            <div className="mt-8 pt-6 border-t border-slate-100 animate-fade-in">
-                                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Verification Sources</p>
-                                                                <div className="flex flex-col gap-3 mb-2">
-                                                                    {(() => {
-                                                                        const displayCitations = m.citations.map((cite, idx) => {
-                                                                            const refIndex = parseInt(cite.sources?.[0]?.referenceId || '0', 10);
-                                                                            const reference = m.references?.[refIndex];
-
-                                                                            let sourceTitle = reference?.chunkInfo?.documentMetadata?.title ||
-                                                                                reference?.chunkInfo?.documentMetadata?.uri ||
-                                                                                cite.sources?.[0]?.title;
-
-                                                                            if (sourceTitle && (sourceTitle.includes('projects/') || sourceTitle.includes('gs://'))) {
-                                                                                const parts = sourceTitle.split('/');
-                                                                                sourceTitle = parts[parts.length - 1];
-                                                                            }
-
-                                                                            if (!sourceTitle && cite.sources?.[0]?.uri) sourceTitle = cite.sources[0].uri;
-                                                                            sourceTitle = sourceTitle || `Source ${idx + 1}`;
-                                                                            const cleanTitle = sourceTitle.split('/').pop()?.replace('.pdf', '') || sourceTitle;
-
-                                                                            if (!cleanTitle.toLowerCase().includes('main')) return null;
-
-                                                                            return {
-                                                                                idx,
-                                                                                bookTitle: getBookTitle(cleanTitle),
-                                                                                snippet: reference?.chunkInfo?.content?.slice(0, 150) + '...',
-                                                                                page: reference?.chunkInfo?.pageSpan?.start || reference?.chunkInfo?.documentMetadata?.page
-                                                                            };
-                                                                        }).filter(Boolean);
-
-                                                                        if (displayCitations.length === 0) return null;
-
-                                                                        const isExpanded = expandedCitations.has(parseInt(m.id));
-                                                                        const visibleCitations = isExpanded ? displayCitations : displayCitations.slice(0, 3);
-                                                                        const remainingCount = displayCitations.length - 3;
-
-                                                                        return (
-                                                                            <>
-                                                                                <div className="flex items-center gap-2 mb-3 -mt-6">
-                                                                                    {displayCitations.length > 0 && (
-                                                                                        <span className="px-1.5 py-0.5 rounded-full bg-slate-100 text-[10px] font-bold text-slate-500">
-                                                                                            +{displayCitations.length}
-                                                                                        </span>
-                                                                                    )}
-                                                                                </div>
-
-                                                                                {visibleCitations.map((cite: any) => (
-                                                                                    <div key={cite.idx} className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1.5 hover:border-blue-200 transition-all overflow-hidden group">
-                                                                                        <div className="flex items-center gap-2 text-[11px] font-bold text-slate-700">
-                                                                                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.5)]" />
-                                                                                            [{cite.bookTitle}]
-                                                                                            {cite.page && <span className="text-slate-400 font-normal ml-1">p.{cite.page}</span>}
-                                                                                        </div>
-                                                                                        <p className="text-[11px] text-slate-500 pl-3.5 border-l-2 border-slate-100 leading-relaxed break-keep">
-                                                                                            {cite.snippet}
-                                                                                        </p>
-                                                                                    </div>
-                                                                                ))}
-
-                                                                                {displayCitations.length > 3 && (
-                                                                                    <button
-                                                                                        onClick={() => toggleCitation(parseInt(m.id))}
-                                                                                        className="flex items-center gap-1 mt-2 px-3 py-1.5 rounded-lg text-[11px] font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors bg-white border border-slate-100 shadow-sm w-fit"
-                                                                                    >
-                                                                                        {isExpanded ? (
-                                                                                            <>
-                                                                                                <ChevronUp className="w-3 h-3" />
-                                                                                                <span>Show less</span>
-                                                                                            </>
-                                                                                        ) : (
-                                                                                            <>
-                                                                                                <span className="text-lg leading-3 mb-1">...</span>
-                                                                                                <span>View {remainingCount} more</span>
-                                                                                            </>
-                                                                                        )}
-                                                                                    </button>
-                                                                                )}
-                                                                            </>
-                                                                        );
-                                                                    })()}
-                                                                </div>
-
-
-
-
-
-                                                            </div>
-                                                        )}
-
-                                                        {!isLoading && (
-                                                            <div className="flex gap-4 mt-8 opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
-                                                                <button onClick={() => startEditing(m.id)} className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest flex items-center gap-2 group/btn transition-colors">
-                                                                    <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover/btn:bg-blue-600 transition-all" /> 수정
-                                                                </button>
-                                                                <button onClick={() => handleSaveMessage(m.content)} className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest flex items-center gap-2 group/btn transition-colors">
-                                                                    <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover/btn:bg-blue-600 transition-all" /> 라이브러리에 저장
-                                                                </button>
-                                                            </div>
-                                                        )}
+                                                        })()}
                                                     </div>
-                                                )}
-                                            </div>
+                                                </div>
+                                            )}
+
+                                            {!isLoading && (
+                                                <div className="flex gap-4 mt-8 opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
+                                                    <button onClick={() => startEditing(m.id)} className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest flex items-center gap-2 group/btn transition-colors">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover/btn:bg-blue-600 transition-all" /> 수정
+                                                    </button>
+                                                    <button onClick={() => handleSaveMessage(m.content)} className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest flex items-center gap-2 group/btn transition-colors">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover/btn:bg-blue-600 transition-all" /> 라이브러리에 저장
+                                                    </button>
+                                                </div>
+                                            )}
                                         </div>
-                                    )}
-                                </div>
-                            ))}
+                                    );
+                                }
+
+                                return (
+                                    <div
+                                        key={m.id}
+                                        className={cn(
+                                            "flex flex-col animate-fade-in group",
+                                            m.role === 'user' ? "items-end" : "items-start"
+                                        )}
+                                    >
+                                        {m.role === 'user' ? (
+                                            <div className="px-6 py-3.5 rounded-2xl bg-slate-900 text-white shadow-xl shadow-slate-200/50 text-sm font-semibold tracking-tight">
+                                                {m.content}
+                                            </div>
+                                        ) : (
+                                            <div className="w-full">
+                                                <div className="flex items-center gap-2.5 mb-5">
+                                                    <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center border border-blue-100 shadow-sm">
+                                                        <Bot size={14} className="text-blue-600" />
+                                                    </div>
+                                                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Research Logic</span>
+                                                </div>
+
+                                                <div className="text-slate-800 leading-[1.7] text-[15px] space-y-5 font-medium">
+                                                    {messageContent}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
                         </div>
                     )}
                     <div ref={messagesEndRef} />
                 </div>
 
-                {/* Floating Navigation */}
-                <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-1.5 p-1.5 bg-white/90 backdrop-blur-2xl border border-slate-200 rounded-2xl shadow-2xl shadow-slate-200/50 z-20 animate-fade-in">
-                    <button
-                        onClick={() => setMode('qa')}
-                        className={cn(
-                            "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
-                            mode === 'qa' ? "bg-slate-900 text-white shadow-lg" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
-                        )}
-                    >
-                        Detailed Q&A
-                    </button>
-                    <button
-                        onClick={() => setMode('lecture')}
-                        className={cn(
-                            "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
-                            mode === 'lecture' ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
-                        )}
-                    >
-                        Curriculum Generation
-                    </button>
-                </div>
+                {/* Floating Navigation & Input Area Container - Width Controlled */}
+                <div className={cn(
+                    "absolute bottom-0 z-20 transition-all duration-300 pointer-events-none",
+                    canvasState.isOpen ? "w-[45%]" : "w-full"
+                )}>
+                    {/* Floating Navigation */}
+                    <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-1.5 p-1.5 bg-white/90 backdrop-blur-2xl border border-slate-200 rounded-2xl shadow-2xl shadow-slate-200/50 pointer-events-auto animate-fade-in">
+                        <button
+                            onClick={() => setMode('qa')}
+                            className={cn(
+                                "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
+                                mode === 'qa' ? "bg-slate-900 text-white shadow-lg" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                            )}
+                        >
+                            Detailed Q&A
+                        </button>
+                        <button
+                            onClick={() => setMode('lecture')}
+                            className={cn(
+                                "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
+                                mode === 'lecture' ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                            )}
+                        >
+                            Curriculum Generation
+                        </button>
+                    </div>
 
-                {/* Input Area */}
-                <div className="px-6 pb-10 bg-transparent relative z-10">
-                    <div className="max-w-3xl mx-auto">
-                        <form onSubmit={handleDataSubmit} className="relative group perspective-1000">
-                            <input
-                                className="w-full h-16 pl-7 pr-16 bg-white border-2 border-slate-100 rounded-2xl shadow-2xl shadow-slate-200/50 focus:outline-none focus:ring-0 focus:border-slate-300 transition-all text-[15px] font-medium placeholder:text-slate-300"
-                                value={inputValue}
-                                onChange={(e) => setInputValue(e.target.value)}
-                                placeholder={mode === 'lecture' ? "수업 자료로 만들고 싶은 주제를 입력하세요..." : "궁금한 빅히스토리 지식을 물어보세요..."}
-                                disabled={isLoading}
-                            />
-                            <button
-                                type="submit"
-                                disabled={isLoading || !inputValue.trim()}
-                                className="absolute right-3 top-3 h-10 w-10 bg-slate-900 hover:bg-black disabled:bg-slate-50 disabled:text-slate-200 rounded-xl flex items-center justify-center text-white transition-all shadow-xl active:scale-90"
-                            >
-                                <Send size={20} fill="currentColor" />
-                            </button>
-                        </form>
+                    {/* Input Area */}
+                    <div className="px-6 pb-10 bg-transparent pointer-events-auto">
+                        <div className={cn("mx-auto transition-all duration-300", canvasState.isOpen ? "max-w-full" : "max-w-3xl")}>
+                            <form onSubmit={handleDataSubmit} className="relative group perspective-1000">
+                                <input
+                                    className="w-full h-16 pl-7 pr-16 bg-white border-2 border-slate-100 rounded-2xl shadow-2xl shadow-slate-200/50 focus:outline-none focus:ring-0 focus:border-slate-300 transition-all text-[15px] font-medium placeholder:text-slate-300"
+                                    value={inputValue}
+                                    onChange={(e) => setInputValue(e.target.value)}
+                                    placeholder={mode === 'lecture' ? "수업 자료로 만들고 싶은 주제를 입력하세요..." : "궁금한 빅히스토리 지식을 물어보세요..."}
+                                    disabled={isLoading}
+                                />
+                                <button
+                                    type="submit"
+                                    disabled={isLoading || !inputValue.trim()}
+                                    className="absolute right-3 top-3 h-10 w-10 bg-slate-900 hover:bg-black disabled:bg-slate-50 disabled:text-slate-200 rounded-xl flex items-center justify-center text-white transition-all shadow-xl active:scale-90"
+                                >
+                                    <Send size={20} fill="currentColor" />
+                                </button>
+                            </form>
 
-                        {isLoading && (
-                            <div className="mt-4 flex items-center justify-center gap-3 animate-fade-in">
-                                <div className="flex gap-1.5">
-                                    <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                                    <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                                    <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce"></span>
+                            {/* Loading Indicator */}
+                            {isLoading && (
+                                <div className="mt-4 flex items-center justify-center gap-3 animate-fade-in">
+                                    <div className="flex gap-1.5">
+                                        <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                                        <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                                        <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce"></span>
+                                    </div>
+                                    <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] animate-pulse">Consulting Knowledge Base</span>
                                 </div>
-                                <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] animate-pulse">Consulting Knowledge Base</span>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </div>
-            </main >
-        </div >
+
+                <CanvasPanel
+                    isOpen={canvasState.isOpen}
+                    title={canvasState.title}
+                    content={canvasState.content}
+                    onClose={() => setCanvasState(prev => ({ ...prev, isOpen: false }))}
+                />
+            </main>
+        </div>
     );
 };
