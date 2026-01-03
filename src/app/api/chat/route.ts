@@ -4,6 +4,9 @@ import { searchStore, answerQuery } from '@/lib/vertex-search';
 import fs from 'fs';
 import path from 'path';
 
+// Imports
+import { COURSE_GENERATION_PROMPT } from '@/lib/prompts';
+
 // Allow streaming responses up to 60 seconds
 export const maxDuration = 60;
 
@@ -62,18 +65,12 @@ Link: ${result.link || 'N/A'}
       }
     }
 
+
     // 2. Determine Preamble (Prompt)
     let preamble = "";
     if (mode === 'lecture') {
-      const promptPath = path.join(process.cwd(), 'doc', 'Course-prompt');
-      try {
-        if (fs.existsSync(promptPath)) {
-          preamble = fs.readFileSync(promptPath, 'utf-8');
-          console.log("Using Course-prompt for Curriculum Generation");
-        }
-      } catch (e) {
-        console.error("Failed to read Course-prompt:", e);
-      }
+      console.log("Using Course-prompt for Curriculum Generation");
+      preamble = COURSE_GENERATION_PROMPT;
     } else {
       const configPath = path.join(process.cwd(), 'config', 'ai-character.md');
       try {
