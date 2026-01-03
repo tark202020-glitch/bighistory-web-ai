@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { Send, Bot, ChevronUp } from 'lucide-react';
+import { Send, Bot, ChevronUp, Menu, User, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MessageEditor } from '@/components/message-editor';
 import { getBookTitle } from '@/lib/book-titles';
@@ -41,6 +41,7 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
     const [isLoading, setIsLoading] = useState(false);
     const [savedItems, setSavedItems] = useState<SavedItem[]>([]);
     const [subjectTarget] = useState('초등 고학년 / 흥미 유발');
+    const [isLibraryOpen, setIsLibraryOpen] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
@@ -155,243 +156,273 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
     };
 
     return (
-        <div className="flex h-screen bg-[#f8fafc] text-slate-900 overflow-hidden selection:bg-blue-100 font-sans">
-
-
-            {/* Main Chat Area */}
-            <main className="flex-1 flex h-full bg-white relative z-0 overflow-hidden">
-                {/* Messages Container */}
-                <div className={cn(
-                    "flex flex-col h-full bg-white transition-all duration-300 ease-in-out pt-8 pb-32 overflow-y-auto custom-scrollbar",
-                    canvasState.isOpen ? "w-[45%] border-r border-slate-200" : "flex-1"
-                )}>
-                    {messages.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center h-full text-center px-8 animate-fade-in">
-                            <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center mb-8 shadow-sm border border-slate-100 ring-8 ring-slate-50/50">
-                                <Bot size={40} className="text-slate-900" />
-                            </div>
-                            <h2 className="text-3xl font-bold font-heading text-slate-900 mb-3 tracking-tight">빅히스토리 가이드</h2>
-                            <p className="text-slate-500 max-w-sm text-sm leading-relaxed font-medium">
-                                도서 20권의 핵심 지식을 바탕으로<br />완벽하게 검증된 답변을 제공합니다.
-                            </p>
-                            <div className="flex flex-wrap gap-2.5 mt-10 justify-center">
-                                {["빅히스토리가 뭐야?", "우주의 시작", "지구 탄생과정"].map(hint => (
-                                    <button
-                                        key={hint}
-                                        onClick={() => setInputValue(hint)}
-                                        className="px-5 py-2.5 rounded-2xl border border-slate-200 text-[11px] font-bold text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all hover:scale-105 active:scale-95"
-                                    >
-                                        {hint}
-                                    </button>
-                                ))}
-                            </div>
+        <div className="flex flex-col h-screen bg-[#f8fafc] text-slate-900 overflow-hidden selection:bg-blue-100 font-sans">
+            {/* Top Header */}
+            <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shadow-sm z-30 shrink-0">
+                <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                            <Bot size={20} className="text-white" />
                         </div>
-                    ) : (
-                        <div className={cn("mx-auto w-full px-6 space-y-12", canvasState.isOpen ? "max-w-full" : "max-w-3xl")}>
-                            {messages.map((m, i) => {
-                                let messageContent;
-                                if (editingMessageId === m.id) {
-                                    messageContent = (
-                                        <MessageEditor
-                                            initialContent={m.content}
-                                            onSave={(newContent) => saveEdit(m.id, newContent)}
-                                            onCancel={() => setEditingMessageId(null)}
-                                        />
-                                    );
-                                } else if (m.type === 'curriculum') {
-                                    const previousMessage = messages[i - 1];
-                                    const cardTitle = previousMessage?.role === 'user'
-                                        ? previousMessage.content.replace('[강의자료 생성 요청] ', '')
-                                        : '맞춤형 커리큘럼';
+                        <h1 className="text-xl font-bold font-heading tracking-tight text-slate-900">BigHistory AI</h1>
+                    </div>
+                    <div className="h-6 w-px bg-slate-200" />
+                    <div className="flex flex-col">
+                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none mb-0.5">Architecture</span>
+                        <span className="text-[11px] text-slate-600 font-medium">GCP: rag-bighistory</span>
+                    </div>
+                </div>
 
-                                    messageContent = (
-                                        <CanvasCard
-                                            title={cardTitle}
-                                            onOpen={() => setCanvasState({
-                                                isOpen: true,
-                                                content: m.content,
-                                                title: cardTitle,
-                                                citations: m.citations,
-                                                references: m.references
-                                            })}
-                                        />
-                                    );
-                                } else {
-                                    messageContent = (
-                                        <div className="prose prose-slate max-w-none prose-headings:font-heading prose-headings:font-bold prose-p:leading-relaxed prose-strong:text-blue-600 prose-strong:bg-blue-50 prose-strong:px-1 prose-strong:rounded">
-                                            {m.content.split('\n').map((line: string, i: number) => {
-                                                if (line.trim() === '') return <div key={i} className="h-2" />;
-                                                if (line.startsWith('### ')) {
-                                                    return <h3 key={i} className="text-lg text-slate-900 mt-8 mb-3 flex items-center gap-3 first:mt-0">
-                                                        <span className="w-1.5 h-6 bg-blue-500 rounded-full" />
-                                                        {line.replace(/^###\s+/, '')}
-                                                    </h3>;
-                                                }
-                                                if (line.startsWith('## ')) {
-                                                    return <h2 key={i} className="text-2xl text-slate-900 mt-10 mb-5 pb-2 border-b-2 border-slate-100">
-                                                        {line.replace(/^##\s+/, '')}
-                                                    </h2>;
-                                                }
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-full border border-slate-100">
+                        <div className="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center">
+                            <User size={14} className="text-slate-500" />
+                        </div>
+                        <span className="text-xs font-semibold text-slate-600">User</span>
+                    </div>
+                    <button
+                        onClick={() => setIsLibraryOpen(!isLibraryOpen)}
+                        className={cn(
+                            "w-9 h-9 rounded-full flex items-center justify-center transition-all",
+                            isLibraryOpen ? "bg-slate-100 text-slate-900 transform rotate-90" : "hover:bg-slate-50 text-slate-500"
+                        )}
+                    >
+                        {isLibraryOpen ? <X size={20} /> : <Menu size={20} />}
+                    </button>
+                </div>
+            </header>
 
-                                                const boldRegex = /\*\*(.*?)\*\*/g;
-                                                const parts = line.split(boldRegex);
 
-                                                return (
-                                                    <p key={i} className="mb-4 text-slate-700">
-                                                        {parts.map((part, pIdx) =>
-                                                            pIdx % 2 === 1 ? <strong key={pIdx} className="text-blue-700 font-bold bg-blue-50 px-1 rounded mx-0.5">{part}</strong> : part
-                                                        )}
-                                                    </p>
-                                                );
-                                            })}
+            <div className="flex flex-1 overflow-hidden relative">
+                {/* Main Chat Area */}
+                <main className="flex-1 flex h-full bg-white relative z-0 overflow-hidden">
+                    {/* Messages Container */}
+                    <div className={cn(
+                        "flex flex-col h-full bg-white transition-all duration-300 ease-in-out pt-8 pb-32 overflow-y-auto custom-scrollbar",
+                        canvasState.isOpen ? "w-[45%] border-r border-slate-200" : "flex-1"
+                    )}>
+                        {messages.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center h-full text-center px-8 animate-fade-in">
+                                <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center mb-8 shadow-sm border border-slate-100 ring-8 ring-slate-50/50">
+                                    <Bot size={40} className="text-slate-900" />
+                                </div>
+                                <h2 className="text-3xl font-bold font-heading text-slate-900 mb-3 tracking-tight">빅히스토리 가이드</h2>
+                                <p className="text-slate-500 max-w-sm text-sm leading-relaxed font-medium">
+                                    도서 20권의 핵심 지식을 바탕으로<br />완벽하게 검증된 답변을 제공합니다.
+                                </p>
+                                <div className="flex flex-wrap gap-2.5 mt-10 justify-center">
+                                    {["빅히스토리가 뭐야?", "우주의 시작", "지구 탄생과정"].map(hint => (
+                                        <button
+                                            key={hint}
+                                            onClick={() => setInputValue(hint)}
+                                            className="px-5 py-2.5 rounded-2xl border border-slate-200 text-[11px] font-bold text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all hover:scale-105 active:scale-95"
+                                        >
+                                            {hint}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        ) : (
+                            <div className={cn("mx-auto w-full px-6 space-y-12", canvasState.isOpen ? "max-w-full" : "max-w-3xl")}>
+                                {messages.map((m, i) => {
+                                    let messageContent;
+                                    if (editingMessageId === m.id) {
+                                        messageContent = (
+                                            <MessageEditor
+                                                initialContent={m.content}
+                                                onSave={(newContent) => saveEdit(m.id, newContent)}
+                                                onCancel={() => setEditingMessageId(null)}
+                                            />
+                                        );
+                                    } else if (m.type === 'curriculum') {
+                                        const previousMessage = messages[i - 1];
+                                        const cardTitle = previousMessage?.role === 'user'
+                                            ? previousMessage.content.replace('[강의자료 생성 요청] ', '')
+                                            : '맞춤형 커리큘럼';
 
-                                            {/* Citations Section */}
-                                            {m.citations && m.citations.length > 0 && (
-                                                <CitationDisplay citations={m.citations} references={m.references} />
+                                        messageContent = (
+                                            <CanvasCard
+                                                title={cardTitle}
+                                                onOpen={() => setCanvasState({
+                                                    isOpen: true,
+                                                    content: m.content,
+                                                    title: cardTitle,
+                                                    citations: m.citations,
+                                                    references: m.references
+                                                })}
+                                            />
+                                        );
+                                    } else {
+                                        messageContent = (
+                                            <div className="prose prose-slate max-w-none prose-headings:font-heading prose-headings:font-bold prose-p:leading-relaxed prose-strong:text-blue-600 prose-strong:bg-blue-50 prose-strong:px-1 prose-strong:rounded">
+                                                {m.content.split('\n').map((line: string, i: number) => {
+                                                    if (line.trim() === '') return <div key={i} className="h-2" />;
+                                                    if (line.startsWith('### ')) {
+                                                        return <h3 key={i} className="text-lg text-slate-900 mt-8 mb-3 flex items-center gap-3 first:mt-0">
+                                                            <span className="w-1.5 h-6 bg-blue-500 rounded-full" />
+                                                            {line.replace(/^###\s+/, '')}
+                                                        </h3>;
+                                                    }
+                                                    if (line.startsWith('## ')) {
+                                                        return <h2 key={i} className="text-2xl text-slate-900 mt-10 mb-5 pb-2 border-b-2 border-slate-100">
+                                                            {line.replace(/^##\s+/, '')}
+                                                        </h2>;
+                                                    }
+
+                                                    const boldRegex = /\*\*(.*?)\*\*/g;
+                                                    const parts = line.split(boldRegex);
+
+                                                    return (
+                                                        <p key={i} className="mb-4 text-slate-700">
+                                                            {parts.map((part, pIdx) =>
+                                                                pIdx % 2 === 1 ? <strong key={pIdx} className="text-blue-700 font-bold bg-blue-50 px-1 rounded mx-0.5">{part}</strong> : part
+                                                            )}
+                                                        </p>
+                                                    );
+                                                })}
+
+                                                {/* Citations Section */}
+                                                {m.citations && m.citations.length > 0 && (
+                                                    <CitationDisplay citations={m.citations} references={m.references} />
+                                                )}
+
+                                                {!isLoading && (
+                                                    <div className="flex gap-4 mt-8 opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
+                                                        <button onClick={() => startEditing(m.id)} className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest flex items-center gap-2 group/btn transition-colors">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover/btn:bg-blue-600 transition-all" /> 수정
+                                                        </button>
+                                                        <button onClick={() => handleSaveMessage(m.content)} className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest flex items-center gap-2 group/btn transition-colors">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover/btn:bg-blue-600 transition-all" /> 라이브러리에 저장
+                                                        </button>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    }
+
+                                    return (
+                                        <div
+                                            key={m.id}
+                                            className={cn(
+                                                "flex flex-col animate-fade-in group",
+                                                m.role === 'user' ? "items-end" : "items-start"
                                             )}
+                                        >
+                                            {m.role === 'user' ? (
+                                                <div className="px-6 py-3.5 rounded-2xl bg-slate-900 text-white shadow-xl shadow-slate-200/50 text-sm font-semibold tracking-tight">
+                                                    {m.content}
+                                                </div>
+                                            ) : (
+                                                <div className="w-full">
+                                                    <div className="flex items-center gap-2.5 mb-5">
+                                                        <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center border border-blue-100 shadow-sm">
+                                                            <Bot size={14} className="text-blue-600" />
+                                                        </div>
+                                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Research Logic</span>
+                                                    </div>
 
-                                            {!isLoading && (
-                                                <div className="flex gap-4 mt-8 opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
-                                                    <button onClick={() => startEditing(m.id)} className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest flex items-center gap-2 group/btn transition-colors">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover/btn:bg-blue-600 transition-all" /> 수정
-                                                    </button>
-                                                    <button onClick={() => handleSaveMessage(m.content)} className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest flex items-center gap-2 group/btn transition-colors">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover/btn:bg-blue-600 transition-all" /> 라이브러리에 저장
-                                                    </button>
+                                                    <div className="text-slate-800 leading-[1.7] text-[15px] space-y-5 font-medium">
+                                                        {messageContent}
+                                                    </div>
                                                 </div>
                                             )}
                                         </div>
                                     );
-                                }
+                                })}
+                            </div>
+                        )}
+                        <div ref={messagesEndRef} />
+                    </div>
 
-                                return (
-                                    <div
-                                        key={m.id}
-                                        className={cn(
-                                            "flex flex-col animate-fade-in group",
-                                            m.role === 'user' ? "items-end" : "items-start"
-                                        )}
+                    {/* Floating Navigation & Input Area Container - Width Controlled */}
+                    <div className={cn(
+                        "absolute bottom-0 z-20 transition-all duration-300 pointer-events-none",
+                        canvasState.isOpen ? "w-[45%]" : "w-full"
+                    )}>
+                        {/* Floating Navigation */}
+                        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-1.5 p-1.5 bg-white/90 backdrop-blur-2xl border border-slate-200 rounded-2xl shadow-2xl shadow-slate-200/50 pointer-events-auto animate-fade-in">
+                            <button
+                                onClick={() => setMode('qa')}
+                                className={cn(
+                                    "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
+                                    mode === 'qa' ? "bg-slate-900 text-white shadow-lg" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                                )}
+                            >
+                                Detailed Q&A
+                            </button>
+                            <button
+                                onClick={() => setMode('lecture')}
+                                className={cn(
+                                    "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
+                                    mode === 'lecture' ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                                )}
+                            >
+                                Curriculum Generation
+                            </button>
+                        </div>
+
+                        {/* Input Area */}
+                        <div className="px-6 pb-10 bg-transparent pointer-events-auto">
+                            <div className={cn("mx-auto transition-all duration-300", canvasState.isOpen ? "max-w-full" : "max-w-3xl")}>
+                                <form onSubmit={handleDataSubmit} className="relative group perspective-1000">
+                                    <input
+                                        className="w-full h-16 pl-7 pr-16 bg-white border-2 border-slate-100 rounded-2xl shadow-2xl shadow-slate-200/50 focus:outline-none focus:ring-0 focus:border-slate-300 transition-all text-[15px] font-medium placeholder:text-slate-300"
+                                        value={inputValue}
+                                        onChange={(e) => setInputValue(e.target.value)}
+                                        placeholder={mode === 'lecture' ? "수업 자료로 만들고 싶은 주제를 입력하세요..." : "궁금한 빅히스토리 지식을 물어보세요..."}
+                                        disabled={isLoading}
+                                    />
+                                    <button
+                                        type="submit"
+                                        disabled={isLoading || !inputValue.trim()}
+                                        className="absolute right-3 top-3 h-10 w-10 bg-slate-900 hover:bg-black disabled:bg-slate-50 disabled:text-slate-200 rounded-xl flex items-center justify-center text-white transition-all shadow-xl active:scale-90"
                                     >
-                                        {m.role === 'user' ? (
-                                            <div className="px-6 py-3.5 rounded-2xl bg-slate-900 text-white shadow-xl shadow-slate-200/50 text-sm font-semibold tracking-tight">
-                                                {m.content}
-                                            </div>
-                                        ) : (
-                                            <div className="w-full">
-                                                <div className="flex items-center gap-2.5 mb-5">
-                                                    <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center border border-blue-100 shadow-sm">
-                                                        <Bot size={14} className="text-blue-600" />
-                                                    </div>
-                                                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Research Logic</span>
-                                                </div>
+                                        <Send size={20} fill="currentColor" />
+                                    </button>
+                                </form>
 
-                                                <div className="text-slate-800 leading-[1.7] text-[15px] space-y-5 font-medium">
-                                                    {messageContent}
-                                                </div>
-                                            </div>
-                                        )}
+                                {/* Loading Indicator */}
+                                {isLoading && (
+                                    <div className="mt-4 flex items-center justify-center gap-3 animate-fade-in">
+                                        <div className="flex gap-1.5">
+                                            <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                                            <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                                            <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce"></span>
+                                        </div>
+                                        <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] animate-pulse">Consulting Knowledge Base</span>
                                     </div>
-                                );
-                            })}
-                        </div>
-                    )}
-                    <div ref={messagesEndRef} />
-                </div>
-
-                {/* Floating Navigation & Input Area Container - Width Controlled */}
-                <div className={cn(
-                    "absolute bottom-0 z-20 transition-all duration-300 pointer-events-none",
-                    canvasState.isOpen ? "w-[45%]" : "w-full"
-                )}>
-                    {/* Floating Navigation */}
-                    <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-1.5 p-1.5 bg-white/90 backdrop-blur-2xl border border-slate-200 rounded-2xl shadow-2xl shadow-slate-200/50 pointer-events-auto animate-fade-in">
-                        <button
-                            onClick={() => setMode('qa')}
-                            className={cn(
-                                "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
-                                mode === 'qa' ? "bg-slate-900 text-white shadow-lg" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
-                            )}
-                        >
-                            Detailed Q&A
-                        </button>
-                        <button
-                            onClick={() => setMode('lecture')}
-                            className={cn(
-                                "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
-                                mode === 'lecture' ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
-                            )}
-                        >
-                            Curriculum Generation
-                        </button>
-                    </div>
-
-                    {/* Input Area */}
-                    <div className="px-6 pb-10 bg-transparent pointer-events-auto">
-                        <div className={cn("mx-auto transition-all duration-300", canvasState.isOpen ? "max-w-full" : "max-w-3xl")}>
-                            <form onSubmit={handleDataSubmit} className="relative group perspective-1000">
-                                <input
-                                    className="w-full h-16 pl-7 pr-16 bg-white border-2 border-slate-100 rounded-2xl shadow-2xl shadow-slate-200/50 focus:outline-none focus:ring-0 focus:border-slate-300 transition-all text-[15px] font-medium placeholder:text-slate-300"
-                                    value={inputValue}
-                                    onChange={(e) => setInputValue(e.target.value)}
-                                    placeholder={mode === 'lecture' ? "수업 자료로 만들고 싶은 주제를 입력하세요..." : "궁금한 빅히스토리 지식을 물어보세요..."}
-                                    disabled={isLoading}
-                                />
-                                <button
-                                    type="submit"
-                                    disabled={isLoading || !inputValue.trim()}
-                                    className="absolute right-3 top-3 h-10 w-10 bg-slate-900 hover:bg-black disabled:bg-slate-50 disabled:text-slate-200 rounded-xl flex items-center justify-center text-white transition-all shadow-xl active:scale-90"
-                                >
-                                    <Send size={20} fill="currentColor" />
-                                </button>
-                            </form>
-
-                            {/* Loading Indicator */}
-                            {isLoading && (
-                                <div className="mt-4 flex items-center justify-center gap-3 animate-fade-in">
-                                    <div className="flex gap-1.5">
-                                        <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                                        <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                                        <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce"></span>
-                                    </div>
-                                    <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] animate-pulse">Consulting Knowledge Base</span>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <CanvasPanel
-                    isOpen={canvasState.isOpen}
-                    title={canvasState.title}
-                    content={canvasState.content}
-                    citations={canvasState.citations}
-                    references={canvasState.references}
-                    onClose={() => setCanvasState(prev => ({ ...prev, isOpen: false }))}
-                />
-            </main>
+                    <CanvasPanel
+                        isOpen={canvasState.isOpen}
+                        title={canvasState.title}
+                        content={canvasState.content}
+                        citations={canvasState.citations}
+                        references={canvasState.references}
+                        onClose={() => setCanvasState(prev => ({ ...prev, isOpen: false }))}
+                    />
+                </main>
+            </div>
 
-            {/* Right Sidebar - Library (Refactored) */}
-            <aside className="w-72 bg-[#0f172a] text-white flex flex-col hidden md:flex shadow-2xl relative z-10 transition-all border-l border-slate-700/50">
-                <div className="p-8 pb-4">
-                    <div className="flex items-center gap-3 mb-2 translate-y-0 hover:-translate-y-0.5 transition-transform cursor-pointer">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
-                            <Bot size={20} className="text-white" />
-                        </div>
-                        <h1 className="text-xl font-bold font-heading tracking-tight">BigHistory AI</h1>
+            {/* Right Sidebar - Library (Toggleable) */}
+            <aside className={cn(
+                "bg-[#0f172a] text-white flex flex-col shadow-2xl relative z-10 transition-all duration-300 ease-in-out border-l border-slate-700/50",
+                isLibraryOpen ? "w-80 translate-x-0" : "w-0 translate-x-full opacity-0 pointer-events-none"
+            )}>
+                <div className="p-6 pb-2">
+                    <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Library</h2>
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">{savedItems.length}</span>
                     </div>
-                    <div className="h-px w-full bg-gradient-to-r from-slate-700 to-transparent mb-6 opacity-50" />
-                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mb-1">Architecture</p>
-                    <p className="text-[11px] text-slate-500 font-medium">Google Cloud Project : rag-bighistory</p>
-                    <p className="text-[10px] text-slate-600 font-medium mt-1">{new Date().toLocaleDateString()}</p>
+                    <p className="text-[10px] text-slate-600 font-medium mb-4 text-right">{new Date().toLocaleDateString()}</p>
                 </div>
 
-                <div className="flex-1 overflow-y-auto px-6 py-4 space-y-8 custom-scrollbar">
+                <div className="flex-1 overflow-y-auto px-6 py-0 space-y-8 custom-scrollbar">
                     {/* Saved Library */}
                     <div className="flex-1 flex flex-col min-h-0">
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Library</h2>
-                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">{savedItems.length}</span>
-                        </div>
                         <div className="space-y-2.5">
                             {savedItems.length === 0 ? (
                                 <div className="p-6 text-center border border-dashed border-slate-800 rounded-2xl">
