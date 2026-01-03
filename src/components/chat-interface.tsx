@@ -346,6 +346,14 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                     return null;
                                                                 })()}
 
+                                                                <div className="mt-4 p-2 bg-red-50 text-[10px] text-red-800 rounded border border-red-200">
+                                                                    <p className="font-bold">DEBUG DATA (Please Screenshot):</p>
+                                                                    <div className="whitespace-pre-wrap">
+                                                                        CITATIONS: {JSON.stringify(m.citations, null, 2)}
+                                                                        REFERENCES: {JSON.stringify(m.references, null, 2)}
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                         )}
 
