@@ -283,11 +283,11 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                 <div className="flex flex-wrap gap-2 mb-6">
                                                                     {m.citations.map((cite, idx) => {
                                                                         // Find the reference matching this citation's referenceId
-                                                                        const refId = cite.sources?.[0]?.referenceId;
-                                                                        const reference = m.references?.find((r: any) => String(r.id) === String(refId));
+                                                                        const refIndex = parseInt(cite.sources?.[0]?.referenceId || '0', 10);
+                                                                        const reference = m.references?.[refIndex];
 
                                                                         // Use title or URI from reference, or fallback to citation title
-                                                                        let sourceTitle = reference?.document || reference?.uri || cite.sources?.[0]?.title;
+                                                                        let sourceTitle = reference?.chunkInfo?.documentMetadata?.title || reference?.chunkInfo?.documentMetadata?.uri || cite.sources?.[0]?.title;
 
                                                                         // If document is a full path, clean it up
                                                                         if (sourceTitle && sourceTitle.includes('projects/')) {
@@ -316,11 +316,15 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                 {(() => {
                                                                     const uniqueSources = Array.from(new Set(
                                                                         m.citations.flatMap((c: any) => {
-                                                                            const refId = c.sources?.[0]?.referenceId;
-                                                                            const ref = m.references?.find((r: any) => String(r.id) === String(refId));
-                                                                            let val = ref?.document || ref?.uri || c.sources?.[0]?.title || c.sources?.[0]?.uri;
+                                                                            const refIndex = parseInt(c.sources?.[0]?.referenceId || '0', 10);
+                                                                            const ref = m.references?.[refIndex];
 
-                                                                            if (val && val.includes('projects/')) {
+                                                                            let val = ref?.chunkInfo?.documentMetadata?.title ||
+                                                                                ref?.chunkInfo?.documentMetadata?.uri ||
+                                                                                c.sources?.[0]?.title ||
+                                                                                c.sources?.[0]?.uri;
+
+                                                                            if (val && (val.includes('projects/') || val.includes('gs://'))) {
                                                                                 const parts = val.split('/');
                                                                                 val = parts[parts.length - 1];
                                                                             }
@@ -346,13 +350,7 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                                     return null;
                                                                 })()}
 
-                                                                <div className="mt-4 p-2 bg-red-50 text-[10px] text-red-800 rounded border border-red-200">
-                                                                    <p className="font-bold">DEBUG DATA (Please Screenshot):</p>
-                                                                    <div className="whitespace-pre-wrap">
-                                                                        CITATIONS: {JSON.stringify(m.citations, null, 2)}
-                                                                        REFERENCES: {JSON.stringify(m.references, null, 2)}
-                                                                    </div>
-                                                                </div>
+
 
                                                             </div>
                                                         )}
