@@ -279,14 +279,44 @@ export const ChatInterface = ({ sources }: { sources: Document[] }) => {
                                                         {m.citations && m.citations.length > 0 && (
                                                             <div className="mt-8 pt-6 border-t border-slate-100 animate-fade-in">
                                                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Verification Sources</p>
-                                                                <div className="flex flex-wrap gap-2">
-                                                                    {m.citations.map((cite, idx) => (
-                                                                        <div key={idx} className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200/50 text-[10px] font-bold text-slate-500 flex items-center gap-2 hover:bg-slate-100 transition-colors shadow-sm cursor-default">
-                                                                            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_5px_rgba(59,130,246,0.5)]" />
-                                                                            Source Reference {idx + 1}
-                                                                        </div>
-                                                                    ))}
+                                                                <div className="flex flex-wrap gap-2 mb-6">
+                                                                    {m.citations.map((cite, idx) => {
+                                                                        const sourceTitle = cite.sources?.[0]?.title || `Source ${idx + 1}`;
+                                                                        // Clean up title if it's a path
+                                                                        const cleanTitle = sourceTitle.split('/').pop()?.replace('.pdf', '') || sourceTitle;
+
+                                                                        return (
+                                                                            <div key={idx} className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200/50 text-[10px] font-bold text-slate-500 flex items-center gap-2 hover:bg-slate-100 transition-colors shadow-sm cursor-default" title={sourceTitle}>
+                                                                                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_5px_rgba(59,130,246,0.5)]" />
+                                                                                {cleanTitle}
+                                                                            </div>
+                                                                        );
+                                                                    })}
                                                                 </div>
+
+                                                                {/* Reference Books (Unique Sources) */}
+                                                                {(() => {
+                                                                    const uniqueSources = Array.from(new Set(
+                                                                        m.citations.flatMap(c => c.sources?.map((s: any) => s.title) || [])
+                                                                    )).filter(Boolean);
+
+                                                                    if (uniqueSources.length > 0) {
+                                                                        return (
+                                                                            <div className="animate-fade-in">
+                                                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Reference Books</p>
+                                                                                <div className="space-y-1">
+                                                                                    {uniqueSources.map((source: any, i) => (
+                                                                                        <div key={i} className="flex items-center gap-2 text-[11px] text-slate-600 font-medium pl-1">
+                                                                                            <span className="w-1 h-1 rounded-full bg-slate-300" />
+                                                                                            {source.split('/').pop()?.replace('.pdf', '')}
+                                                                                        </div>
+                                                                                    ))}
+                                                                                </div>
+                                                                            </div>
+                                                                        );
+                                                                    }
+                                                                    return null;
+                                                                })()}
                                                             </div>
                                                         )}
 
