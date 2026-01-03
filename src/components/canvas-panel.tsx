@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Save, Share2, Edit3, FileText, Check } from 'lucide-react';
+import { X, Save, Edit3, FileText, Trash2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { CitationDisplay } from '@/components/citation-display';
@@ -11,9 +11,10 @@ interface CanvasPanelProps {
     citations?: any[];
     references?: any[];
     onClose: () => void;
+    onDelete?: () => void;
 }
 
-export function CanvasPanel({ isOpen, title, content, citations, references, onClose }: CanvasPanelProps) {
+export function CanvasPanel({ isOpen, title, content, citations, references, onClose, onDelete }: CanvasPanelProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [currentContent, setCurrentContent] = useState(content);
     const [isSaving, setIsSaving] = useState(false);
@@ -69,9 +70,15 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
                     >
                         {isSaving ? <span className="animate-spin">⏳</span> : <Save className="w-4 h-4" />}
                     </button>
-                    <button className="p-2 text-slate-400 hover:text-blue-600 hover:bg-slate-50 rounded-lg transition-colors">
-                        <Share2 className="w-4 h-4" />
-                    </button>
+                    {onDelete && (
+                        <button
+                            onClick={onDelete}
+                            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Delete Note"
+                        >
+                            <Trash2 className="w-4 h-4" />
+                        </button>
+                    )}
                     <div className="w-px h-4 bg-slate-200 mx-1" />
                     <button onClick={onClose} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
                         <X className="w-4 h-4" />
@@ -79,9 +86,8 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
                 </div>
             </div>
 
-            {/* Content (Markdown Editor/Viewer) */}
-            <div className="flex-1 overflow-y-auto p-8 bg-white/50">
-                <div className="max-w-3xl mx-auto bg-white p-10 rounded-xl shadow-sm border border-slate-100 min-h-full flex flex-col">
+            <div className="flex-1 overflow-y-auto p-6 bg-white/50">
+                <div className="max-w-4xl mx-auto bg-white p-12 rounded-xl shadow-sm border border-slate-100 min-h-full flex flex-col">
                     {isEditing ? (
                         <textarea
                             className="w-full h-full min-h-[500px] resize-none focus:outline-none text-slate-700 font-mono text-sm leading-relaxed"
@@ -90,7 +96,13 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
                         />
                     ) : (
                         <>
-                            <div className="prose prose-slate max-w-none prose-headings:font-heading prose-headings:font-bold prose-p:leading-relaxed prose-strong:text-blue-600 prose-strong:bg-blue-50 prose-strong:px-1 prose-strong:rounded">
+                            <div className="prose prose-slate max-w-none 
+                                prose-headings:font-heading prose-headings:font-bold prose-headings:tracking-tight 
+                                prose-p:leading-8 prose-p:text-slate-700 prose-p:my-2
+                                prose-li:my-1 prose-li:leading-7
+                                prose-strong:text-slate-900 prose-strong:font-bold
+                                prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
+                                prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6">
                                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                     {currentContent}
                                 </ReactMarkdown>

@@ -36,11 +36,13 @@ interface Message {
 
 export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) => {
     const [messages, setMessages] = useState<Message[]>([]);
-    const [canvasState, setCanvasState] = useState<{ isOpen: boolean; content: string; title: string; citations?: any[]; references?: any[] }>({ isOpen: false, content: '', title: '' });
+    const [canvasState, setCanvasState] = useState<{ isOpen: boolean; content: string; title: string; citations?: any[]; references?: any[]; itemId?: string }>({ isOpen: false, content: '', title: '' });
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [savedItems, setSavedItems] = useState<SavedItem[]>([]);
+
     const [subjectTarget] = useState('초등 고학년 / 흥미 유발');
+    const [selectedGrade, setSelectedGrade] = useState<string | null>(null);
     const [isLibraryOpen, setIsLibraryOpen] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -93,6 +95,19 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
         }
     };
 
+    const handleDeleteSavedItem = async (id: string) => {
+        if (!confirm('정말로 삭제하시겠습니까?')) return;
+        try {
+            const res = await fetch(`/api/saved-items?id=${id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error('Failed to delete');
+            fetchSavedItems();
+            setCanvasState(prev => ({ ...prev, isOpen: false }));
+        } catch (error) {
+            console.error("Delete failed", error);
+            alert('삭제 중 오류가 발생했습니다.');
+        }
+    };
+
     const startEditing = (id: string) => {
         setEditingMessageId(id);
     };
@@ -108,7 +123,11 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
 
         let finalInput = inputValue;
         if (mode === 'lecture') {
-            finalInput = `[강의자료 생성 요청] ${inputValue}`;
+            if (!selectedGrade) {
+                alert("강의 대상을 선택해주세요.");
+                return;
+            }
+            finalInput = `[강의 대상: ${selectedGrade}]\n[강의자료 생성 요청] ${inputValue}`;
         }
 
         const userMessage = { id: Date.now().toString(), role: 'user', content: finalInput };
@@ -339,38 +358,65 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                         "absolute bottom-0 z-20 transition-all duration-300 pointer-events-none",
                         canvasState.isOpen ? "w-[45%]" : "w-full"
                     )}>
-                        {/* Floating Navigation */}
-                        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-1.5 p-1.5 bg-white/90 backdrop-blur-2xl border border-slate-200 rounded-2xl shadow-2xl shadow-slate-200/50 pointer-events-auto animate-fade-in">
-                            <button
-                                onClick={() => setMode('qa')}
-                                className={cn(
-                                    "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
-                                    mode === 'qa' ? "bg-slate-900 text-white shadow-lg" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
-                                )}
-                            >
-                                Detailed Q&A
-                            </button>
-                            <button
-                                onClick={() => setMode('lecture')}
-                                className={cn(
-                                    "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
-                                    mode === 'lecture' ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
-                                )}
-                            >
-                                Curriculum Generation
-                            </button>
-                        </div>
-
-                        {/* Input Area */}
+                        {/* Floating Navigation & Input Area */}
                         <div className="px-6 pb-10 bg-transparent pointer-events-auto">
-                            <div className={cn("mx-auto transition-all duration-300", canvasState.isOpen ? "max-w-full" : "max-w-3xl")}>
-                                <form onSubmit={handleDataSubmit} className="relative group perspective-1000">
+                            <div className={cn("mx-auto transition-all duration-300 flex flex-col items-center", canvasState.isOpen ? "max-w-full" : "max-w-3xl")}>
+
+                                {/* Mode Toggles & Grades Container */}
+                                <div className="flex flex-col items-center mb-6 w-full z-30 animate-fade-in">
+                                    {/* Mode Toggles */}
+                                    <div className="flex gap-1.5 p-1.5 bg-white/90 backdrop-blur-2xl border border-slate-200 rounded-2xl shadow-2xl shadow-slate-200/50">
+                                        <button
+                                            onClick={() => { setMode('qa'); setSelectedGrade(null); }}
+                                            className={cn(
+                                                "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
+                                                mode === 'qa' ? "bg-slate-900 text-white shadow-lg" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                                            )}
+                                        >
+                                            Detailed Q&A
+                                        </button>
+                                        <button
+                                            onClick={() => setMode('lecture')}
+                                            className={cn(
+                                                "px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95",
+                                                mode === 'lecture' ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                                            )}
+                                        >
+                                            Curriculum Generation
+                                        </button>
+                                    </div>
+
+                                    {/* Grade Selection Buttons (Only in Lecture Mode) */}
+                                    {mode === 'lecture' && (
+                                        <div className="flex gap-2 mt-4 animate-fade-in-up">
+                                            {['초등 고학년', '중학교 1학년', '중학교 2-3학년'].map((grade) => (
+                                                <button
+                                                    key={grade}
+                                                    onClick={() => setSelectedGrade(grade)}
+                                                    className={cn(
+                                                        "px-4 py-2 rounded-xl text-[11px] font-bold border transition-all active:scale-95 shadow-sm",
+                                                        selectedGrade === grade
+                                                            ? "bg-blue-600 border-blue-600 text-white shadow-blue-500/30 ring-2 ring-blue-200"
+                                                            : "bg-white border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-600"
+                                                    )}
+                                                >
+                                                    {grade}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Input Form */}
+                                <form onSubmit={handleDataSubmit} className="relative group perspective-1000 w-full">
                                     <input
-                                        className="w-full h-16 pl-7 pr-16 bg-white border-2 border-slate-100 rounded-2xl shadow-2xl shadow-slate-200/50 focus:outline-none focus:ring-0 focus:border-slate-300 transition-all text-[15px] font-medium placeholder:text-slate-300"
+                                        className="w-full h-16 pl-7 pr-16 bg-white border-2 border-slate-100 rounded-2xl shadow-2xl shadow-slate-200/50 focus:outline-none focus:ring-0 focus:border-slate-300 transition-all text-[15px] font-medium placeholder:text-slate-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                         value={inputValue}
                                         onChange={(e) => setInputValue(e.target.value)}
-                                        placeholder={mode === 'lecture' ? "수업 자료로 만들고 싶은 주제를 입력하세요..." : "궁금한 빅히스토리 지식을 물어보세요..."}
-                                        disabled={isLoading}
+                                        placeholder={mode === 'lecture'
+                                            ? (selectedGrade ? `${selectedGrade} 대상 수업 자료 주제를 입력하세요...` : "먼저 강의 대상을 선택해주세요")
+                                            : "궁금한 빅히스토리 지식을 물어보세요..."}
+                                        disabled={isLoading || (mode === 'lecture' && !selectedGrade)}
                                     />
                                     <button
                                         type="submit"
@@ -403,15 +449,18 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                         citations={canvasState.citations}
                         references={canvasState.references}
                         onClose={() => setCanvasState(prev => ({ ...prev, isOpen: false }))}
+                        onDelete={canvasState.itemId ? () => handleDeleteSavedItem(canvasState.itemId!) : undefined}
                     />
                 </main>
 
 
                 {/* Right Sidebar - Library (Toggleable) */}
-                <aside className={cn(
-                    "bg-[#0f172a] text-white flex flex-col shadow-2xl relative z-10 transition-all duration-300 ease-in-out border-l border-slate-700/50",
-                    isLibraryOpen ? "w-80 translate-x-0" : "w-0 translate-x-full opacity-0 pointer-events-none"
-                )}>
+                <aside className={
+                    cn(
+                        "bg-[#0f172a] text-white flex flex-col shadow-2xl relative z-10 transition-all duration-300 ease-in-out border-l border-slate-700/50",
+                        isLibraryOpen ? "w-80 translate-x-0" : "w-0 translate-x-full opacity-0 pointer-events-none"
+                    )
+                }>
                     <div className="p-6 pb-2">
                         <div className="flex items-center justify-between mb-4">
                             <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Library</h2>
@@ -435,7 +484,7 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                                         return (
                                             <div
                                                 key={idx}
-                                                onClick={() => setCanvasState({ isOpen: true, content: item.content, title: title })}
+                                                onClick={() => setCanvasState({ isOpen: true, content: item.content, title: title, itemId: item.id })}
                                                 className="group flex items-start gap-3 p-3.5 rounded-2xl hover:bg-white/[0.03] border border-transparent hover:border-white/5 transition-all cursor-pointer"
                                             >
                                                 <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-500 group-hover:shadow-[0_0_8px_rgba(59,130,246,0.5)] transition-all shrink-0" />
