@@ -405,61 +405,62 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                         onClose={() => setCanvasState(prev => ({ ...prev, isOpen: false }))}
                     />
                 </main>
+
+
+                {/* Right Sidebar - Library (Toggleable) */}
+                <aside className={cn(
+                    "bg-[#0f172a] text-white flex flex-col shadow-2xl relative z-10 transition-all duration-300 ease-in-out border-l border-slate-700/50",
+                    isLibraryOpen ? "w-80 translate-x-0" : "w-0 translate-x-full opacity-0 pointer-events-none"
+                )}>
+                    <div className="p-6 pb-2">
+                        <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Library</h2>
+                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">{savedItems.length}</span>
+                        </div>
+                        <p className="text-[10px] text-slate-600 font-medium mb-4 text-right">{new Date().toLocaleDateString()}</p>
+                    </div>
+
+                    <div className="flex-1 overflow-y-auto px-6 py-0 space-y-8 custom-scrollbar">
+                        {/* Saved Library */}
+                        <div className="flex-1 flex flex-col min-h-0">
+                            <div className="space-y-2.5">
+                                {savedItems.length === 0 ? (
+                                    <div className="p-6 text-center border border-dashed border-slate-800 rounded-2xl">
+                                        <p className="text-[11px] text-slate-600 font-medium">No saved insights yet</p>
+                                    </div>
+                                ) : (
+                                    savedItems.map((item, idx) => {
+                                        // Parse title from content (first line or truncated text)
+                                        const title = item.content.split('\n')[0].replace(/^#+\s*/, '') || "Untitled Note";
+                                        return (
+                                            <div
+                                                key={idx}
+                                                onClick={() => setCanvasState({ isOpen: true, content: item.content, title: title })}
+                                                className="group flex items-start gap-3 p-3.5 rounded-2xl hover:bg-white/[0.03] border border-transparent hover:border-white/5 transition-all cursor-pointer"
+                                            >
+                                                <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-500 group-hover:shadow-[0_0_8px_rgba(59,130,246,0.5)] transition-all shrink-0" />
+                                                <p className="text-[11px] text-slate-400 group-hover:text-slate-200 leading-relaxed line-clamp-2 transition-colors font-medium">
+                                                    {title}
+                                                </p>
+                                            </div>
+                                        );
+                                    })
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="p-6 mt-auto">
+                        <div className="p-4 bg-gradient-to-br from-blue-500/5 to-purple-500/5 border border-white/5 rounded-2xl">
+                            <div className="flex items-center gap-2 mb-1">
+                                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">System Online</p>
+                            </div>
+                            <p className="text-[11px] text-slate-500 leading-tight">Grounded on BigHistory Private Dataset</p>
+                        </div>
+                    </div>
+                </aside>
             </div>
-
-            {/* Right Sidebar - Library (Toggleable) */}
-            <aside className={cn(
-                "bg-[#0f172a] text-white flex flex-col shadow-2xl relative z-10 transition-all duration-300 ease-in-out border-l border-slate-700/50",
-                isLibraryOpen ? "w-80 translate-x-0" : "w-0 translate-x-full opacity-0 pointer-events-none"
-            )}>
-                <div className="p-6 pb-2">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Library</h2>
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">{savedItems.length}</span>
-                    </div>
-                    <p className="text-[10px] text-slate-600 font-medium mb-4 text-right">{new Date().toLocaleDateString()}</p>
-                </div>
-
-                <div className="flex-1 overflow-y-auto px-6 py-0 space-y-8 custom-scrollbar">
-                    {/* Saved Library */}
-                    <div className="flex-1 flex flex-col min-h-0">
-                        <div className="space-y-2.5">
-                            {savedItems.length === 0 ? (
-                                <div className="p-6 text-center border border-dashed border-slate-800 rounded-2xl">
-                                    <p className="text-[11px] text-slate-600 font-medium">No saved insights yet</p>
-                                </div>
-                            ) : (
-                                savedItems.map((item, idx) => {
-                                    // Parse title from content (first line or truncated text)
-                                    const title = item.content.split('\n')[0].replace(/^#+\s*/, '') || "Untitled Note";
-                                    return (
-                                        <div
-                                            key={idx}
-                                            onClick={() => setCanvasState({ isOpen: true, content: item.content, title: title })}
-                                            className="group flex items-start gap-3 p-3.5 rounded-2xl hover:bg-white/[0.03] border border-transparent hover:border-white/5 transition-all cursor-pointer"
-                                        >
-                                            <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-500 group-hover:shadow-[0_0_8px_rgba(59,130,246,0.5)] transition-all shrink-0" />
-                                            <p className="text-[11px] text-slate-400 group-hover:text-slate-200 leading-relaxed line-clamp-2 transition-colors font-medium">
-                                                {title}
-                                            </p>
-                                        </div>
-                                    );
-                                })
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="p-6 mt-auto">
-                    <div className="p-4 bg-gradient-to-br from-blue-500/5 to-purple-500/5 border border-white/5 rounded-2xl">
-                        <div className="flex items-center gap-2 mb-1">
-                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">System Online</p>
-                        </div>
-                        <p className="text-[11px] text-slate-500 leading-tight">Grounded on BigHistory Private Dataset</p>
-                    </div>
-                </div>
-            </aside>
         </div>
     );
 };
