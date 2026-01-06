@@ -50,10 +50,9 @@ export async function getBucketLastModified(bucketName: string = '20set-bighisto
 
         return `RAG-Bighistory_${yyyy}${mm}${dd}`;
 
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error fetching GCS bucket info:', error);
-        // In case of error (e.g. auth failed in dev), return a default or today's date?
-        // Let's return a safe fallback to avoid crashing the UI
-        return 'GCP: rag-bighistory (Connect Error)';
+        // Expose error message for debugging purposes
+        return `GCP Error: ${error.message}`;
     }
 }
