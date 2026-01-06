@@ -547,16 +547,50 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                                     </div>
                                 ) : (
                                     savedItems.map((item, idx) => {
-                                        // Parse title from content (first line or truncated text)
-                                        const title = item.content.split('\n')[0].replace(/^#+\s*/, '') || "Untitled Note";
+                                        // Parse content for metadata
+                                        const lines = item.content.split('\n');
+                                        let title = "Untitled Note";
+                                        let type = "질문";
+                                        let grades = "";
+
+                                        // Check for Lecture format
+                                        // Format: [강의 대상: ...]\n[강의자료 생성 요청] ...
+                                        if (lines[0].startsWith('[강의 대상:')) {
+                                            const match = lines[0].match(/\[강의 대상: (.*?)\]/);
+                                            if (match) {
+                                                type = "강의";
+                                                grades = match[1];
+                                            }
+                                            // Title is usually after the prefix or just the first non-empty line after prefix
+                                            const contentStartLine = lines.findIndex((l, i) => i > 0 && l.trim() !== '' && !l.startsWith('[강의자료 생성 요청]'));
+                                            if (contentStartLine !== -1) {
+                                                title = lines[contentStartLine].replace(/^#+\s*/, '');
+                                            }
+                                        } else {
+                                            // Regular Q&A
+                                            // Title is the first line usually
+                                            title = lines[0].replace(/^#+\s*/, '');
+                                        }
+
+                                        // Format Date
+                                        const date = item.created_at ? new Date(item.created_at) : new Date();
+                                        const dateStr = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+                                        const metaString = `[${type}${grades ? ':' + grades : ''}] ${dateStr}`;
+
                                         return (
                                             <div
                                                 key={idx}
                                                 onClick={() => setCanvasState({ isOpen: true, content: item.content, title: title, itemId: item.id })}
-                                                className="group flex items-start gap-3 p-3.5 rounded-2xl hover:bg-white/[0.03] border border-transparent hover:border-white/5 transition-all cursor-pointer"
+                                                className="group flex flex-col gap-1.5 p-4 rounded-2xl hover:bg-white/[0.03] border border-transparent hover:border-white/5 transition-all cursor-pointer"
                                             >
-                                                <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-500 group-hover:shadow-[0_0_8px_rgba(59,130,246,0.5)] transition-all shrink-0" />
-                                                <p className="text-[11px] text-slate-400 group-hover:text-slate-200 leading-relaxed line-clamp-2 transition-colors font-medium">
+                                                <div className="flex items-center gap-1.5">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-500 group-hover:shadow-[0_0_8px_rgba(59,130,246,0.5)] transition-all shrink-0" />
+                                                    <p className="text-[10px] text-slate-500 font-mono tracking-tight">
+                                                        {metaString}
+                                                    </p>
+                                                </div>
+                                                <p className="text-[11px] text-slate-300 group-hover:text-white leading-relaxed line-clamp-2 transition-colors font-medium pl-3">
                                                     {title}
                                                 </p>
                                             </div>
