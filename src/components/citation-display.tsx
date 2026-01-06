@@ -29,7 +29,7 @@ export function CitationDisplay({ citations, references }: CitationDisplayProps)
         sourceTitle = sourceTitle || `Source ${idx + 1}`;
         const cleanTitle = sourceTitle.split('/').pop()?.replace('.pdf', '') || sourceTitle;
 
-        if (!cleanTitle.toLowerCase().includes('main')) return null;
+        if (!cleanTitle.toLowerCase().includes('main') && !cleanTitle.toLowerCase().includes('all')) return null;
 
         return {
             idx,

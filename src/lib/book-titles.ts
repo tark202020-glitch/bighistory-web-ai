@@ -18,7 +18,8 @@ export const BOOK_TITLES: { [key: string]: string } = {
     '17': '과학과 기술의 발전',
     '18': '문화와 예술',
     '19': '전쟁과 평화',
-    '20': '지속 가능한 미래'
+    '20': '지속 가능한 미래',
+    '21': '빅히스토리 | 조지형 옮김'
 };
 
 export const getBookTitle = (filename: string): string => {
