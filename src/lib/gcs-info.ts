@@ -7,7 +7,12 @@ export async function getBucketLastModified(bucketName: string = '20set-bighisto
 
         const storageOptions: any = { projectId };
         if (credentialsJson) {
-            storageOptions.credentials = JSON.parse(credentialsJson);
+            const credentials = JSON.parse(credentialsJson);
+            // Handle private_key newlines if they are escaped literal \n
+            if (credentials.private_key) {
+                credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+            }
+            storageOptions.credentials = credentials;
         }
 
         const storage = new Storage(storageOptions);
