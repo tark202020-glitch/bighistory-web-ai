@@ -40,3 +40,4 @@ data/*.pdf
 
 .vercel
 .env*.local
+doc/rag-bighistory-c38034a62dc3.json

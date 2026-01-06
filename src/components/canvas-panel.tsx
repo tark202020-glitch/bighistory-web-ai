@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { X, Save, Edit3, FileText, Trash2, Printer } from 'lucide-react';
+import { X, Save, Edit3, FileText, Trash2, Printer, ChevronsDown, ChevronsUp } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -21,7 +21,25 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
     const [isEditing, setIsEditing] = useState(false);
     const [currentContent, setCurrentContent] = useState(content);
     const [isSaving, setIsSaving] = useState(false);
+    const [isAllOpen, setIsAllOpen] = useState(false);
     const printRef = useRef<HTMLDivElement>(null);
+
+    const toggleAllAnswers = () => {
+        if (!printRef.current) return;
+
+        const detailsElements = printRef.current.querySelectorAll('details');
+        const newState = !isAllOpen;
+
+        detailsElements.forEach((el) => {
+            if (newState) {
+                el.setAttribute('open', '');
+            } else {
+                el.removeAttribute('open');
+            }
+        });
+
+        setIsAllOpen(newState);
+    };
 
     useEffect(() => {
         setCurrentContent(content);
@@ -65,6 +83,14 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
                     <h2 className="text-sm font-bold text-slate-700">{title || "Untitled Document"}</h2>
                 </div>
                 <div className="flex items-center gap-1">
+                    <button
+                        onClick={toggleAllAnswers}
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-500 hover:text-blue-600 hover:bg-slate-50 rounded-lg transition-colors mr-2 border border-slate-100"
+                        title={isAllOpen ? "전체 답변 닫기" : "전체 답변 열기"}
+                    >
+                        {isAllOpen ? <ChevronsUp className="w-4 h-4" /> : <ChevronsDown className="w-4 h-4" />}
+                        <span className="hidden md:inline">{isAllOpen ? '전체 닫기' : '전체 열기'}</span>
+                    </button>
                     <button
                         onClick={() => setIsEditing(!isEditing)}
                         className={`p-2 rounded-lg transition-colors ${isEditing ? 'text-blue-600 bg-blue-50' : 'text-slate-400 hover:text-blue-600 hover:bg-slate-50'}`}
