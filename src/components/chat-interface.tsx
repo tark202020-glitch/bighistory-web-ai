@@ -64,7 +64,20 @@ export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Do
     };
 
     useEffect(() => {
-        scrollToBottom();
+        if (messages.length === 0) return;
+        const lastMessage = messages[messages.length - 1];
+
+        if (isLoading || lastMessage.role === 'user') {
+            scrollToBottom();
+        } else if (lastMessage.role === 'assistant') {
+            // 답변이 생성되면 답변의 시작 부분으로 스크롤 (사용자가 답변을 놓치지 않도록)
+            setTimeout(() => {
+                const lastMsgElement = document.getElementById(`msg-${lastMessage.id}`);
+                if (lastMsgElement) {
+                    lastMsgElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
     }, [messages, isLoading]);
 
     useEffect(() => {
@@ -379,6 +392,7 @@ export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Do
                                     return (
                                         <div
                                             key={m.id}
+                                            id={`msg-${m.id}`}
                                             className={cn(
                                                 "flex flex-col animate-fade-in group",
                                                 m.role === 'user' ? "items-end" : "items-start"

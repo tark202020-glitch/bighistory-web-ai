@@ -18,6 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [Alpha V1.014] - 2026-01-06 12:47:09
+
+### 🔄 Build Update
+- **Summary**: Feat: Multimodal Image Extraction & Chat Scroll Improvement
+- **Build Time**: 2026-01-06 12:47:09
+
 ## [Alpha V1.013] - 2026-01-04 17:54:30
 
 ### 🔄 Build Update
