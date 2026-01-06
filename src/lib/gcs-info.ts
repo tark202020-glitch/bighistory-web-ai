@@ -56,3 +56,52 @@ export async function getBucketLastModified(bucketName: string = '20set-bighisto
         return `GCP Error: ${error.message}`;
     }
 }
+
+export async function getMatchingImages(bookId: string, page: number): Promise<string[]> {
+    try {
+        const projectId = process.env.GOOGLE_CLOUD_PROJECT_ID || 'rag-bighistory';
+        const credentialsJson = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON;
+        const bucketName = '20set-bighistory-raw';
+
+        const storageOptions: any = { projectId };
+        if (credentialsJson) {
+            const credentials = JSON.parse(credentialsJson);
+            if (credentials.private_key) {
+                credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+            }
+            storageOptions.credentials = credentials;
+        }
+
+        const storage = new Storage(storageOptions);
+        const bucket = storage.bucket(bucketName);
+
+        // Construct prefix: extracted_images/15-Main_p001
+        // Need to pad page number to 3 digits
+        const pageStr = page.toString().padStart(3, '0');
+        const prefix = `extracted_images/${bookId}-Main_p${pageStr}`;
+
+        console.log(`Searching images with prefix: ${prefix}`);
+
+        const [files] = await bucket.getFiles({ prefix });
+
+        // Filter for image files
+        const imageFiles = files.filter(f => f.name.match(/\.(jpg|jpeg|png|webp|gif)$/i));
+
+        if (imageFiles.length === 0) return [];
+
+        // Generate Signed URLs
+        const urls = await Promise.all(imageFiles.map(async (file) => {
+            const [url] = await file.getSignedUrl({
+                action: 'read',
+                expires: Date.now() + 1000 * 60 * 60, // 1 hour
+            });
+            return url;
+        }));
+
+        return urls;
+
+    } catch (error) {
+        console.error('Error fetching matching images:', error);
+        return [];
+    }
+}
