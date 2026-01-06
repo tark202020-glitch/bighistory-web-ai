@@ -85,11 +85,10 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
                 <div className="flex items-center gap-1">
                     <button
                         onClick={toggleAllAnswers}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-500 hover:text-blue-600 hover:bg-slate-50 rounded-lg transition-colors mr-2 border border-slate-100"
+                        className="p-2 text-slate-400 hover:text-blue-600 hover:bg-slate-50 rounded-lg transition-colors"
                         title={isAllOpen ? "전체 답변 닫기" : "전체 답변 열기"}
                     >
                         {isAllOpen ? <ChevronsUp className="w-4 h-4" /> : <ChevronsDown className="w-4 h-4" />}
-                        <span className="hidden md:inline">{isAllOpen ? '전체 닫기' : '전체 열기'}</span>
                     </button>
                     <button
                         onClick={() => setIsEditing(!isEditing)}
