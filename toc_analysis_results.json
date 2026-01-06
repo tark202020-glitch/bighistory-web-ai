@@ -1,0 +1,4622 @@
+{
+  "01-Content.pdf": {
+    "filename": "01-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/01-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 23,
+        "range_text": "14~23 : 타임라인"
+      },
+      {
+        "title": "올베르스가 품은 의문",
+        "start_page": 24,
+        "end_page": 27,
+        "range_text": "24~27 : 올베르스가 품은 의문"
+      },
+      {
+        "title": "세상을 바꾼 그림 한 장",
+        "start_page": 28,
+        "end_page": 32,
+        "range_text": "28~32 : 세상을 바꾼 그림 한 장"
+      },
+      {
+        "title": "저 별은 얼마나 멀리 떨어진 것일까?",
+        "start_page": 33,
+        "end_page": 40,
+        "range_text": "33~40 : 저 별은 얼마나 멀리 떨어진 것일까?"
+      },
+      {
+        "title": "거대한 논쟁에 마침표를 찍은 허블",
+        "start_page": 41,
+        "end_page": 45,
+        "range_text": "41~45 : 거대한 논쟁에 마침표를 찍은 허블"
+      },
+      {
+        "title": "한 줄기 빛으로부터!",
+        "start_page": 46,
+        "end_page": 49,
+        "range_text": "46~49 : 한 줄기 빛으로부터!"
+      },
+      {
+        "title": "도플러 효과",
+        "start_page": 50,
+        "end_page": 52,
+        "range_text": "50~52 : 도플러 효과"
+      },
+      {
+        "title": "슬라이퍼의 놀라운 관측",
+        "start_page": 53,
+        "end_page": 57,
+        "range_text": "53~57 : 슬라이퍼의 놀라운 관측"
+      },
+      {
+        "title": "허블의 법칙, 더 빨리 멀어지는 은하들",
+        "start_page": 58,
+        "end_page": 65,
+        "range_text": "58~65 : 허블의 법칙, 더 빨리 멀어지는 은하들"
+      },
+      {
+        "title": "아인슈타인의 딜레마",
+        "start_page": 66,
+        "end_page": 73,
+        "range_text": "66~73 : 아인슈타인의 딜레마"
+      },
+      {
+        "title": "프리드만의 세 가지 우주 모형",
+        "start_page": 74,
+        "end_page": 78,
+        "range_text": "74~78 : 프리드만의 세 가지 우주 모형"
+      },
+      {
+        "title": "아인슈타인의 고백",
+        "start_page": 79,
+        "end_page": 81,
+        "range_text": "79~81 : 아인슈타인의 고백"
+      },
+      {
+        "title": "솔베이 학회",
+        "start_page": 82,
+        "end_page": 86,
+        "range_text": "82~86 : 솔베이 학회"
+      },
+      {
+        "title": "풍선처럼 늘어나고 있는 우주",
+        "start_page": 87,
+        "end_page": 91,
+        "range_text": "87~91 : 풍선처럼 늘어나고 있는 우주"
+      },
+      {
+        "title": "우주에 중심은 없다",
+        "start_page": 92,
+        "end_page": 99,
+        "range_text": "92~99 : 우주에 중심은 없다"
+      },
+      {
+        "title": "팽창우주, 올베르스의 역설을 해결하다",
+        "start_page": 100,
+        "end_page": 108,
+        "range_text": "100~108 : 팽창우주, 올베르스의 역설을 해결하다"
+      },
+      {
+        "title": "지구가 우주보다 늙었다고?",
+        "start_page": 109,
+        "end_page": 116,
+        "range_text": "109~116 : 지구가 우주보다 늙었다고?"
+      },
+      {
+        "title": "우주의 나이를 바꾼 허블상수 전쟁",
+        "start_page": 117,
+        "end_page": 121,
+        "range_text": "117~121 : 우주의 나이를 바꾼 허블상수 전쟁"
+      },
+      {
+        "title": "구상성단",
+        "start_page": 122,
+        "end_page": 128,
+        "range_text": "122~128 : 구상성단"
+      },
+      {
+        "title": "\"나는 우주의 나이를 정말 모른다\"",
+        "start_page": 129,
+        "end_page": 134,
+        "range_text": "129~134 : \"나는 우주의 나이를 정말 모른다\""
+      },
+      {
+        "title": "마침내 찾아낸 우주의 나이",
+        "start_page": 135,
+        "end_page": 143,
+        "range_text": "135~143 : 마침내 찾아낸 우주의 나이"
+      },
+      {
+        "title": "우주는 얼마나 큰 것일까?",
+        "start_page": 144,
+        "end_page": 151,
+        "range_text": "144~151 : 우주는 얼마나 큰 것일까?"
+      },
+      {
+        "title": "우주가 아주 작아지면",
+        "start_page": 152,
+        "end_page": 154,
+        "range_text": "152~154 : 우주가 아주 작아지면"
+      },
+      {
+        "title": "태초의 3분과 그 이후",
+        "start_page": 155,
+        "end_page": 161,
+        "range_text": "155~161 : 태초의 3분과 그 이후"
+      },
+      {
+        "title": "투명해진 우주",
+        "start_page": 162,
+        "end_page": 168,
+        "range_text": "162~168 : 투명해진 우주"
+      },
+      {
+        "title": "이상한 잡음인가, 태초의 빛인가",
+        "start_page": 169,
+        "end_page": 173,
+        "range_text": "169~173 : 이상한 잡음인가, 태초의 빛인가"
+      },
+      {
+        "title": "별과 은하의 씨앗",
+        "start_page": 174,
+        "end_page": 187,
+        "range_text": "174~187 : 별과 은하의 씨앗"
+      },
+      {
+        "title": "우주는 편평한가",
+        "start_page": 188,
+        "end_page": 191,
+        "range_text": "188~191 : 우주는 편평한가"
+      },
+      {
+        "title": "우주는 점점 빠른 속도로 늘어난다",
+        "start_page": 192,
+        "end_page": 195,
+        "range_text": "192~195 : 우주는 점점 빠른 속도로 늘어난다"
+      },
+      {
+        "title": "초신성 이야기",
+        "start_page": 196,
+        "end_page": 199,
+        "range_text": "196~199 : 초신성 이야기"
+      },
+      {
+        "title": "WMAP이 알아낸 우주의 현재 모습",
+        "start_page": 200,
+        "end_page": 207,
+        "range_text": "200~207 : WMAP이 알아낸 우주의 현재 모습"
+      },
+      {
+        "title": "팽창우주의 비밀을 풀어준 암흑 에너지",
+        "start_page": 208,
+        "end_page": 209,
+        "range_text": "208~209 : 팽창우주의 비밀을 풀어준 암흑 에너지"
+      },
+      {
+        "title": "우주의 기원, 빅뱅이 있기 전에 무슨 일이 있었을까?",
+        "start_page": 210,
+        "end_page": 214,
+        "range_text": "210~214 : 우주의 기원, 빅뱅이 있기 전에 무슨 일이 있었을까?"
+      },
+      {
+        "title": "빅히스토리, 그 원대한 시작",
+        "start_page": 215,
+        "end_page": 218,
+        "range_text": "215~218 : 빅히스토리, 그 원대한 시작"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '우주의 탄생'",
+        "start_page": 219,
+        "end_page": 223,
+        "range_text": "219~223 : 빅히스토리의 관점으로 본 '우주의 탄생'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 224,
+        "end_page": 224,
+        "range_text": "224~224 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 225,
+        "end_page": 235,
+        "range_text": "225~235 : 찾아보기"
+      }
+    ]
+  },
+  "02-Content.pdf": {
+    "filename": "02-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/02-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "거대한 이 세상, 그 속에 잠시 스쳐 지나가는 존재, 인간",
+        "start_page": 21,
+        "end_page": 28,
+        "range_text": "21~28 : 거대한 이 세상, 그 속에 잠시 스쳐 지나가는 존재, 인간"
+      },
+      {
+        "title": "우주의 탄생",
+        "start_page": 29,
+        "end_page": 32,
+        "range_text": "29~32 : 우주의 탄생"
+      },
+      {
+        "title": "작은 요동에서 태어난 별과 은하",
+        "start_page": 33,
+        "end_page": 35,
+        "range_text": "33~35 : 작은 요동에서 태어난 별과 은하"
+      },
+      {
+        "title": "우주의 거대 구조물 탄생",
+        "start_page": 36,
+        "end_page": 40,
+        "range_text": "36~40 : 우주의 거대 구조물 탄생"
+      },
+      {
+        "title": "3차원 우주의 규모",
+        "start_page": 41,
+        "end_page": 46,
+        "range_text": "41~46 : 3차원 우주의 규모"
+      },
+      {
+        "title": "숨어 있는 질량, 암흑 물질",
+        "start_page": 47,
+        "end_page": 51,
+        "range_text": "47~51 : 숨어 있는 질량, 암흑 물질"
+      },
+      {
+        "title": "우주 팽창을 가속시키는 암흑 에너지",
+        "start_page": 52,
+        "end_page": 54,
+        "range_text": "52~54 : 우주 팽창을 가속시키는 암흑 에너지"
+      },
+      {
+        "title": "빅뱅으로 분리된 네 개의 힘",
+        "start_page": 55,
+        "end_page": 59,
+        "range_text": "55~59 : 빅뱅으로 분리된 네 개의 힘"
+      },
+      {
+        "title": "빛의 속도와 거리",
+        "start_page": 60,
+        "end_page": 65,
+        "range_text": "60~65 : 빛의 속도와 거리"
+      },
+      {
+        "title": "은하의 설계도",
+        "start_page": 66,
+        "end_page": 76,
+        "range_text": "66~76 : 은하의 설계도"
+      },
+      {
+        "title": "은하의 형성과 성장",
+        "start_page": 77,
+        "end_page": 83,
+        "range_text": "77~83 : 은하의 형성과 성장"
+      },
+      {
+        "title": "물질과 빈 공간",
+        "start_page": 84,
+        "end_page": 87,
+        "range_text": "84~87 : 물질과 빈 공간"
+      },
+      {
+        "title": "우리 은하의 발견",
+        "start_page": 88,
+        "end_page": 89,
+        "range_text": "88~89 : 우리 은하의 발견"
+      },
+      {
+        "title": "우리 은하의 구조",
+        "start_page": 90,
+        "end_page": 97,
+        "range_text": "90~97 : 우리 은하의 구조"
+      },
+      {
+        "title": "별의 요람, 성운",
+        "start_page": 98,
+        "end_page": 104,
+        "range_text": "98~104 : 별의 요람, 성운"
+      },
+      {
+        "title": "별에서 태어난 원소",
+        "start_page": 105,
+        "end_page": 111,
+        "range_text": "105~111 : 별에서 태어난 원소"
+      },
+      {
+        "title": "별의 일생",
+        "start_page": 112,
+        "end_page": 129,
+        "range_text": "112~129 : 별의 일생"
+      },
+      {
+        "title": "별의 세대",
+        "start_page": 130,
+        "end_page": 132,
+        "range_text": "130~132 : 별의 세대"
+      },
+      {
+        "title": "적색거성과 적색초거성",
+        "start_page": 133,
+        "end_page": 134,
+        "range_text": "133~134 : 적색거성과 적색초거성"
+      },
+      {
+        "title": "초신성 폭발",
+        "start_page": 135,
+        "end_page": 141,
+        "range_text": "135~141 : 초신성 폭발"
+      },
+      {
+        "title": "블랙홀의 정체",
+        "start_page": 142,
+        "end_page": 144,
+        "range_text": "142~144 : 블랙홀의 정체"
+      },
+      {
+        "title": "블랙홀의 발견",
+        "start_page": 145,
+        "end_page": 146,
+        "range_text": "145~146 : 블랙홀의 발견"
+      },
+      {
+        "title": "은하 중심의 초대형 블랙홀",
+        "start_page": 147,
+        "end_page": 149,
+        "range_text": "147~149 : 은하 중심의 초대형 블랙홀"
+      },
+      {
+        "title": "초기 우주의 퀘이사",
+        "start_page": 150,
+        "end_page": 151,
+        "range_text": "150~151 : 초기 우주의 퀘이사"
+      },
+      {
+        "title": "화이트홀, 웜홀 그리고 소멸하는 블랙홀",
+        "start_page": 152,
+        "end_page": 154,
+        "range_text": "152~154 : 화이트홀, 웜홀 그리고 소멸하는 블랙홀"
+      },
+      {
+        "title": "인공 블랙홀",
+        "start_page": 155,
+        "end_page": 161,
+        "range_text": "155~161 : 인공 블랙홀"
+      },
+      {
+        "title": "세상의 중심 지상계와 천구 밖의 천상계",
+        "start_page": 162,
+        "end_page": 163,
+        "range_text": "162~163 : 세상의 중심 지상계와 천구 밖의 천상계"
+      },
+      {
+        "title": "태양의 변두리 행성, 지구",
+        "start_page": 164,
+        "end_page": 169,
+        "range_text": "164~169 : 태양의 변두리 행성, 지구"
+      },
+      {
+        "title": "우주와 지상을 결합시킨 만유인력",
+        "start_page": 170,
+        "end_page": 174,
+        "range_text": "170~174 : 우주와 지상을 결합시킨 만유인력"
+      },
+      {
+        "title": "태양계의 기원을 찾아서",
+        "start_page": 175,
+        "end_page": 183,
+        "range_text": "175~183 : 태양계의 기원을 찾아서"
+      },
+      {
+        "title": "드러나는 우주의 구조",
+        "start_page": 184,
+        "end_page": 187,
+        "range_text": "184~187 : 드러나는 우주의 구조"
+      },
+      {
+        "title": "망원경의 역사",
+        "start_page": 188,
+        "end_page": 198,
+        "range_text": "188~198 : 망원경의 역사"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '별의 일생'",
+        "start_page": 199,
+        "end_page": 204,
+        "range_text": "199~204 : 빅히스토리의 관점으로 본 '별의 일생'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 205,
+        "end_page": 205,
+        "range_text": "205~205 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 206,
+        "end_page": 216,
+        "range_text": "206~216 : 찾아보기"
+      }
+    ]
+  },
+  "03-Content.pdf": {
+    "filename": "03-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/03-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "우리는 어디서 왔는가? 우리는 무엇인가? 우리는 어디로 가는가?",
+        "start_page": 21,
+        "end_page": 27,
+        "range_text": "21~27 : 우리는 어디서 왔는가? 우리는 무엇인가? 우리는 어디로 가는가?"
+      },
+      {
+        "title": "최초의 원소",
+        "start_page": 28,
+        "end_page": 36,
+        "range_text": "28~36 : 최초의 원소"
+      },
+      {
+        "title": "생명 재료의 탄생",
+        "start_page": 37,
+        "end_page": 43,
+        "range_text": "37~43 : 생명 재료의 탄생"
+      },
+      {
+        "title": "원소의 고향, 별",
+        "start_page": 44,
+        "end_page": 52,
+        "range_text": "44~52 : 원소의 고향, 별"
+      },
+      {
+        "title": "초신성 폭발로 탄생한 원소",
+        "start_page": 53,
+        "end_page": 59,
+        "range_text": "53~59 : 초신성 폭발로 탄생한 원소"
+      },
+      {
+        "title": "별의 핵융합, 왜 철에서 멈추는가?",
+        "start_page": 60,
+        "end_page": 62,
+        "range_text": "60~62 : 별의 핵융합, 왜 철에서 멈추는가?"
+      },
+      {
+        "title": "철보다 무거운 원소의 생성",
+        "start_page": 63,
+        "end_page": 67,
+        "range_text": "63~67 : 철보다 무거운 원소의 생성"
+      },
+      {
+        "title": "찬드라세카르와 에딩턴",
+        "start_page": 68,
+        "end_page": 70,
+        "range_text": "68~70 : 찬드라세카르와 에딩턴"
+      },
+      {
+        "title": "원자와 원소",
+        "start_page": 71,
+        "end_page": 73,
+        "range_text": "71~73 : 원자와 원소"
+      },
+      {
+        "title": "원자의 구조",
+        "start_page": 74,
+        "end_page": 73,
+        "range_text": "74~73 : 원자의 구조"
+      },
+      {
+        "title": "원자량과 원자번호",
+        "start_page": 74,
+        "end_page": 80,
+        "range_text": "74~80 : 원자량과 원자번호"
+      },
+      {
+        "title": "기본 입자와 기본 상호작용",
+        "start_page": 81,
+        "end_page": 90,
+        "range_text": "81~90 : 기본 입자와 기본 상호작용"
+      },
+      {
+        "title": "원소 발견의 주역, 선스펙트럼",
+        "start_page": 91,
+        "end_page": 94,
+        "range_text": "91~94 : 원소 발견의 주역, 선스펙트럼"
+      },
+      {
+        "title": "원자모형의 변천사",
+        "start_page": 95,
+        "end_page": 109,
+        "range_text": "95~109 : 원자모형의 변천사"
+      },
+      {
+        "title": "힉스 입자",
+        "start_page": 110,
+        "end_page": 115,
+        "range_text": "110~115 : 힉스 입자"
+      },
+      {
+        "title": "원소 리듬의 감지",
+        "start_page": 116,
+        "end_page": 117,
+        "range_text": "116~117 : 원소 리듬의 감지"
+      },
+      {
+        "title": "멘델레예프의 카드놀이",
+        "start_page": 118,
+        "end_page": 130,
+        "range_text": "118~130 : 멘델레예프의 카드놀이"
+      },
+      {
+        "title": "현대의 주기율표",
+        "start_page": 131,
+        "end_page": 137,
+        "range_text": "131~137 : 현대의 주기율표"
+      },
+      {
+        "title": "주기율표의 규칙",
+        "start_page": 138,
+        "end_page": 155,
+        "range_text": "138~155 : 주기율표의 규칙"
+      },
+      {
+        "title": "아보가드로의 법칙",
+        "start_page": 156,
+        "end_page": 158,
+        "range_text": "156~158 : 아보가드로의 법칙"
+      },
+      {
+        "title": "소금물의 전기분해",
+        "start_page": 159,
+        "end_page": 160,
+        "range_text": "159~160 : 소금물의 전기분해"
+      },
+      {
+        "title": "발전하는 주기율표",
+        "start_page": 161,
+        "end_page": 167,
+        "range_text": "161~167 : 발전하는 주기율표"
+      },
+      {
+        "title": "일상에서 만나는 원소",
+        "start_page": 168,
+        "end_page": 174,
+        "range_text": "168~174 : 일상에서 만나는 원소"
+      },
+      {
+        "title": "분자의 출현",
+        "start_page": 175,
+        "end_page": 177,
+        "range_text": "175~177 : 분자의 출현"
+      },
+      {
+        "title": "화학결합",
+        "start_page": 178,
+        "end_page": 187,
+        "range_text": "178~187 : 화학결합"
+      },
+      {
+        "title": "분자 사이에 작용하는 힘",
+        "start_page": 188,
+        "end_page": 194,
+        "range_text": "188~194 : 분자 사이에 작용하는 힘"
+      },
+      {
+        "title": "물질의 분류",
+        "start_page": 195,
+        "end_page": 197,
+        "range_text": "195~197 : 물질의 분류"
+      },
+      {
+        "title": "루이스의 공로",
+        "start_page": 198,
+        "end_page": 202,
+        "range_text": "198~202 : 루이스의 공로"
+      },
+      {
+        "title": "생명의 기원에 대한 가설",
+        "start_page": 203,
+        "end_page": 203,
+        "range_text": "203~203 : 생명의 기원에 대한 가설"
+      },
+      {
+        "title": "유기물 합성에 관한 밀러의 실험",
+        "start_page": 204,
+        "end_page": 205,
+        "range_text": "204~205 : 유기물 합성에 관한 밀러의 실험"
+      },
+      {
+        "title": "외계 유입설과 심해 열수구설",
+        "start_page": 206,
+        "end_page": 207,
+        "range_text": "206~207 : 외계 유입설과 심해 열수구설"
+      },
+      {
+        "title": "원시세포의 탄생",
+        "start_page": 208,
+        "end_page": 209,
+        "range_text": "208~209 : 원시세포의 탄생"
+      },
+      {
+        "title": "생물학적 진화",
+        "start_page": 210,
+        "end_page": 211,
+        "range_text": "210~211 : 생물학적 진화"
+      },
+      {
+        "title": "최초의 유전물질은 무엇이었을까?",
+        "start_page": 212,
+        "end_page": 214,
+        "range_text": "212~214 : 최초의 유전물질은 무엇이었을까?"
+      },
+      {
+        "title": "우주 속 이웃에게 보내는 손짓",
+        "start_page": 215,
+        "end_page": 218,
+        "range_text": "215~218 : 우주 속 이웃에게 보내는 손짓"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '원소와 물질의 생성'",
+        "start_page": 219,
+        "end_page": 223,
+        "range_text": "219~223 : 빅히스토리의 관점으로 본 '원소와 물질의 생성'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 224,
+        "end_page": 225,
+        "range_text": "224~225 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 226,
+        "end_page": 236,
+        "range_text": "226~236 : 찾아보기"
+      }
+    ]
+  },
+  "04-Content.pdf": {
+    "filename": "04-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/04-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "태양계는 어떻게 구성되었을까?",
+        "start_page": 21,
+        "end_page": 25,
+        "range_text": "21~25 : 태양계는 어떻게 구성되었을까?"
+      },
+      {
+        "title": "우주에서 바라본 태양계의 위치",
+        "start_page": 26,
+        "end_page": 29,
+        "range_text": "26~29 : 우주에서 바라본 태양계의 위치"
+      },
+      {
+        "title": "태양계의 구성원들",
+        "start_page": 30,
+        "end_page": 36,
+        "range_text": "30~36 : 태양계의 구성원들"
+      },
+      {
+        "title": "태양계의 생성 원리",
+        "start_page": 37,
+        "end_page": 41,
+        "range_text": "37~41 : 태양계의 생성 원리"
+      },
+      {
+        "title": "뜨거운 목성",
+        "start_page": 42,
+        "end_page": 46,
+        "range_text": "42~46 : 뜨거운 목성"
+      },
+      {
+        "title": "불타는 별, 태양",
+        "start_page": 47,
+        "end_page": 52,
+        "range_text": "47~52 : 불타는 별, 태양"
+      },
+      {
+        "title": "지구의 힘, 태양 활동",
+        "start_page": 53,
+        "end_page": 56,
+        "range_text": "53~56 : 지구의 힘, 태양 활동"
+      },
+      {
+        "title": "천체의 이름에 담긴 규칙",
+        "start_page": 57,
+        "end_page": 61,
+        "range_text": "57~61 : 천체의 이름에 담긴 규칙"
+      },
+      {
+        "title": "두 얼굴의 수성",
+        "start_page": 62,
+        "end_page": 70,
+        "range_text": "62~70 : 두 얼굴의 수성"
+      },
+      {
+        "title": "뜨거운 황무지, 금성",
+        "start_page": 71,
+        "end_page": 82,
+        "range_text": "71~82 : 뜨거운 황무지, 금성"
+      },
+      {
+        "title": "생명의 터전, 지구",
+        "start_page": 83,
+        "end_page": 95,
+        "range_text": "83~95 : 생명의 터전, 지구"
+      },
+      {
+        "title": "붉은 화성",
+        "start_page": 96,
+        "end_page": 114,
+        "range_text": "96~114 : 붉은 화성"
+      },
+      {
+        "title": "마스500 프로젝트",
+        "start_page": 115,
+        "end_page": 118,
+        "range_text": "115~118 : 마스500 프로젝트"
+      },
+      {
+        "title": "또 하나의 태양이 될 뻔한 목성",
+        "start_page": 119,
+        "end_page": 133,
+        "range_text": "119~133 : 또 하나의 태양이 될 뻔한 목성"
+      },
+      {
+        "title": "귀가 달린 토성",
+        "start_page": 134,
+        "end_page": 145,
+        "range_text": "134~145 : 귀가 달린 토성"
+      },
+      {
+        "title": "누워서 공전하는 천왕성",
+        "start_page": 146,
+        "end_page": 153,
+        "range_text": "146~153 : 누워서 공전하는 천왕성"
+      },
+      {
+        "title": "디딜 수 없는 종착역, 해왕성",
+        "start_page": 154,
+        "end_page": 159,
+        "range_text": "154~159 : 디딜 수 없는 종착역, 해왕성"
+      },
+      {
+        "title": "행성의 지위를 잃은 명왕성",
+        "start_page": 160,
+        "end_page": 164,
+        "range_text": "160~164 : 행성의 지위를 잃은 명왕성"
+      },
+      {
+        "title": "왜소행성",
+        "start_page": 165,
+        "end_page": 165,
+        "range_text": "165~165 : 왜소행성"
+      },
+      {
+        "title": "소행성",
+        "start_page": 166,
+        "end_page": 172,
+        "range_text": "166~172 : 소행성"
+      },
+      {
+        "title": "카이퍼 벨트",
+        "start_page": 173,
+        "end_page": 174,
+        "range_text": "173~174 : 카이퍼 벨트"
+      },
+      {
+        "title": "혜성",
+        "start_page": 175,
+        "end_page": 179,
+        "range_text": "175~179 : 혜성"
+      },
+      {
+        "title": "오르트 구름",
+        "start_page": 180,
+        "end_page": 182,
+        "range_text": "180~182 : 오르트 구름"
+      },
+      {
+        "title": "우주로 날아간 보이저 1호",
+        "start_page": 183,
+        "end_page": 187,
+        "range_text": "183~187 : 우주로 날아간 보이저 1호"
+      },
+      {
+        "title": "생명체가 살 수 있는 조건",
+        "start_page": 188,
+        "end_page": 191,
+        "range_text": "188~191 : 생명체가 살 수 있는 조건"
+      },
+      {
+        "title": "운석 속의 생명 흔적",
+        "start_page": 192,
+        "end_page": 193,
+        "range_text": "192~193 : 운석 속의 생명 흔적"
+      },
+      {
+        "title": "오래된 가설, 범종설",
+        "start_page": 194,
+        "end_page": 196,
+        "range_text": "194~196 : 오래된 가설, 범종설"
+      },
+      {
+        "title": "화성과 금성에 거는 기대",
+        "start_page": 197,
+        "end_page": 199,
+        "range_text": "197~199 : 화성과 금성에 거는 기대"
+      },
+      {
+        "title": "유로파, 타이탄, 엔켈라두스의 가능성",
+        "start_page": 200,
+        "end_page": 201,
+        "range_text": "200~201 : 유로파, 타이탄, 엔켈라두스의 가능성"
+      },
+      {
+        "title": "생명체가 거주하는 지구",
+        "start_page": 202,
+        "end_page": 204,
+        "range_text": "202~204 : 생명체가 거주하는 지구"
+      },
+      {
+        "title": "슈퍼지구, 거주 가능한 외계 행성",
+        "start_page": 205,
+        "end_page": 208,
+        "range_text": "205~208 : 슈퍼지구, 거주 가능한 외계 행성"
+      },
+      {
+        "title": "케플러우주망원경, 제2의 지구를 찾아라!",
+        "start_page": 209,
+        "end_page": 210,
+        "range_text": "209~210 : 케플러우주망원경, 제2의 지구를 찾아라!"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '태양계의 구성원들'",
+        "start_page": 211,
+        "end_page": 214,
+        "range_text": "211~214 : 빅히스토리의 관점으로 본 '태양계의 구성원들'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 215,
+        "end_page": 215,
+        "range_text": "215~215 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 216,
+        "end_page": 226,
+        "range_text": "216~226 : 찾아보기"
+      }
+    ]
+  },
+  "05-Content.pdf": {
+    "filename": "05-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/05-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "당신은 호기심이 많으신가요?",
+        "start_page": 21,
+        "end_page": 25,
+        "range_text": "21~25 : 당신은 호기심이 많으신가요?"
+      },
+      {
+        "title": "눈에 비친 우주",
+        "start_page": 26,
+        "end_page": 37,
+        "range_text": "26~37 : 눈에 비친 우주"
+      },
+      {
+        "title": "과학자가 두려워하는 것",
+        "start_page": 38,
+        "end_page": 39,
+        "range_text": "38~39 : 과학자가 두려워하는 것"
+      },
+      {
+        "title": "지도의 위아래",
+        "start_page": 40,
+        "end_page": 41,
+        "range_text": "40~41 : 지도의 위아래"
+      },
+      {
+        "title": "인류와 달",
+        "start_page": 42,
+        "end_page": 55,
+        "range_text": "42~55 : 인류와 달"
+      },
+      {
+        "title": "조력발전",
+        "start_page": 56,
+        "end_page": 57,
+        "range_text": "56~57 : 조력발전"
+      },
+      {
+        "title": "달과 예술",
+        "start_page": 58,
+        "end_page": 59,
+        "range_text": "58~59 : 달과 예술"
+      },
+      {
+        "title": "일주일은 왜 7일일까?",
+        "start_page": 60,
+        "end_page": 61,
+        "range_text": "60~61 : 일주일은 왜 7일일까?"
+      },
+      {
+        "title": "지구는 어디에 있나",
+        "start_page": 62,
+        "end_page": 71,
+        "range_text": "62~71 : 지구는 어디에 있나"
+      },
+      {
+        "title": "항성과 행성",
+        "start_page": 72,
+        "end_page": 72,
+        "range_text": "72~72 : 항성과 행성"
+      },
+      {
+        "title": "보이는 것은 존재하는 것인가",
+        "start_page": 73,
+        "end_page": 74,
+        "range_text": "73~74 : 보이는 것은 존재하는 것인가"
+      },
+      {
+        "title": "외로운 지구",
+        "start_page": 75,
+        "end_page": 83,
+        "range_text": "75~83 : 외로운 지구"
+      },
+      {
+        "title": "우주 망원경",
+        "start_page": 84,
+        "end_page": 85,
+        "range_text": "84~85 : 우주 망원경"
+      },
+      {
+        "title": "골디락스와 세 마리 곰 이야기",
+        "start_page": 86,
+        "end_page": 89,
+        "range_text": "86~89 : 골디락스와 세 마리 곰 이야기"
+      },
+      {
+        "title": "지구의 시작",
+        "start_page": 90,
+        "end_page": 95,
+        "range_text": "90~95 : 지구의 시작"
+      },
+      {
+        "title": "보이저 1호와 2호",
+        "start_page": 96,
+        "end_page": 97,
+        "range_text": "96~97 : 보이저 1호와 2호"
+      },
+      {
+        "title": "달 출생의 비밀",
+        "start_page": 98,
+        "end_page": 104,
+        "range_text": "98~104 : 달 출생의 비밀"
+      },
+      {
+        "title": "컴퓨터 모의실험",
+        "start_page": 105,
+        "end_page": 106,
+        "range_text": "105~106 : 컴퓨터 모의실험"
+      },
+      {
+        "title": "발밑의 세계",
+        "start_page": 107,
+        "end_page": 117,
+        "range_text": "107~117 : 발밑의 세계"
+      },
+      {
+        "title": "달의 안쪽",
+        "start_page": 118,
+        "end_page": 120,
+        "range_text": "118~120 : 달의 안쪽"
+      },
+      {
+        "title": "조석력",
+        "start_page": 121,
+        "end_page": 124,
+        "range_text": "121~124 : 조석력"
+      },
+      {
+        "title": "푸른 바다, 푸른 지구",
+        "start_page": 125,
+        "end_page": 125,
+        "range_text": "125~125 : 푸른 바다, 푸른 지구"
+      },
+      {
+        "title": "해류",
+        "start_page": 126,
+        "end_page": 127,
+        "range_text": "126~127 : 해류"
+      },
+      {
+        "title": "대기는 지구의 고속도로",
+        "start_page": 128,
+        "end_page": 137,
+        "range_text": "128~137 : 대기는 지구의 고속도로"
+      },
+      {
+        "title": "국가의 영토는 어디까지일까?",
+        "start_page": 138,
+        "end_page": 139,
+        "range_text": "138~139 : 국가의 영토는 어디까지일까?"
+      },
+      {
+        "title": "살아 있는 땅",
+        "start_page": 140,
+        "end_page": 140,
+        "range_text": "140~140 : 살아 있는 땅"
+      },
+      {
+        "title": "떠다니는 대륙",
+        "start_page": 141,
+        "end_page": 146,
+        "range_text": "141~146 : 떠다니는 대륙"
+      },
+      {
+        "title": "지구라는 기계",
+        "start_page": 147,
+        "end_page": 147,
+        "range_text": "147~147 : 지구라는 기계"
+      },
+      {
+        "title": "베수비오 화산",
+        "start_page": 148,
+        "end_page": 149,
+        "range_text": "148~149 : 베수비오 화산"
+      },
+      {
+        "title": "쓰나미",
+        "start_page": 150,
+        "end_page": 158,
+        "range_text": "150~158 : 쓰나미"
+      },
+      {
+        "title": "따로 또 같이 움직이는 지구와 달",
+        "start_page": 159,
+        "end_page": 160,
+        "range_text": "159~160 : 따로 또 같이 움직이는 지구와 달"
+      },
+      {
+        "title": "달 때문에",
+        "start_page": 161,
+        "end_page": 166,
+        "range_text": "161~166 : 달 때문에"
+      },
+      {
+        "title": "달 착륙 음모론과 레이저 반사판",
+        "start_page": 167,
+        "end_page": 171,
+        "range_text": "167~171 : 달 착륙 음모론과 레이저 반사판"
+      },
+      {
+        "title": "비처럼 쏟아진 유성",
+        "start_page": 172,
+        "end_page": 173,
+        "range_text": "172~173 : 비처럼 쏟아진 유성"
+      },
+      {
+        "title": "소행성 충돌 그후",
+        "start_page": 174,
+        "end_page": 177,
+        "range_text": "174~177 : 소행성 충돌 그후"
+      },
+      {
+        "title": "택배 회사 소행성",
+        "start_page": 178,
+        "end_page": 180,
+        "range_text": "178~180 : 택배 회사 소행성"
+      },
+      {
+        "title": "그건 우연이었을까?",
+        "start_page": 181,
+        "end_page": 185,
+        "range_text": "181~185 : 그건 우연이었을까?"
+      },
+      {
+        "title": "결국에는",
+        "start_page": 186,
+        "end_page": 195,
+        "range_text": "186~195 : 결국에는"
+      },
+      {
+        "title": "그럼, 우리는?",
+        "start_page": 196,
+        "end_page": 197,
+        "range_text": "196~197 : 그럼, 우리는?"
+      },
+      {
+        "title": "소행성에서 자원을 얻는 계획",
+        "start_page": 198,
+        "end_page": 198,
+        "range_text": "198~198 : 소행성에서 자원을 얻는 계획"
+      },
+      {
+        "title": "섭씨와 화씨",
+        "start_page": 199,
+        "end_page": 199,
+        "range_text": "199~199 : 섭씨와 화씨"
+      },
+      {
+        "title": "세상에 이런 일이",
+        "start_page": 200,
+        "end_page": 204,
+        "range_text": "200~204 : 세상에 이런 일이"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '지구와 달'",
+        "start_page": 205,
+        "end_page": 209,
+        "range_text": "205~209 : 빅히스토리의 관점으로 본 '지구와 달'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 210,
+        "end_page": 210,
+        "range_text": "210~210 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 211,
+        "end_page": 221,
+        "range_text": "211~221 : 찾아보기"
+      }
+    ]
+  },
+  "06-Content.pdf": {
+    "filename": "06-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/06-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "생명은 어떻게 시작되었을까?",
+        "start_page": 21,
+        "end_page": 27,
+        "range_text": "21~27 : 생명은 어떻게 시작되었을까?"
+      },
+      {
+        "title": "생명을 정의할 수 있을까?",
+        "start_page": 28,
+        "end_page": 34,
+        "range_text": "28~34 : 생명을 정의할 수 있을까?"
+      },
+      {
+        "title": "왜 하필 지구였을까?",
+        "start_page": 35,
+        "end_page": 42,
+        "range_text": "35~42 : 왜 하필 지구였을까?"
+      },
+      {
+        "title": "생명을 바라보는 관점",
+        "start_page": 43,
+        "end_page": 49,
+        "range_text": "43~49 : 생명을 바라보는 관점"
+      },
+      {
+        "title": "환원론과 유기체론",
+        "start_page": 50,
+        "end_page": 53,
+        "range_text": "50~53 : 환원론과 유기체론"
+      },
+      {
+        "title": "지구 자체가 거대 생명체라고?",
+        "start_page": 54,
+        "end_page": 60,
+        "range_text": "54~60 : 지구 자체가 거대 생명체라고?"
+      },
+      {
+        "title": "자연발생설에서 생물속생설로",
+        "start_page": 61,
+        "end_page": 62,
+        "range_text": "61~62 : 자연발생설에서 생물속생설로"
+      },
+      {
+        "title": "원시 수프에서 발생한 화학적 진화",
+        "start_page": 63,
+        "end_page": 68,
+        "range_text": "63~68 : 원시 수프에서 발생한 화학적 진화"
+      },
+      {
+        "title": "심해의 끓는 굴뚝에 사는 생명체들",
+        "start_page": 69,
+        "end_page": 75,
+        "range_text": "69~75 : 심해의 끓는 굴뚝에 사는 생명체들"
+      },
+      {
+        "title": "레디의 대조 실험",
+        "start_page": 76,
+        "end_page": 78,
+        "range_text": "76~78 : 레디의 대조 실험"
+      },
+      {
+        "title": "복제자 출현의 우주적 의미",
+        "start_page": 79,
+        "end_page": 81,
+        "range_text": "79~81 : 복제자 출현의 우주적 의미"
+      },
+      {
+        "title": "RNA 세계와 진화의 시작",
+        "start_page": 82,
+        "end_page": 93,
+        "range_text": "82~93 : RNA 세계와 진화의 시작"
+      },
+      {
+        "title": "자연선택의 작동",
+        "start_page": 94,
+        "end_page": 96,
+        "range_text": "94~96 : 자연선택의 작동"
+      },
+      {
+        "title": "다윈의 자연선택 이론",
+        "start_page": 97,
+        "end_page": 100,
+        "range_text": "97~100 : 다윈의 자연선택 이론"
+      },
+      {
+        "title": "세포의 탄생",
+        "start_page": 101,
+        "end_page": 102,
+        "range_text": "101~102 : 세포의 탄생"
+      },
+      {
+        "title": "최초의 생명체",
+        "start_page": 103,
+        "end_page": 111,
+        "range_text": "103~111 : 최초의 생명체"
+      },
+      {
+        "title": "지구환경을 뒤바꾼 광합성 세포",
+        "start_page": 112,
+        "end_page": 118,
+        "range_text": "112~118 : 지구환경을 뒤바꾼 광합성 세포"
+      },
+      {
+        "title": "복잡한 생명체로의 도약, 진핵생물",
+        "start_page": 119,
+        "end_page": 129,
+        "range_text": "119~129 : 복잡한 생명체로의 도약, 진핵생물"
+      },
+      {
+        "title": "동물과 식물의 출현, 다세포생물",
+        "start_page": 130,
+        "end_page": 135,
+        "range_text": "130~135 : 동물과 식물의 출현, 다세포생물"
+      },
+      {
+        "title": "생물의 복잡성과 진화",
+        "start_page": 136,
+        "end_page": 141,
+        "range_text": "136~141 : 생물의 복잡성과 진화"
+      },
+      {
+        "title": "최초의 대기오염, 유독한 산소",
+        "start_page": 142,
+        "end_page": 145,
+        "range_text": "142~145 : 최초의 대기오염, 유독한 산소"
+      },
+      {
+        "title": "바이러스 행성",
+        "start_page": 146,
+        "end_page": 147,
+        "range_text": "146~147 : 바이러스 행성"
+      },
+      {
+        "title": "핵막은 어떤 역할을 할까?",
+        "start_page": 148,
+        "end_page": 150,
+        "range_text": "148~150 : 핵막은 어떤 역할을 할까?"
+      },
+      {
+        "title": "줄기세포",
+        "start_page": 151,
+        "end_page": 156,
+        "range_text": "151~156 : 줄기세포"
+      },
+      {
+        "title": "캄브리아기 대폭발",
+        "start_page": 157,
+        "end_page": 162,
+        "range_text": "157~162 : 캄브리아기 대폭발"
+      },
+      {
+        "title": "진화의 도구 상자",
+        "start_page": 163,
+        "end_page": 166,
+        "range_text": "163~166 : 진화의 도구 상자"
+      },
+      {
+        "title": "지구환경의 변화",
+        "start_page": 167,
+        "end_page": 174,
+        "range_text": "167~174 : 지구환경의 변화"
+      },
+      {
+        "title": "다섯 번의 대멸종",
+        "start_page": 175,
+        "end_page": 186,
+        "range_text": "175~186 : 다섯 번의 대멸종"
+      },
+      {
+        "title": "에디아카라 동물군",
+        "start_page": 187,
+        "end_page": 188,
+        "range_text": "187~188 : 에디아카라 동물군"
+      },
+      {
+        "title": "모든 생명체는 단순한 것에서 복잡한 것으로 진화하는가?",
+        "start_page": 189,
+        "end_page": 192,
+        "range_text": "189~192 : 모든 생명체는 단순한 것에서 복잡한 것으로 진화하는가?"
+      },
+      {
+        "title": "생명 시스템의 이해와 재창조",
+        "start_page": 193,
+        "end_page": 196,
+        "range_text": "193~196 : 생명 시스템의 이해와 재창조"
+      },
+      {
+        "title": "생명을 다루는 인간의 기술",
+        "start_page": 197,
+        "end_page": 205,
+        "range_text": "197~205 : 생명을 다루는 인간의 기술"
+      },
+      {
+        "title": "종 보존을 위한 인간의 노력",
+        "start_page": 206,
+        "end_page": 209,
+        "range_text": "206~209 : 종 보존을 위한 인간의 노력"
+      },
+      {
+        "title": "만일 외계 생명체가 있다면, 지구의 생명체와 생화학적 구조가 같을까?",
+        "start_page": 210,
+        "end_page": 212,
+        "range_text": "210~212 : 만일 외계 생명체가 있다면, 지구의 생명체와 생화학적 구조가 같을까?"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '생명의 탄생'",
+        "start_page": 213,
+        "end_page": 217,
+        "range_text": "213~217 : 빅히스토리의 관점으로 본 '생명의 탄생'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 218,
+        "end_page": 218,
+        "range_text": "218~218 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 219,
+        "end_page": 229,
+        "range_text": "219~229 : 찾아보기"
+      }
+    ]
+  },
+  "07-Content.pdf": {
+    "filename": "07-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/07-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "성의 탄생과 진화",
+        "start_page": 21,
+        "end_page": 28,
+        "range_text": "21~28 : 성의 탄생과 진화"
+      },
+      {
+        "title": "혼자서 자식 낳기",
+        "start_page": 29,
+        "end_page": 34,
+        "range_text": "29~34 : 혼자서 자식 낳기"
+      },
+      {
+        "title": "둘이서 자식 낳기",
+        "start_page": 35,
+        "end_page": 46,
+        "range_text": "35~46 : 둘이서 자식 낳기"
+      },
+      {
+        "title": "성은 꼭 필요한 것일까?",
+        "start_page": 47,
+        "end_page": 53,
+        "range_text": "47~53 : 성은 꼭 필요한 것일까?"
+      },
+      {
+        "title": "동물세포의 체세포분열",
+        "start_page": 54,
+        "end_page": 55,
+        "range_text": "54~55 : 동물세포의 체세포분열"
+      },
+      {
+        "title": "감수분열",
+        "start_page": 56,
+        "end_page": 60,
+        "range_text": "56~60 : 감수분열"
+      },
+      {
+        "title": "'다양성'과 '차이'를 만드는 성",
+        "start_page": 61,
+        "end_page": 63,
+        "range_text": "61~63 : '다양성'과 '차이'를 만드는 성"
+      },
+      {
+        "title": "찰스 다윈",
+        "start_page": 64,
+        "end_page": 80,
+        "range_text": "64~80 : 찰스 다윈"
+      },
+      {
+        "title": "성이 단둘인 이유",
+        "start_page": 81,
+        "end_page": 84,
+        "range_text": "81~84 : 성이 단둘인 이유"
+      },
+      {
+        "title": "성세포의 크기 차이가 변화시킨 것들",
+        "start_page": 85,
+        "end_page": 93,
+        "range_text": "85~93 : 성세포의 크기 차이가 변화시킨 것들"
+      },
+      {
+        "title": "앙큼한 암컷",
+        "start_page": 94,
+        "end_page": 96,
+        "range_text": "94~96 : 앙큼한 암컷"
+      },
+      {
+        "title": "정자의 수를 늘려라",
+        "start_page": 97,
+        "end_page": 100,
+        "range_text": "97~100 : 정자의 수를 늘려라"
+      },
+      {
+        "title": "암컷과 수컷의 군비경쟁",
+        "start_page": 101,
+        "end_page": 104,
+        "range_text": "101~104 : 암컷과 수컷의 군비경쟁"
+      },
+      {
+        "title": "죽느냐 사느냐 그것이 문제로다",
+        "start_page": 105,
+        "end_page": 109,
+        "range_text": "105~109 : 죽느냐 사느냐 그것이 문제로다"
+      },
+      {
+        "title": "새끼를 죽이는 잔혹한 수컷",
+        "start_page": 110,
+        "end_page": 112,
+        "range_text": "110~112 : 새끼를 죽이는 잔혹한 수컷"
+      },
+      {
+        "title": "사기 치는 식물",
+        "start_page": 113,
+        "end_page": 116,
+        "range_text": "113~116 : 사기 치는 식물"
+      },
+      {
+        "title": "영장류의 성과 짝짓기",
+        "start_page": 117,
+        "end_page": 125,
+        "range_text": "117~125 : 영장류의 성과 짝짓기"
+      },
+      {
+        "title": "제인 구달",
+        "start_page": 126,
+        "end_page": 128,
+        "range_text": "126~128 : 제인 구달"
+      },
+      {
+        "title": "남자는 왜 S라인 몸매 여자를 좋아하는가",
+        "start_page": 129,
+        "end_page": 135,
+        "range_text": "129~135 : 남자는 왜 S라인 몸매 여자를 좋아하는가"
+      },
+      {
+        "title": "여자는 왜 능력 있는 남자를 좋아하는가",
+        "start_page": 136,
+        "end_page": 137,
+        "range_text": "136~137 : 여자는 왜 능력 있는 남자를 좋아하는가"
+      },
+      {
+        "title": "동안이 사랑받는 이유",
+        "start_page": 138,
+        "end_page": 145,
+        "range_text": "138~145 : 동안이 사랑받는 이유"
+      },
+      {
+        "title": "남성과 여성의 서로 다른 짝짓기 전략",
+        "start_page": 146,
+        "end_page": 151,
+        "range_text": "146~151 : 남성과 여성의 서로 다른 짝짓기 전략"
+      },
+      {
+        "title": "제발, 오해하지 마!",
+        "start_page": 152,
+        "end_page": 157,
+        "range_text": "152~157 : 제발, 오해하지 마!"
+      },
+      {
+        "title": "창의성의 원천은 짝짓기?",
+        "start_page": 158,
+        "end_page": 159,
+        "range_text": "158~159 : 창의성의 원천은 짝짓기?"
+      },
+      {
+        "title": "성 선택의 산물, 유머",
+        "start_page": 160,
+        "end_page": 164,
+        "range_text": "160~164 : 성 선택의 산물, 유머"
+      },
+      {
+        "title": "진화론과 문학의 만남",
+        "start_page": 165,
+        "end_page": 174,
+        "range_text": "165~174 : 진화론과 문학의 만남"
+      },
+      {
+        "title": "성과 가족의 미래",
+        "start_page": 175,
+        "end_page": 174,
+        "range_text": "175~174 : 성과 가족의 미래"
+      },
+      {
+        "title": "아빠는 사라질까?",
+        "start_page": 175,
+        "end_page": 180,
+        "range_text": "175~180 : 아빠는 사라질까?"
+      },
+      {
+        "title": "혈연 중심의 가족은 해체될까?",
+        "start_page": 181,
+        "end_page": 184,
+        "range_text": "181~184 : 혈연 중심의 가족은 해체될까?"
+      },
+      {
+        "title": "일부일처제는 유지될까?",
+        "start_page": 185,
+        "end_page": 188,
+        "range_text": "185~188 : 일부일처제는 유지될까?"
+      },
+      {
+        "title": "성의 의미",
+        "start_page": 189,
+        "end_page": 192,
+        "range_text": "189~192 : 성의 의미"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '성의 탄생'",
+        "start_page": 193,
+        "end_page": 196,
+        "range_text": "193~196 : 빅히스토리의 관점으로 본 '성의 탄생'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 197,
+        "end_page": 197,
+        "range_text": "197~197 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 198,
+        "end_page": 208,
+        "range_text": "198~208 : 찾아보기"
+      }
+    ]
+  },
+  "08-Content.pdf": {
+    "filename": "08-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/08-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "생명의 나무",
+        "start_page": 21,
+        "end_page": 25,
+        "range_text": "21~25 : 생명의 나무"
+      },
+      {
+        "title": "산소의 두 얼굴",
+        "start_page": 26,
+        "end_page": 31,
+        "range_text": "26~31 : 산소의 두 얼굴"
+      },
+      {
+        "title": "원시 지구에 산소는 없었다",
+        "start_page": 32,
+        "end_page": 36,
+        "range_text": "32~36 : 원시 지구에 산소는 없었다"
+      },
+      {
+        "title": "광합성, 산소를 뿜어내다",
+        "start_page": 37,
+        "end_page": 41,
+        "range_text": "37~41 : 광합성, 산소를 뿜어내다"
+      },
+      {
+        "title": "산소와 군비경쟁",
+        "start_page": 42,
+        "end_page": 44,
+        "range_text": "42~44 : 산소와 군비경쟁"
+      },
+      {
+        "title": "생물의 대분류, 3역 6계",
+        "start_page": 45,
+        "end_page": 48,
+        "range_text": "45~48 : 생물의 대분류, 3역 6계"
+      },
+      {
+        "title": "지구 바깥에서 생명의 씨앗이 오진 않았을까?",
+        "start_page": 49,
+        "end_page": 52,
+        "range_text": "49~52 : 지구 바깥에서 생명의 씨앗이 오진 않았을까?"
+      },
+      {
+        "title": "식물의 탄생",
+        "start_page": 53,
+        "end_page": 56,
+        "range_text": "53~56 : 식물의 탄생"
+      },
+      {
+        "title": "육지 정복하기",
+        "start_page": 57,
+        "end_page": 59,
+        "range_text": "57~59 : 육지 정복하기"
+      },
+      {
+        "title": "식물의 진화",
+        "start_page": 60,
+        "end_page": 80,
+        "range_text": "60~80 : 식물의 진화"
+      },
+      {
+        "title": "더불어 살아가기",
+        "start_page": 81,
+        "end_page": 89,
+        "range_text": "81~89 : 더불어 살아가기"
+      },
+      {
+        "title": "초원의 순환주기",
+        "start_page": 90,
+        "end_page": 92,
+        "range_text": "90~92 : 초원의 순환주기"
+      },
+      {
+        "title": "육식하는 식물",
+        "start_page": 93,
+        "end_page": 94,
+        "range_text": "93~94 : 육식하는 식물"
+      },
+      {
+        "title": "식물의 분류 체계",
+        "start_page": 95,
+        "end_page": 98,
+        "range_text": "95~98 : 식물의 분류 체계"
+      },
+      {
+        "title": "진화의 도구 상자, 호메오박스",
+        "start_page": 99,
+        "end_page": 104,
+        "range_text": "99~104 : 진화의 도구 상자, 호메오박스"
+      },
+      {
+        "title": "움직이는 동물",
+        "start_page": 105,
+        "end_page": 111,
+        "range_text": "105~111 : 움직이는 동물"
+      },
+      {
+        "title": "백문이 불여일견, 눈의 진화",
+        "start_page": 112,
+        "end_page": 118,
+        "range_text": "112~118 : 백문이 불여일견, 눈의 진화"
+      },
+      {
+        "title": "설계도의 다양한 변주",
+        "start_page": 119,
+        "end_page": 126,
+        "range_text": "119~126 : 설계도의 다양한 변주"
+      },
+      {
+        "title": "생각하는 동물",
+        "start_page": 127,
+        "end_page": 135,
+        "range_text": "127~135 : 생각하는 동물"
+      },
+      {
+        "title": "바다로 돌아간 고래",
+        "start_page": 136,
+        "end_page": 139,
+        "range_text": "136~139 : 바다로 돌아간 고래"
+      },
+      {
+        "title": "동물의 기막힌 적응",
+        "start_page": 140,
+        "end_page": 144,
+        "range_text": "140~144 : 동물의 기막힌 적응"
+      },
+      {
+        "title": "멸종 위기에 처한 바나나",
+        "start_page": 145,
+        "end_page": 146,
+        "range_text": "145~146 : 멸종 위기에 처한 바나나"
+      },
+      {
+        "title": "다르다는 것, 변이",
+        "start_page": 147,
+        "end_page": 148,
+        "range_text": "147~148 : 다르다는 것, 변이"
+      },
+      {
+        "title": "종",
+        "start_page": 149,
+        "end_page": 150,
+        "range_text": "149~150 : 종"
+      },
+      {
+        "title": "성 선택과 정자를 만드는 집짓기 새",
+        "start_page": 151,
+        "end_page": 152,
+        "range_text": "151~152 : 성 선택과 정자를 만드는 집짓기 새"
+      },
+      {
+        "title": "신비 중의 신비, 종 분화",
+        "start_page": 153,
+        "end_page": 156,
+        "range_text": "153~156 : 신비 중의 신비, 종 분화"
+      },
+      {
+        "title": "진화의 보이지 않는 손, 자연선택",
+        "start_page": 157,
+        "end_page": 158,
+        "range_text": "157~158 : 진화의 보이지 않는 손, 자연선택"
+      },
+      {
+        "title": "진화의 주사위 놀이, 유전적 부동",
+        "start_page": 159,
+        "end_page": 162,
+        "range_text": "159~162 : 진화의 주사위 놀이, 유전적 부동"
+      },
+      {
+        "title": "진화의 미다스, 인위선택",
+        "start_page": 163,
+        "end_page": 164,
+        "range_text": "163~164 : 진화의 미다스, 인위선택"
+      },
+      {
+        "title": "멸종을 기억하라",
+        "start_page": 165,
+        "end_page": 179,
+        "range_text": "165~179 : 멸종을 기억하라"
+      },
+      {
+        "title": "인위선택이 부른 조류인플루엔자",
+        "start_page": 180,
+        "end_page": 185,
+        "range_text": "180~185 : 인위선택이 부른 조류인플루엔자"
+      },
+      {
+        "title": "선캄브리아대, 지구에 생명이 깃들다",
+        "start_page": 186,
+        "end_page": 191,
+        "range_text": "186~191 : 선캄브리아대, 지구에 생명이 깃들다"
+      },
+      {
+        "title": "고생대, 동물 시대의 개막",
+        "start_page": 192,
+        "end_page": 209,
+        "range_text": "192~209 : 고생대, 동물 시대의 개막"
+      },
+      {
+        "title": "중생대, 공룡의 시대",
+        "start_page": 210,
+        "end_page": 225,
+        "range_text": "210~225 : 중생대, 공룡의 시대"
+      },
+      {
+        "title": "신생대, 포유류의 시대",
+        "start_page": 226,
+        "end_page": 232,
+        "range_text": "226~232 : 신생대, 포유류의 시대"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '동식물의 진화'",
+        "start_page": 233,
+        "end_page": 237,
+        "range_text": "233~237 : 빅히스토리의 관점으로 본 '동식물의 진화'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 238,
+        "end_page": 239,
+        "range_text": "238~239 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 240,
+        "end_page": 250,
+        "range_text": "240~250 : 찾아보기"
+      }
+    ]
+  },
+  "09-Content.pdf": {
+    "filename": "09-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/09-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "생명의 나뭇가지에서",
+        "start_page": 21,
+        "end_page": 31,
+        "range_text": "21~31 : 생명의 나뭇가지에서"
+      },
+      {
+        "title": "천적의 소멸, 공룡 멸종",
+        "start_page": 32,
+        "end_page": 35,
+        "range_text": "32~35 : 천적의 소멸, 공룡 멸종"
+      },
+      {
+        "title": "영장류의 조상을 찾아서",
+        "start_page": 36,
+        "end_page": 43,
+        "range_text": "36~43 : 영장류의 조상을 찾아서"
+      },
+      {
+        "title": "영장류의 가계도",
+        "start_page": 44,
+        "end_page": 51,
+        "range_text": "44~51 : 영장류의 가계도"
+      },
+      {
+        "title": "뗏목을 타고 바다를 건넌 원숭이",
+        "start_page": 52,
+        "end_page": 55,
+        "range_text": "52~55 : 뗏목을 타고 바다를 건넌 원숭이"
+      },
+      {
+        "title": "영장류의 다양한 식성",
+        "start_page": 56,
+        "end_page": 58,
+        "range_text": "56~58 : 영장류의 다양한 식성"
+      },
+      {
+        "title": "나무를 타기에 적합한 신체 구조",
+        "start_page": 59,
+        "end_page": 61,
+        "range_text": "59~61 : 나무를 타기에 적합한 신체 구조"
+      },
+      {
+        "title": "고도로 진화한 입체적 시각",
+        "start_page": 62,
+        "end_page": 64,
+        "range_text": "62~64 : 고도로 진화한 입체적 시각"
+      },
+      {
+        "title": "독특하게 진화한 포유류들",
+        "start_page": 65,
+        "end_page": 69,
+        "range_text": "65~69 : 독특하게 진화한 포유류들"
+      },
+      {
+        "title": "비루테 갈디카스와 오랑우탄",
+        "start_page": 70,
+        "end_page": 73,
+        "range_text": "70~73 : 비루테 갈디카스와 오랑우탄"
+      },
+      {
+        "title": "뇌의 구조와 지능",
+        "start_page": 74,
+        "end_page": 77,
+        "range_text": "74~77 : 뇌의 구조와 지능"
+      },
+      {
+        "title": "인간의 뇌 vs 영장류의 뇌",
+        "start_page": 78,
+        "end_page": 85,
+        "range_text": "78~85 : 인간의 뇌 vs 영장류의 뇌"
+      },
+      {
+        "title": "침팬지의 인지능력",
+        "start_page": 86,
+        "end_page": 89,
+        "range_text": "86~89 : 침팬지의 인지능력"
+      },
+      {
+        "title": "사회적 뇌의 진화",
+        "start_page": 90,
+        "end_page": 92,
+        "range_text": "90~92 : 사회적 뇌의 진화"
+      },
+      {
+        "title": "제인 구달과 침팬지",
+        "start_page": 93,
+        "end_page": 97,
+        "range_text": "93~97 : 제인 구달과 침팬지"
+      },
+      {
+        "title": "죄수의 딜레마",
+        "start_page": 98,
+        "end_page": 101,
+        "range_text": "98~101 : 죄수의 딜레마"
+      },
+      {
+        "title": "협동과 도덕적 감성의 유전자",
+        "start_page": 102,
+        "end_page": 108,
+        "range_text": "102~108 : 협동과 도덕적 감성의 유전자"
+      },
+      {
+        "title": "털 고르기와 서열의 사회학",
+        "start_page": 109,
+        "end_page": 113,
+        "range_text": "109~113 : 털 고르기와 서열의 사회학"
+      },
+      {
+        "title": "폭력의 폴리틱스",
+        "start_page": 114,
+        "end_page": 120,
+        "range_text": "114~120 : 폭력의 폴리틱스"
+      },
+      {
+        "title": "유인원의 화해조정 능력",
+        "start_page": 121,
+        "end_page": 125,
+        "range_text": "121~125 : 유인원의 화해조정 능력"
+      },
+      {
+        "title": "보노보의 섹스라이프",
+        "start_page": 126,
+        "end_page": 132,
+        "range_text": "126~132 : 보노보의 섹스라이프"
+      },
+      {
+        "title": "보노보는 왜 침팬지만큼 알려지지 않았을까?",
+        "start_page": 133,
+        "end_page": 136,
+        "range_text": "133~136 : 보노보는 왜 침팬지만큼 알려지지 않았을까?"
+      },
+      {
+        "title": "도구를 사용하는 유인원",
+        "start_page": 137,
+        "end_page": 143,
+        "range_text": "137~143 : 도구를 사용하는 유인원"
+      },
+      {
+        "title": "유인원의 소통법",
+        "start_page": 144,
+        "end_page": 147,
+        "range_text": "144~147 : 유인원의 소통법"
+      },
+      {
+        "title": "공감과 모방의 근원 거울 뉴런",
+        "start_page": 148,
+        "end_page": 157,
+        "range_text": "148~157 : 공감과 모방의 근원 거울 뉴런"
+      },
+      {
+        "title": "영장류도 문화를 갖고 있을까?",
+        "start_page": 158,
+        "end_page": 162,
+        "range_text": "158~162 : 영장류도 문화를 갖고 있을까?"
+      },
+      {
+        "title": "다이앤 포시와 고릴라",
+        "start_page": 163,
+        "end_page": 167,
+        "range_text": "163~167 : 다이앤 포시와 고릴라"
+      },
+      {
+        "title": "사소한 차이",
+        "start_page": 168,
+        "end_page": 170,
+        "range_text": "168~170 : 사소한 차이"
+      },
+      {
+        "title": "숲을 떠나 초원으로",
+        "start_page": 171,
+        "end_page": 176,
+        "range_text": "171~176 : 숲을 떠나 초원으로"
+      },
+      {
+        "title": "두 발로 서서 걷기 때문에",
+        "start_page": 177,
+        "end_page": 179,
+        "range_text": "177~179 : 두 발로 서서 걷기 때문에"
+      },
+      {
+        "title": "독특함을 대물림하다",
+        "start_page": 180,
+        "end_page": 184,
+        "range_text": "180~184 : 독특함을 대물림하다"
+      },
+      {
+        "title": "영장류학자 프란스 드 발",
+        "start_page": 185,
+        "end_page": 186,
+        "range_text": "185~186 : 영장류학자 프란스 드 발"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '인류의 사촌, 영장류'",
+        "start_page": 187,
+        "end_page": 194,
+        "range_text": "187~194 : 빅히스토리의 관점으로 본 '인류의 사촌, 영장류'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 195,
+        "end_page": 196,
+        "range_text": "195~196 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 197,
+        "end_page": 207,
+        "range_text": "197~207 : 찾아보기"
+      }
+    ]
+  },
+  "10-Content.pdf": {
+    "filename": "10-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/10-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "최초의 인간을 찾아서",
+        "start_page": 21,
+        "end_page": 27,
+        "range_text": "21~27 : 최초의 인간을 찾아서"
+      },
+      {
+        "title": "인간의 기원에 대한 질문",
+        "start_page": 28,
+        "end_page": 33,
+        "range_text": "28~33 : 인간의 기원에 대한 질문"
+      },
+      {
+        "title": "루시의 발견",
+        "start_page": 34,
+        "end_page": 41,
+        "range_text": "34~41 : 루시의 발견"
+      },
+      {
+        "title": "생명체의 공통 조상을 찾아서",
+        "start_page": 42,
+        "end_page": 44,
+        "range_text": "42~44 : 생명체의 공통 조상을 찾아서"
+      },
+      {
+        "title": "땅으로 내려온 유인원",
+        "start_page": 45,
+        "end_page": 51,
+        "range_text": "45~51 : 땅으로 내려온 유인원"
+      },
+      {
+        "title": "털 없는 유인원",
+        "start_page": 52,
+        "end_page": 56,
+        "range_text": "52~56 : 털 없는 유인원"
+      },
+      {
+        "title": "유인원과 인간의 해부학적 구조 차이",
+        "start_page": 57,
+        "end_page": 65,
+        "range_text": "57~65 : 유인원과 인간의 해부학적 구조 차이"
+      },
+      {
+        "title": "요리하는 인간",
+        "start_page": 66,
+        "end_page": 73,
+        "range_text": "66~73 : 요리하는 인간"
+      },
+      {
+        "title": "깃털 달린 공룡",
+        "start_page": 74,
+        "end_page": 79,
+        "range_text": "74~79 : 깃털 달린 공룡"
+      },
+      {
+        "title": "호모속의 진화",
+        "start_page": 80,
+        "end_page": 87,
+        "range_text": "80~87 : 호모속의 진화"
+      },
+      {
+        "title": "두 발로 걷는 유인원 오스트랄로피테쿠스",
+        "start_page": 88,
+        "end_page": 89,
+        "range_text": "88~89 : 두 발로 걷는 유인원 오스트랄로피테쿠스"
+      },
+      {
+        "title": "최초로 도구를 사용한 호모하빌리스",
+        "start_page": 90,
+        "end_page": 93,
+        "range_text": "90~93 : 최초로 도구를 사용한 호모하빌리스"
+      },
+      {
+        "title": "식생활을 개선한 호모에렉투스",
+        "start_page": 94,
+        "end_page": 97,
+        "range_text": "94~97 : 식생활을 개선한 호모에렉투스"
+      },
+      {
+        "title": "건장한 체격의 위협적인 사냥꾼 호모하이델베르겐시스",
+        "start_page": 98,
+        "end_page": 101,
+        "range_text": "98~101 : 건장한 체격의 위협적인 사냥꾼 호모하이델베르겐시스"
+      },
+      {
+        "title": "우리와 가장 가까운 사촌 호모네안데르탈렌시스",
+        "start_page": 102,
+        "end_page": 110,
+        "range_text": "102~110 : 우리와 가장 가까운 사촌 호모네안데르탈렌시스"
+      },
+      {
+        "title": "영리하고 수다스러운 호모사피엔스",
+        "start_page": 111,
+        "end_page": 119,
+        "range_text": "111~119 : 영리하고 수다스러운 호모사피엔스"
+      },
+      {
+        "title": "인류의 진화에 대한 새로운 주장",
+        "start_page": 120,
+        "end_page": 125,
+        "range_text": "120~125 : 인류의 진화에 대한 새로운 주장"
+      },
+      {
+        "title": "다지역 기원설",
+        "start_page": 126,
+        "end_page": 126,
+        "range_text": "126~126 : 다지역 기원설"
+      },
+      {
+        "title": "아프리카 기원설",
+        "start_page": 127,
+        "end_page": 133,
+        "range_text": "127~133 : 아프리카 기원설"
+      },
+      {
+        "title": "결정적인 증거, 이달투",
+        "start_page": 134,
+        "end_page": 135,
+        "range_text": "134~135 : 결정적인 증거, 이달투"
+      },
+      {
+        "title": "끝나지 않은 논쟁",
+        "start_page": 136,
+        "end_page": 137,
+        "range_text": "136~137 : 끝나지 않은 논쟁"
+      },
+      {
+        "title": "고인류학의 방법론",
+        "start_page": 138,
+        "end_page": 148,
+        "range_text": "138~148 : 고인류학의 방법론"
+      },
+      {
+        "title": "걸어서 지구 끝까지",
+        "start_page": 149,
+        "end_page": 152,
+        "range_text": "149~152 : 걸어서 지구 끝까지"
+      },
+      {
+        "title": "네안데르탈인은 왜 사라진 것일까?",
+        "start_page": 153,
+        "end_page": 158,
+        "range_text": "153~158 : 네안데르탈인은 왜 사라진 것일까?"
+      },
+      {
+        "title": "호모사피엔스는 어떻게 살아남았을까?",
+        "start_page": 159,
+        "end_page": 165,
+        "range_text": "159~165 : 호모사피엔스는 어떻게 살아남았을까?"
+      },
+      {
+        "title": "인간을 인간답게 만드는 언어",
+        "start_page": 166,
+        "end_page": 173,
+        "range_text": "166~173 : 인간을 인간답게 만드는 언어"
+      },
+      {
+        "title": "네안데르탈인은 멸종하지 않았다",
+        "start_page": 174,
+        "end_page": 176,
+        "range_text": "174~176 : 네안데르탈인은 멸종하지 않았다"
+      },
+      {
+        "title": "제3의 인류, 데니소바인",
+        "start_page": 177,
+        "end_page": 180,
+        "range_text": "177~180 : 제3의 인류, 데니소바인"
+      },
+      {
+        "title": "인류의 기원을 밝히려는 노력",
+        "start_page": 181,
+        "end_page": 187,
+        "range_text": "181~187 : 인류의 기원을 밝히려는 노력"
+      },
+      {
+        "title": "우리는 모두 연결되어 있으며 잡종이다",
+        "start_page": 188,
+        "end_page": 192,
+        "range_text": "188~192 : 우리는 모두 연결되어 있으며 잡종이다"
+      },
+      {
+        "title": "인간의 욕망이 부른 사기극 필트다운인",
+        "start_page": 193,
+        "end_page": 196,
+        "range_text": "193~196 : 인간의 욕망이 부른 사기극 필트다운인"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '최초의 인간'",
+        "start_page": 197,
+        "end_page": 202,
+        "range_text": "197~202 : 빅히스토리의 관점으로 본 '최초의 인간'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 203,
+        "end_page": 203,
+        "range_text": "203~203 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 204,
+        "end_page": 214,
+        "range_text": "204~214 : 찾아보기"
+      }
+    ]
+  },
+  "11-Content.pdf": {
+    "filename": "11-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/11-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "1 인간은 과연 독특한가?",
+        "start_page": 21,
+        "end_page": 20,
+        "range_text": "21~20 : 1 인간은 과연 독특한가?"
+      },
+      {
+        "title": "인간은 어떻게 지구상에서 가장 유별난 동물이 되었을까?",
+        "start_page": 21,
+        "end_page": 28,
+        "range_text": "21~28 : 인간은 어떻게 지구상에서 가장 유별난 동물이 되었을까?"
+      },
+      {
+        "title": "침팬지와 인간은 얼마나 다를까?",
+        "start_page": 29,
+        "end_page": 33,
+        "range_text": "29~33 : 침팬지와 인간은 얼마나 다를까?"
+      },
+      {
+        "title": "인간의 고유한 특성은 무엇일까?",
+        "start_page": 34,
+        "end_page": 37,
+        "range_text": "34~37 : 인간의 고유한 특성은 무엇일까?"
+      },
+      {
+        "title": "앞으로 인간은 어떻게 진화할까?",
+        "start_page": 38,
+        "end_page": 43,
+        "range_text": "38~43 : 앞으로 인간은 어떻게 진화할까?"
+      },
+      {
+        "title": "2 뇌의 진화와 의식의 탄생",
+        "start_page": 44,
+        "end_page": 43,
+        "range_text": "44~43 : 2 뇌의 진화와 의식의 탄생"
+      },
+      {
+        "title": "삼위일체 뇌의 형성",
+        "start_page": 44,
+        "end_page": 46,
+        "range_text": "44~46 : 삼위일체 뇌의 형성"
+      },
+      {
+        "title": "인간의 뇌 구조",
+        "start_page": 47,
+        "end_page": 52,
+        "range_text": "47~52 : 인간의 뇌 구조"
+      },
+      {
+        "title": "인간의 뇌를 진화시킨 요인들",
+        "start_page": 53,
+        "end_page": 60,
+        "range_text": "53~60 : 인간의 뇌를 진화시킨 요인들"
+      },
+      {
+        "title": "의식의 작동 원리",
+        "start_page": 61,
+        "end_page": 65,
+        "range_text": "61~65 : 의식의 작동 원리"
+      },
+      {
+        "title": "사회적 뇌 가설",
+        "start_page": 66,
+        "end_page": 69,
+        "range_text": "66~69 : 사회적 뇌 가설"
+      },
+      {
+        "title": "우리는 왜 달고 기름진 음식을 좋아할까?",
+        "start_page": 70,
+        "end_page": 74,
+        "range_text": "70~74 : 우리는 왜 달고 기름진 음식을 좋아할까?"
+      },
+      {
+        "title": "3 심리적 적응과 사회성의 진화",
+        "start_page": 75,
+        "end_page": 74,
+        "range_text": "75~74 : 3 심리적 적응과 사회성의 진화"
+      },
+      {
+        "title": "수렵 채집 시대에 적응된 마음",
+        "start_page": 75,
+        "end_page": 79,
+        "range_text": "75~79 : 수렵 채집 시대에 적응된 마음"
+      },
+      {
+        "title": "수컷 공작의 꼬리 깃털과 연애 본능",
+        "start_page": 80,
+        "end_page": 85,
+        "range_text": "80~85 : 수컷 공작의 꼬리 깃털과 연애 본능"
+      },
+      {
+        "title": "이타적인 행동과 도덕적 감정",
+        "start_page": 86,
+        "end_page": 89,
+        "range_text": "86~89 : 이타적인 행동과 도덕적 감정"
+      },
+      {
+        "title": "모방 능력과 사회성 진화",
+        "start_page": 90,
+        "end_page": 99,
+        "range_text": "90~99 : 모방 능력과 사회성 진화"
+      },
+      {
+        "title": "행복이란 무엇일까?",
+        "start_page": 100,
+        "end_page": 106,
+        "range_text": "100~106 : 행복이란 무엇일까?"
+      },
+      {
+        "title": "4 언어와 집단학습의 위력",
+        "start_page": 107,
+        "end_page": 106,
+        "range_text": "107~106 : 4 언어와 집단학습의 위력"
+      },
+      {
+        "title": "꿀벌의 춤과 혹등고래의 노래",
+        "start_page": 107,
+        "end_page": 111,
+        "range_text": "107~111 : 꿀벌의 춤과 혹등고래의 노래"
+      },
+      {
+        "title": "인간 언어의 기원과 언어 유전자의 의미",
+        "start_page": 112,
+        "end_page": 115,
+        "range_text": "112~115 : 인간 언어의 기원과 언어 유전자의 의미"
+      },
+      {
+        "title": "인류 가계도에 나타난 언어적 특성",
+        "start_page": 116,
+        "end_page": 124,
+        "range_text": "116~124 : 인류 가계도에 나타난 언어적 특성"
+      },
+      {
+        "title": "거인의 어깨 위에 서서",
+        "start_page": 125,
+        "end_page": 133,
+        "range_text": "125~133 : 거인의 어깨 위에 서서"
+      },
+      {
+        "title": "5 문화적 유전자 밈과 유연한 적응력",
+        "start_page": 134,
+        "end_page": 133,
+        "range_text": "134~133 : 5 문화적 유전자 밈과 유연한 적응력"
+      },
+      {
+        "title": "농부의 식단과 유전자 돌연변이",
+        "start_page": 134,
+        "end_page": 138,
+        "range_text": "134~138 : 농부의 식단과 유전자 돌연변이"
+      },
+      {
+        "title": "새로운 복제자, 문화적 유전자 밈",
+        "start_page": 139,
+        "end_page": 143,
+        "range_text": "139~143 : 새로운 복제자, 문화적 유전자 밈"
+      },
+      {
+        "title": "아름다움을 추구하는 본능",
+        "start_page": 144,
+        "end_page": 151,
+        "range_text": "144~151 : 아름다움을 추구하는 본능"
+      },
+      {
+        "title": "예술적 즐거움과 유연한 적응력",
+        "start_page": 152,
+        "end_page": 159,
+        "range_text": "152~159 : 예술적 즐거움과 유연한 적응력"
+      },
+      {
+        "title": "6 호모사피엔스를 넘어서",
+        "start_page": 160,
+        "end_page": 159,
+        "range_text": "160~159 : 6 호모사피엔스를 넘어서"
+      },
+      {
+        "title": "신의 기술, 유전자 편집",
+        "start_page": 160,
+        "end_page": 166,
+        "range_text": "160~166 : 신의 기술, 유전자 편집"
+      },
+      {
+        "title": "불멸의 꿈, 복제 인간",
+        "start_page": 167,
+        "end_page": 172,
+        "range_text": "167~172 : 불멸의 꿈, 복제 인간"
+      },
+      {
+        "title": "합성생물학, 생명체를 디자인하다",
+        "start_page": 173,
+        "end_page": 174,
+        "range_text": "173~174 : 합성생물학, 생명체를 디자인하다"
+      },
+      {
+        "title": "지적 설계자 호모사피엔스의 질문",
+        "start_page": 175,
+        "end_page": 177,
+        "range_text": "175~177 : 지적 설계자 호모사피엔스의 질문"
+      },
+      {
+        "title": "인공지능은 인간을 넘어설 수 있을까?",
+        "start_page": 178,
+        "end_page": 180,
+        "range_text": "178~180 : 인공지능은 인간을 넘어설 수 있을까?"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '인류의 진화와 적응'",
+        "start_page": 181,
+        "end_page": 186,
+        "range_text": "181~186 : 빅히스토리의 관점으로 본 '인류의 진화와 적응'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 187,
+        "end_page": 188,
+        "range_text": "187~188 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 189,
+        "end_page": 199,
+        "range_text": "189~199 : 찾아보기"
+      }
+    ]
+  },
+  "12-Content.pdf": {
+    "filename": "12-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/12-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "식탁 위에 차려진 1만 년의 역사",
+        "start_page": 21,
+        "end_page": 27,
+        "range_text": "21~27 : 식탁 위에 차려진 1만 년의 역사"
+      },
+      {
+        "title": "수렵 채집시대",
+        "start_page": 28,
+        "end_page": 34,
+        "range_text": "28~34 : 수렵 채집시대"
+      },
+      {
+        "title": "농경의 기원",
+        "start_page": 35,
+        "end_page": 38,
+        "range_text": "35~38 : 농경의 기원"
+      },
+      {
+        "title": "농경시대의 개막",
+        "start_page": 39,
+        "end_page": 55,
+        "range_text": "39~55 : 농경시대의 개막"
+      },
+      {
+        "title": "풍요로운 수렵 채집시대",
+        "start_page": 56,
+        "end_page": 59,
+        "range_text": "56~59 : 풍요로운 수렵 채집시대"
+      },
+      {
+        "title": "최초의 작물화",
+        "start_page": 60,
+        "end_page": 74,
+        "range_text": "60~74 : 최초의 작물화"
+      },
+      {
+        "title": "최초의 가축화",
+        "start_page": 75,
+        "end_page": 85,
+        "range_text": "75~85 : 최초의 가축화"
+      },
+      {
+        "title": "새로운 기술, 토기와 도구",
+        "start_page": 86,
+        "end_page": 91,
+        "range_text": "86~91 : 새로운 기술, 토기와 도구"
+      },
+      {
+        "title": "한국은 언제부터 쌀을 생산했을까?",
+        "start_page": 92,
+        "end_page": 92,
+        "range_text": "92~92 : 한국은 언제부터 쌀을 생산했을까?"
+      },
+      {
+        "title": "한국 문화 속에 나타난 닭",
+        "start_page": 93,
+        "end_page": 97,
+        "range_text": "93~97 : 한국 문화 속에 나타난 닭"
+      },
+      {
+        "title": "유제품의 생산",
+        "start_page": 98,
+        "end_page": 105,
+        "range_text": "98~105 : 유제품의 생산"
+      },
+      {
+        "title": "양털과 모직물 생산",
+        "start_page": 106,
+        "end_page": 109,
+        "range_text": "106~109 : 양털과 모직물 생산"
+      },
+      {
+        "title": "소와 우경",
+        "start_page": 110,
+        "end_page": 114,
+        "range_text": "110~114 : 소와 우경"
+      },
+      {
+        "title": "말과 전차",
+        "start_page": 115,
+        "end_page": 122,
+        "range_text": "115~122 : 말과 전차"
+      },
+      {
+        "title": "한국의 역참 제도",
+        "start_page": 123,
+        "end_page": 125,
+        "range_text": "123~125 : 한국의 역참 제도"
+      },
+      {
+        "title": "잉여생산물과 사유재산",
+        "start_page": 126,
+        "end_page": 133,
+        "range_text": "126~133 : 잉여생산물과 사유재산"
+      },
+      {
+        "title": "성직자, 장인, 군인",
+        "start_page": 134,
+        "end_page": 141,
+        "range_text": "134~141 : 성직자, 장인, 군인"
+      },
+      {
+        "title": "법률가와 관리",
+        "start_page": 142,
+        "end_page": 146,
+        "range_text": "142~146 : 법률가와 관리"
+      },
+      {
+        "title": "도시와 국가의 발전",
+        "start_page": 147,
+        "end_page": 150,
+        "range_text": "147~150 : 도시와 국가의 발전"
+      },
+      {
+        "title": "스톤헨지",
+        "start_page": 151,
+        "end_page": 153,
+        "range_text": "151~153 : 스톤헨지"
+      },
+      {
+        "title": "인구 증가와 경작지의 확대",
+        "start_page": 154,
+        "end_page": 159,
+        "range_text": "154~159 : 인구 증가와 경작지의 확대"
+      },
+      {
+        "title": "새로운 동력 개발",
+        "start_page": 160,
+        "end_page": 164,
+        "range_text": "160~164 : 새로운 동력 개발"
+      },
+      {
+        "title": "콜럼버스의 교환",
+        "start_page": 165,
+        "end_page": 168,
+        "range_text": "165~168 : 콜럼버스의 교환"
+      },
+      {
+        "title": "면화와 설탕 플랜테이션",
+        "start_page": 169,
+        "end_page": 176,
+        "range_text": "169~176 : 면화와 설탕 플랜테이션"
+      },
+      {
+        "title": "상품작물과 자본축적",
+        "start_page": 177,
+        "end_page": 182,
+        "range_text": "177~182 : 상품작물과 자본축적"
+      },
+      {
+        "title": "농경의 기계화",
+        "start_page": 183,
+        "end_page": 188,
+        "range_text": "183~188 : 농경의 기계화"
+      },
+      {
+        "title": "현대사회의 농경과 환경문제",
+        "start_page": 189,
+        "end_page": 197,
+        "range_text": "189~197 : 현대사회의 농경과 환경문제"
+      },
+      {
+        "title": "유전공학과 새로운 식량",
+        "start_page": 198,
+        "end_page": 199,
+        "range_text": "198~199 : 유전공학과 새로운 식량"
+      },
+      {
+        "title": "도시 농경",
+        "start_page": 200,
+        "end_page": 204,
+        "range_text": "200~204 : 도시 농경"
+      },
+      {
+        "title": "농경의 자동화",
+        "start_page": 205,
+        "end_page": 206,
+        "range_text": "205~206 : 농경의 자동화"
+      },
+      {
+        "title": "인간과 환경의 공존",
+        "start_page": 207,
+        "end_page": 210,
+        "range_text": "207~210 : 인간과 환경의 공존"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '농경의 시작'",
+        "start_page": 211,
+        "end_page": 214,
+        "range_text": "211~214 : 빅히스토리의 관점으로 본 '농경의 시작'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 215,
+        "end_page": 215,
+        "range_text": "215~215 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 216,
+        "end_page": 226,
+        "range_text": "216~226 : 찾아보기"
+      }
+    ]
+  },
+  "13-Content.pdf": {
+    "filename": "13-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/13-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "도시는 어떻게 발전했을까?",
+        "start_page": 21,
+        "end_page": 27,
+        "range_text": "21~27 : 도시는 어떻게 발전했을까?"
+      },
+      {
+        "title": "메소포타미아의 도시들",
+        "start_page": 28,
+        "end_page": 33,
+        "range_text": "28~33 : 메소포타미아의 도시들"
+      },
+      {
+        "title": "신을 위한 도시",
+        "start_page": 34,
+        "end_page": 38,
+        "range_text": "34~38 : 신을 위한 도시"
+      },
+      {
+        "title": "불평등한 사회 구조",
+        "start_page": 39,
+        "end_page": 45,
+        "range_text": "39~45 : 불평등한 사회 구조"
+      },
+      {
+        "title": "최초의 지식 체계, 문자와 달력",
+        "start_page": 46,
+        "end_page": 50,
+        "range_text": "46~50 : 최초의 지식 체계, 문자와 달력"
+      },
+      {
+        "title": "도시국가의 변천과 제국의 탄생",
+        "start_page": 51,
+        "end_page": 54,
+        "range_text": "51~54 : 도시국가의 변천과 제국의 탄생"
+      },
+      {
+        "title": "피라미드는 하루아침에 만들어지지 않았다",
+        "start_page": 55,
+        "end_page": 57,
+        "range_text": "55~57 : 피라미드는 하루아침에 만들어지지 않았다"
+      },
+      {
+        "title": "최초의 메갈로시티 로마",
+        "start_page": 58,
+        "end_page": 63,
+        "range_text": "58~63 : 최초의 메갈로시티 로마"
+      },
+      {
+        "title": "수도의 탄생",
+        "start_page": 64,
+        "end_page": 69,
+        "range_text": "64~69 : 수도의 탄생"
+      },
+      {
+        "title": "황제를 위한 도시",
+        "start_page": 70,
+        "end_page": 73,
+        "range_text": "70~73 : 황제를 위한 도시"
+      },
+      {
+        "title": "관용의 도시",
+        "start_page": 74,
+        "end_page": 79,
+        "range_text": "74~79 : 관용의 도시"
+      },
+      {
+        "title": "지혜의 전당",
+        "start_page": 80,
+        "end_page": 83,
+        "range_text": "80~83 : 지혜의 전당"
+      },
+      {
+        "title": "수도의 쇠락과 제국의 쇠퇴",
+        "start_page": 84,
+        "end_page": 85,
+        "range_text": "84~85 : 수도의 쇠락과 제국의 쇠퇴"
+      },
+      {
+        "title": "15세기 아메리카에서 발달한 제국의 도시",
+        "start_page": 86,
+        "end_page": 91,
+        "range_text": "86~91 : 15세기 아메리카에서 발달한 제국의 도시"
+      },
+      {
+        "title": "후추 무역과 상업 도시의 성장",
+        "start_page": 92,
+        "end_page": 104,
+        "range_text": "92~104 : 후추 무역과 상업 도시의 성장"
+      },
+      {
+        "title": "상업 도시들의 연결",
+        "start_page": 105,
+        "end_page": 108,
+        "range_text": "105~108 : 상업 도시들의 연결"
+      },
+      {
+        "title": "초기 근대국가의 형성",
+        "start_page": 109,
+        "end_page": 112,
+        "range_text": "109~112 : 초기 근대국가의 형성"
+      },
+      {
+        "title": "14세기 유럽 최대의 도시 파리",
+        "start_page": 113,
+        "end_page": 115,
+        "range_text": "113~115 : 14세기 유럽 최대의 도시 파리"
+      },
+      {
+        "title": "중국의 상업 도시 카이펑",
+        "start_page": 116,
+        "end_page": 119,
+        "range_text": "116~119 : 중국의 상업 도시 카이펑"
+      },
+      {
+        "title": "교역 도시의 형성",
+        "start_page": 120,
+        "end_page": 128,
+        "range_text": "120~128 : 교역 도시의 형성"
+      },
+      {
+        "title": "요새화된 도시",
+        "start_page": 129,
+        "end_page": 135,
+        "range_text": "129~135 : 요새화된 도시"
+      },
+      {
+        "title": "크리스트교의 전파",
+        "start_page": 136,
+        "end_page": 141,
+        "range_text": "136~141 : 크리스트교의 전파"
+      },
+      {
+        "title": "혼합 문화와 사회 변화",
+        "start_page": 142,
+        "end_page": 147,
+        "range_text": "142~147 : 혼합 문화와 사회 변화"
+      },
+      {
+        "title": "정화의 항해",
+        "start_page": 148,
+        "end_page": 151,
+        "range_text": "148~151 : 정화의 항해"
+      },
+      {
+        "title": "마젤란과 추장 라푸라푸",
+        "start_page": 152,
+        "end_page": 155,
+        "range_text": "152~155 : 마젤란과 추장 라푸라푸"
+      },
+      {
+        "title": "산업화와 인류세의 시작",
+        "start_page": 156,
+        "end_page": 160,
+        "range_text": "156~160 : 산업화와 인류세의 시작"
+      },
+      {
+        "title": "철도의 등장",
+        "start_page": 161,
+        "end_page": 170,
+        "range_text": "161~170 : 철도의 등장"
+      },
+      {
+        "title": "굴뚝 산업의 발전",
+        "start_page": 171,
+        "end_page": 179,
+        "range_text": "171~179 : 굴뚝 산업의 발전"
+      },
+      {
+        "title": "산업도시의 빛과 그림자",
+        "start_page": 180,
+        "end_page": 185,
+        "range_text": "180~185 : 산업도시의 빛과 그림자"
+      },
+      {
+        "title": "제국주의 시대, 식민 도시의 확장",
+        "start_page": 186,
+        "end_page": 192,
+        "range_text": "186~192 : 제국주의 시대, 식민 도시의 확장"
+      },
+      {
+        "title": "도시와 하수구",
+        "start_page": 193,
+        "end_page": 198,
+        "range_text": "193~198 : 도시와 하수구"
+      },
+      {
+        "title": "메이지유신으로 시작된 일본의 산업화",
+        "start_page": 199,
+        "end_page": 201,
+        "range_text": "199~201 : 메이지유신으로 시작된 일본의 산업화"
+      },
+      {
+        "title": "현대 도시란 무엇일까?",
+        "start_page": 202,
+        "end_page": 207,
+        "range_text": "202~207 : 현대 도시란 무엇일까?"
+      },
+      {
+        "title": "친환경 도시를 향한 노력",
+        "start_page": 208,
+        "end_page": 211,
+        "range_text": "208~211 : 친환경 도시를 향한 노력"
+      },
+      {
+        "title": "미래 도시에 대한 상상",
+        "start_page": 212,
+        "end_page": 216,
+        "range_text": "212~216 : 미래 도시에 대한 상상"
+      },
+      {
+        "title": "뉴욕 시와 할렘",
+        "start_page": 217,
+        "end_page": 220,
+        "range_text": "217~220 : 뉴욕 시와 할렘"
+      },
+      {
+        "title": "도시 브랜드",
+        "start_page": 221,
+        "end_page": 224,
+        "range_text": "221~224 : 도시 브랜드"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '도시와 국가'",
+        "start_page": 225,
+        "end_page": 229,
+        "range_text": "225~229 : 빅히스토리의 관점으로 본 '도시와 국가'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 230,
+        "end_page": 231,
+        "range_text": "230~231 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 232,
+        "end_page": 242,
+        "range_text": "232~242 : 찾아보기"
+      }
+    ]
+  },
+  "14-Content.pdf": {
+    "filename": "14-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/14-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "제국 역사로의 여정",
+        "start_page": 21,
+        "end_page": 25,
+        "range_text": "21~25 : 제국 역사로의 여정"
+      },
+      {
+        "title": "제국이란 무엇인가?",
+        "start_page": 26,
+        "end_page": 28,
+        "range_text": "26~28 : 제국이란 무엇인가?"
+      },
+      {
+        "title": "누가 제국을 만드는가?",
+        "start_page": 29,
+        "end_page": 37,
+        "range_text": "29~37 : 누가 제국을 만드는가?"
+      },
+      {
+        "title": "협력의 길",
+        "start_page": 38,
+        "end_page": 42,
+        "range_text": "38~42 : 협력의 길"
+      },
+      {
+        "title": "연결과 집중",
+        "start_page": 43,
+        "end_page": 49,
+        "range_text": "43~49 : 연결과 집중"
+      },
+      {
+        "title": "불멸의 제국, 페르시아",
+        "start_page": 50,
+        "end_page": 60,
+        "range_text": "50~60 : 불멸의 제국, 페르시아"
+      },
+      {
+        "title": "시민의 제국, 로마",
+        "start_page": 61,
+        "end_page": 77,
+        "range_text": "61~77 : 시민의 제국, 로마"
+      },
+      {
+        "title": "천하 종횡의 제국, 한",
+        "start_page": 78,
+        "end_page": 94,
+        "range_text": "78~94 : 천하 종횡의 제국, 한"
+      },
+      {
+        "title": "아카드, 세계 최초의 제국",
+        "start_page": 95,
+        "end_page": 99,
+        "range_text": "95~99 : 아카드, 세계 최초의 제국"
+      },
+      {
+        "title": "'라일라하일랄라' 이슬람 제국",
+        "start_page": 100,
+        "end_page": 113,
+        "range_text": "100~113 : '라일라하일랄라' 이슬람 제국"
+      },
+      {
+        "title": "비잔틴 제국의 성스러운 지혜",
+        "start_page": 114,
+        "end_page": 127,
+        "range_text": "114~127 : 비잔틴 제국의 성스러운 지혜"
+      },
+      {
+        "title": "당 제국의 국제주의",
+        "start_page": 128,
+        "end_page": 138,
+        "range_text": "128~138 : 당 제국의 국제주의"
+      },
+      {
+        "title": "이슬람 세계의 통합 카바 순례",
+        "start_page": 139,
+        "end_page": 140,
+        "range_text": "139~140 : 이슬람 세계의 통합 카바 순례"
+      },
+      {
+        "title": "크메르 제국",
+        "start_page": 141,
+        "end_page": 146,
+        "range_text": "141~146 : 크메르 제국"
+      },
+      {
+        "title": "몽골 제국",
+        "start_page": 147,
+        "end_page": 161,
+        "range_text": "147~161 : 몽골 제국"
+      },
+      {
+        "title": "무굴 제국",
+        "start_page": 162,
+        "end_page": 172,
+        "range_text": "162~172 : 무굴 제국"
+      },
+      {
+        "title": "오스만 제국",
+        "start_page": 173,
+        "end_page": 187,
+        "range_text": "173~187 : 오스만 제국"
+      },
+      {
+        "title": "마자파히트 제국",
+        "start_page": 188,
+        "end_page": 192,
+        "range_text": "188~192 : 마자파히트 제국"
+      },
+      {
+        "title": "티무르 제국",
+        "start_page": 193,
+        "end_page": 196,
+        "range_text": "193~196 : 티무르 제국"
+      },
+      {
+        "title": "서유럽 해양 제국 포르투갈과 네덜란드",
+        "start_page": 197,
+        "end_page": 206,
+        "range_text": "197~206 : 서유럽 해양 제국 포르투갈과 네덜란드"
+      },
+      {
+        "title": "영국 제국",
+        "start_page": 207,
+        "end_page": 219,
+        "range_text": "207~219 : 영국 제국"
+      },
+      {
+        "title": "두 번의 세계대전과 유럽 제국주의의 운명",
+        "start_page": 220,
+        "end_page": 228,
+        "range_text": "220~228 : 두 번의 세계대전과 유럽 제국주의의 운명"
+      },
+      {
+        "title": "새로운 제국의 시대",
+        "start_page": 229,
+        "end_page": 245,
+        "range_text": "229~245 : 새로운 제국의 시대"
+      },
+      {
+        "title": "지구 사회 공동체를 향하여",
+        "start_page": 246,
+        "end_page": 252,
+        "range_text": "246~252 : 지구 사회 공동체를 향하여"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '제국의 꿈'",
+        "start_page": 253,
+        "end_page": 256,
+        "range_text": "253~256 : 빅히스토리의 관점으로 본 '제국의 꿈'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 257,
+        "end_page": 257,
+        "range_text": "257~257 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 258,
+        "end_page": 268,
+        "range_text": "258~268 : 찾아보기"
+      }
+    ]
+  },
+  "15-Content.pdf": {
+    "filename": "15-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/15-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "세계는 어떻게 연결되었을까?",
+        "start_page": 21,
+        "end_page": 28,
+        "range_text": "21~28 : 세계는 어떻게 연결되었을까?"
+      },
+      {
+        "title": "1 장건의 서역사행",
+        "start_page": 29,
+        "end_page": 39,
+        "range_text": "29~39 : 1 장건의 서역사행"
+      },
+      {
+        "title": "2 옥과 비단 교역",
+        "start_page": 40,
+        "end_page": 46,
+        "range_text": "40~46 : 2 옥과 비단 교역"
+      },
+      {
+        "title": "3 불교의 전파",
+        "start_page": 47,
+        "end_page": 52,
+        "range_text": "47~52 : 3 불교의 전파"
+      },
+      {
+        "title": "4 안토니우스 역병",
+        "start_page": 53,
+        "end_page": 58,
+        "range_text": "53~58 : 4 안토니우스 역병"
+      },
+      {
+        "title": "파르티안 기마 궁술",
+        "start_page": 59,
+        "end_page": 64,
+        "range_text": "59~64 : 파르티안 기마 궁술"
+      },
+      {
+        "title": "5 히팔루스의 계절풍 항해",
+        "start_page": 65,
+        "end_page": 72,
+        "range_text": "65~72 : 5 히팔루스의 계절풍 항해"
+      },
+      {
+        "title": "6 향신료 교역",
+        "start_page": 73,
+        "end_page": 79,
+        "range_text": "73~79 : 6 향신료 교역"
+      },
+      {
+        "title": "7 힌두교의 확산",
+        "start_page": 80,
+        "end_page": 84,
+        "range_text": "80~84 : 7 힌두교의 확산"
+      },
+      {
+        "title": "8 유스티니아누스 역병",
+        "start_page": 85,
+        "end_page": 89,
+        "range_text": "85~89 : 8 유스티니아누스 역병"
+      },
+      {
+        "title": "혜초의 천축국 기행",
+        "start_page": 90,
+        "end_page": 94,
+        "range_text": "90~94 : 혜초의 천축국 기행"
+      },
+      {
+        "title": "바닷길 시대의 선박 건조와 항해술",
+        "start_page": 95,
+        "end_page": 102,
+        "range_text": "95~102 : 바닷길 시대의 선박 건조와 항해술"
+      },
+      {
+        "title": "9 무함마드의 성전",
+        "start_page": 103,
+        "end_page": 112,
+        "range_text": "103~112 : 9 무함마드의 성전"
+      },
+      {
+        "title": "10 낙타 카라반의 황금 교역",
+        "start_page": 113,
+        "end_page": 119,
+        "range_text": "113~119 : 10 낙타 카라반의 황금 교역"
+      },
+      {
+        "title": "11 지식의 통합과 종이의 확산",
+        "start_page": 120,
+        "end_page": 128,
+        "range_text": "120~128 : 11 지식의 통합과 종이의 확산"
+      },
+      {
+        "title": "12 흑사병",
+        "start_page": 129,
+        "end_page": 135,
+        "range_text": "129~135 : 12 흑사병"
+      },
+      {
+        "title": "몽골 제국의 팽창",
+        "start_page": 136,
+        "end_page": 140,
+        "range_text": "136~140 : 몽골 제국의 팽창"
+      },
+      {
+        "title": "도로의 두 얼굴",
+        "start_page": 141,
+        "end_page": 146,
+        "range_text": "141~146 : 도로의 두 얼굴"
+      },
+      {
+        "title": "13 콜럼버스의 탐험",
+        "start_page": 147,
+        "end_page": 158,
+        "range_text": "147~158 : 13 콜럼버스의 탐험"
+      },
+      {
+        "title": "14 감자와 삼각무역",
+        "start_page": 159,
+        "end_page": 163,
+        "range_text": "159~163 : 14 감자와 삼각무역"
+      },
+      {
+        "title": "15 은의 글로벌 교환",
+        "start_page": 164,
+        "end_page": 171,
+        "range_text": "164~171 : 15 은의 글로벌 교환"
+      },
+      {
+        "title": "16 천연두와 황열병",
+        "start_page": 172,
+        "end_page": 179,
+        "range_text": "172~179 : 16 천연두와 황열병"
+      },
+      {
+        "title": "아프리카의 비극 노예무역",
+        "start_page": 180,
+        "end_page": 186,
+        "range_text": "180~186 : 아프리카의 비극 노예무역"
+      },
+      {
+        "title": "바스쿠 다 가마의 인도항로",
+        "start_page": 187,
+        "end_page": 194,
+        "range_text": "187~194 : 바스쿠 다 가마의 인도항로"
+      },
+      {
+        "title": "17 쿡 선장의 태평양 탐험",
+        "start_page": 195,
+        "end_page": 204,
+        "range_text": "195~204 : 17 쿡 선장의 태평양 탐험"
+      },
+      {
+        "title": "18 고래잡이와 양모 교역",
+        "start_page": 205,
+        "end_page": 211,
+        "range_text": "205~211 : 18 고래잡이와 양모 교역"
+      },
+      {
+        "title": "19 태평양 해상 지도의 완성",
+        "start_page": 212,
+        "end_page": 220,
+        "range_text": "212~220 : 19 태평양 해상 지도의 완성"
+      },
+      {
+        "title": "20 매독과 결핵",
+        "start_page": 221,
+        "end_page": 226,
+        "range_text": "221~226 : 20 매독과 결핵"
+      },
+      {
+        "title": "생태계 교란, 회색 전쟁",
+        "start_page": 227,
+        "end_page": 230,
+        "range_text": "227~230 : 생태계 교란, 회색 전쟁"
+      },
+      {
+        "title": "글로벌 네트워크 시대를 연 조선술과 항해술",
+        "start_page": 231,
+        "end_page": 240,
+        "range_text": "231~240 : 글로벌 네트워크 시대를 연 조선술과 항해술"
+      },
+      {
+        "title": "21 교통수단의 발달",
+        "start_page": 241,
+        "end_page": 249,
+        "range_text": "241~249 : 21 교통수단의 발달"
+      },
+      {
+        "title": "22 통신 네트워크의 발달",
+        "start_page": 250,
+        "end_page": 260,
+        "range_text": "250~260 : 22 통신 네트워크의 발달"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '글로벌 네트워크'",
+        "start_page": 261,
+        "end_page": 265,
+        "range_text": "261~265 : 빅히스토리의 관점으로 본 '글로벌 네트워크'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 266,
+        "end_page": 266,
+        "range_text": "266~266 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 267,
+        "end_page": 277,
+        "range_text": "267~277 : 찾아보기"
+      }
+    ]
+  },
+  "16-Content.pdf": {
+    "filename": "16-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/16-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "우리가 기후에 대해 알고 있는 것",
+        "start_page": 21,
+        "end_page": 33,
+        "range_text": "21~33 : 우리가 기후에 대해 알고 있는 것"
+      },
+      {
+        "title": "과거 기후의 복원",
+        "start_page": 34,
+        "end_page": 38,
+        "range_text": "34~38 : 과거 기후의 복원"
+      },
+      {
+        "title": "산소가 없던 시대에서 생명의 대폭발까지",
+        "start_page": 39,
+        "end_page": 40,
+        "range_text": "39~40 : 산소가 없던 시대에서 생명의 대폭발까지"
+      },
+      {
+        "title": "생물 대멸종과 새로운 기회",
+        "start_page": 41,
+        "end_page": 43,
+        "range_text": "41~43 : 생물 대멸종과 새로운 기회"
+      },
+      {
+        "title": "기후시스템의 구성 요소들",
+        "start_page": 44,
+        "end_page": 50,
+        "range_text": "44~50 : 기후시스템의 구성 요소들"
+      },
+      {
+        "title": "얼어붙은 지구",
+        "start_page": 51,
+        "end_page": 61,
+        "range_text": "51~61 : 얼어붙은 지구"
+      },
+      {
+        "title": "불타는 지구와 사라진 여름",
+        "start_page": 62,
+        "end_page": 65,
+        "range_text": "62~65 : 불타는 지구와 사라진 여름"
+      },
+      {
+        "title": "따뜻해지는 지구와 해수면 상승",
+        "start_page": 66,
+        "end_page": 72,
+        "range_text": "66~72 : 따뜻해지는 지구와 해수면 상승"
+      },
+      {
+        "title": "멈춰 버린 바다",
+        "start_page": 73,
+        "end_page": 77,
+        "range_text": "73~77 : 멈춰 버린 바다"
+      },
+      {
+        "title": "엘니뇨-남방진동",
+        "start_page": 78,
+        "end_page": 84,
+        "range_text": "78~84 : 엘니뇨-남방진동"
+      },
+      {
+        "title": "추위에 강한 꽃, 드라이아스",
+        "start_page": 85,
+        "end_page": 87,
+        "range_text": "85~87 : 추위에 강한 꽃, 드라이아스"
+      },
+      {
+        "title": "씨앗을 심고 동물을 길들이는",
+        "start_page": 88,
+        "end_page": 89,
+        "range_text": "88~89 : 씨앗을 심고 동물을 길들이는"
+      },
+      {
+        "title": "쾨펜의 기후 구분",
+        "start_page": 90,
+        "end_page": 92,
+        "range_text": "90~92 : 쾨펜의 기후 구분"
+      },
+      {
+        "title": "1만 년 동안의 기후변화",
+        "start_page": 93,
+        "end_page": 96,
+        "range_text": "93~96 : 1만 년 동안의 기후변화"
+      },
+      {
+        "title": "인류 문명의 여명기",
+        "start_page": 97,
+        "end_page": 102,
+        "range_text": "97~102 : 인류 문명의 여명기"
+      },
+      {
+        "title": "한랭건조기, 초기 지중해 문명의 쇠퇴",
+        "start_page": 103,
+        "end_page": 107,
+        "range_text": "103~107 : 한랭건조기, 초기 지중해 문명의 쇠퇴"
+      },
+      {
+        "title": "로마온난기, 대제국과 비단길의 연결",
+        "start_page": 108,
+        "end_page": 114,
+        "range_text": "108~114 : 로마온난기, 대제국과 비단길의 연결"
+      },
+      {
+        "title": "300년의 가뭄과 마야문명의 붕괴",
+        "start_page": 115,
+        "end_page": 118,
+        "range_text": "115~118 : 300년의 가뭄과 마야문명의 붕괴"
+      },
+      {
+        "title": "기후최적기가 보내는 이상 신호",
+        "start_page": 119,
+        "end_page": 128,
+        "range_text": "119~128 : 기후최적기가 보내는 이상 신호"
+      },
+      {
+        "title": "백두산과 라키 화산",
+        "start_page": 129,
+        "end_page": 135,
+        "range_text": "129~135 : 백두산과 라키 화산"
+      },
+      {
+        "title": "데드선과 대양 컨베이어벨트의 오작동",
+        "start_page": 136,
+        "end_page": 139,
+        "range_text": "136~139 : 데드선과 대양 컨베이어벨트의 오작동"
+      },
+      {
+        "title": "탐보라 화산 폭발과 여름이 없는 해",
+        "start_page": 140,
+        "end_page": 143,
+        "range_text": "140~143 : 탐보라 화산 폭발과 여름이 없는 해"
+      },
+      {
+        "title": "가혹한 시대를 헤쳐 나가는 돌파구",
+        "start_page": 144,
+        "end_page": 149,
+        "range_text": "144~149 : 가혹한 시대를 헤쳐 나가는 돌파구"
+      },
+      {
+        "title": "거대한 가속의 시대",
+        "start_page": 150,
+        "end_page": 158,
+        "range_text": "150~158 : 거대한 가속의 시대"
+      },
+      {
+        "title": "한반도를 덮친 한파",
+        "start_page": 159,
+        "end_page": 165,
+        "range_text": "159~165 : 한반도를 덮친 한파"
+      },
+      {
+        "title": "지구온난화는 전 지구적 비상사태",
+        "start_page": 166,
+        "end_page": 169,
+        "range_text": "166~169 : 지구온난화는 전 지구적 비상사태"
+      },
+      {
+        "title": "1.5도의 위기와 기회",
+        "start_page": 170,
+        "end_page": 173,
+        "range_text": "170~173 : 1.5도의 위기와 기회"
+      },
+      {
+        "title": "거대한 위험을 대하는 자세",
+        "start_page": 174,
+        "end_page": 175,
+        "range_text": "174~175 : 거대한 위험을 대하는 자세"
+      },
+      {
+        "title": "우리는 알고 있다",
+        "start_page": 176,
+        "end_page": 182,
+        "range_text": "176~182 : 우리는 알고 있다"
+      },
+      {
+        "title": "미세먼지와 불편한 진실",
+        "start_page": 183,
+        "end_page": 188,
+        "range_text": "183~188 : 미세먼지와 불편한 진실"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '기후와 인류 역사'",
+        "start_page": 189,
+        "end_page": 197,
+        "range_text": "189~197 : 빅히스토리의 관점으로 본 '기후와 인류 역사'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 198,
+        "end_page": 200,
+        "range_text": "198~200 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 201,
+        "end_page": 211,
+        "range_text": "201~211 : 찾아보기"
+      }
+    ]
+  },
+  "17-Content.pdf": {
+    "filename": "17-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/17-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "인구 증가해도 문제, 감소해도 문제",
+        "start_page": 21,
+        "end_page": 27,
+        "range_text": "21~27 : 인구 증가해도 문제, 감소해도 문제"
+      },
+      {
+        "title": "인구란 무엇일까?",
+        "start_page": 28,
+        "end_page": 31,
+        "range_text": "28~31 : 인구란 무엇일까?"
+      },
+      {
+        "title": "인구 규모의 경제학",
+        "start_page": 32,
+        "end_page": 37,
+        "range_text": "32~37 : 인구 규모의 경제학"
+      },
+      {
+        "title": "인구조사의 변천사",
+        "start_page": 38,
+        "end_page": 47,
+        "range_text": "38~47 : 인구조사의 변천사"
+      },
+      {
+        "title": "맬서스의 인구론",
+        "start_page": 48,
+        "end_page": 53,
+        "range_text": "48~53 : 맬서스의 인구론"
+      },
+      {
+        "title": "인구 증가 전략",
+        "start_page": 54,
+        "end_page": 63,
+        "range_text": "54~63 : 인구 증가 전략"
+      },
+      {
+        "title": "환경 변화에 따른 선택과 적응",
+        "start_page": 64,
+        "end_page": 69,
+        "range_text": "64~69 : 환경 변화에 따른 선택과 적응"
+      },
+      {
+        "title": "사회 변화와 대규모 인구 이동",
+        "start_page": 70,
+        "end_page": 77,
+        "range_text": "70~77 : 사회 변화와 대규모 인구 이동"
+      },
+      {
+        "title": "인위적인 인구 통제",
+        "start_page": 78,
+        "end_page": 83,
+        "range_text": "78~83 : 인위적인 인구 통제"
+      },
+      {
+        "title": "기술의 발전",
+        "start_page": 84,
+        "end_page": 91,
+        "range_text": "84~91 : 기술의 발전"
+      },
+      {
+        "title": "사냥꾼에서 농부로",
+        "start_page": 92,
+        "end_page": 94,
+        "range_text": "92~94 : 사냥꾼에서 농부로"
+      },
+      {
+        "title": "농경 공동체의 성장",
+        "start_page": 95,
+        "end_page": 104,
+        "range_text": "95~104 : 농경 공동체의 성장"
+      },
+      {
+        "title": "인구 증가와 산업화",
+        "start_page": 105,
+        "end_page": 114,
+        "range_text": "105~114 : 인구 증가와 산업화"
+      },
+      {
+        "title": "이촌향도, 거대 도시의 두 얼굴",
+        "start_page": 115,
+        "end_page": 120,
+        "range_text": "115~120 : 이촌향도, 거대 도시의 두 얼굴"
+      },
+      {
+        "title": "대기근과 구황작물",
+        "start_page": 121,
+        "end_page": 133,
+        "range_text": "121~133 : 대기근과 구황작물"
+      },
+      {
+        "title": "조류인플루엔자, 인간이 자초한 바이러스의 역습",
+        "start_page": 134,
+        "end_page": 138,
+        "range_text": "134~138 : 조류인플루엔자, 인간이 자초한 바이러스의 역습"
+      },
+      {
+        "title": "1918년 인플루엔자, 전쟁보다 더 파괴적인 전염병",
+        "start_page": 139,
+        "end_page": 144,
+        "range_text": "139~144 : 1918년 인플루엔자, 전쟁보다 더 파괴적인 전염병"
+      },
+      {
+        "title": "콜레라, 전쟁과 산업화가 키워 낸 죽음의 화신",
+        "start_page": 145,
+        "end_page": 153,
+        "range_text": "145~153 : 콜레라, 전쟁과 산업화가 키워 낸 죽음의 화신"
+      },
+      {
+        "title": "흑사병, 역사상 최악의 재앙",
+        "start_page": 154,
+        "end_page": 158,
+        "range_text": "154~158 : 흑사병, 역사상 최악의 재앙"
+      },
+      {
+        "title": "천연두, 두 개의 제국을 삼킨 전염병",
+        "start_page": 159,
+        "end_page": 165,
+        "range_text": "159~165 : 천연두, 두 개의 제국을 삼킨 전염병"
+      },
+      {
+        "title": "전염병을 막기 위한 노력과 인구 증가",
+        "start_page": 166,
+        "end_page": 175,
+        "range_text": "166~175 : 전염병을 막기 위한 노력과 인구 증가"
+      },
+      {
+        "title": "세균과 바이러스",
+        "start_page": 176,
+        "end_page": 181,
+        "range_text": "176~181 : 세균과 바이러스"
+      },
+      {
+        "title": "인구 변동을 예측하는 방법",
+        "start_page": 182,
+        "end_page": 186,
+        "range_text": "182~186 : 인구 변동을 예측하는 방법"
+      },
+      {
+        "title": "인구 증가가 문제일까, 감소가 문제일까?",
+        "start_page": 187,
+        "end_page": 195,
+        "range_text": "187~195 : 인구 증가가 문제일까, 감소가 문제일까?"
+      },
+      {
+        "title": "100억 명이 함께 살 수 있는 지구",
+        "start_page": 196,
+        "end_page": 206,
+        "range_text": "196~206 : 100억 명이 함께 살 수 있는 지구"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '인구 폭발과 전염병'",
+        "start_page": 207,
+        "end_page": 212,
+        "range_text": "207~212 : 빅히스토리의 관점으로 본 '인구 폭발과 전염병'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 213,
+        "end_page": 214,
+        "range_text": "213~214 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 215,
+        "end_page": 225,
+        "range_text": "215~225 : 찾아보기"
+      }
+    ]
+  },
+  "18-Content.pdf": {
+    "filename": "18-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/18-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "인류 문명과 과학은 어떻게 진화하는가?",
+        "start_page": 21,
+        "end_page": 29,
+        "range_text": "21~29 : 인류 문명과 과학은 어떻게 진화하는가?"
+      },
+      {
+        "title": "최초의 황금기를 향해",
+        "start_page": 30,
+        "end_page": 43,
+        "range_text": "30~43 : 최초의 황금기를 향해"
+      },
+      {
+        "title": "진리 추구, 개방성, 그리고 이슬람 제국의 과학 발전",
+        "start_page": 44,
+        "end_page": 58,
+        "range_text": "44~58 : 진리 추구, 개방성, 그리고 이슬람 제국의 과학 발전"
+      },
+      {
+        "title": "\"유레카\"가 다가 아니다",
+        "start_page": 59,
+        "end_page": 63,
+        "range_text": "59~63 : \"유레카\"가 다가 아니다"
+      },
+      {
+        "title": "현대 화학의 기초, 이슬람 화학",
+        "start_page": 64,
+        "end_page": 69,
+        "range_text": "64~69 : 현대 화학의 기초, 이슬람 화학"
+      },
+      {
+        "title": "유럽 사회의 발전과 유럽 과학의 씨앗",
+        "start_page": 70,
+        "end_page": 81,
+        "range_text": "70~81 : 유럽 사회의 발전과 유럽 과학의 씨앗"
+      },
+      {
+        "title": "천체 운행의 원리를 찾아서",
+        "start_page": 82,
+        "end_page": 93,
+        "range_text": "82~93 : 천체 운행의 원리를 찾아서"
+      },
+      {
+        "title": "힘과 운동의 원리를 찾아서",
+        "start_page": 94,
+        "end_page": 106,
+        "range_text": "94~106 : 힘과 운동의 원리를 찾아서"
+      },
+      {
+        "title": "빛이란 무엇인가?",
+        "start_page": 107,
+        "end_page": 110,
+        "range_text": "107~110 : 빛이란 무엇인가?"
+      },
+      {
+        "title": "과학혁명의 구조",
+        "start_page": 111,
+        "end_page": 117,
+        "range_text": "111~117 : 과학혁명의 구조"
+      },
+      {
+        "title": "방적기와 증기기관",
+        "start_page": 118,
+        "end_page": 125,
+        "range_text": "118~125 : 방적기와 증기기관"
+      },
+      {
+        "title": "에너지와 엔트로피의 원리를 찾아서",
+        "start_page": 126,
+        "end_page": 131,
+        "range_text": "126~131 : 에너지와 엔트로피의 원리를 찾아서"
+      },
+      {
+        "title": "전자기력의 원리를 찾아서",
+        "start_page": 132,
+        "end_page": 145,
+        "range_text": "132~145 : 전자기력의 원리를 찾아서"
+      },
+      {
+        "title": "무질서도와 엔트로피",
+        "start_page": 146,
+        "end_page": 149,
+        "range_text": "146~149 : 무질서도와 엔트로피"
+      },
+      {
+        "title": "마이클 패러데이",
+        "start_page": 150,
+        "end_page": 152,
+        "range_text": "150~152 : 마이클 패러데이"
+      },
+      {
+        "title": "지그문트 프로이트와 에너지",
+        "start_page": 153,
+        "end_page": 156,
+        "range_text": "153~156 : 지그문트 프로이트와 에너지"
+      },
+      {
+        "title": "상대성의 세계와 상대성이론",
+        "start_page": 157,
+        "end_page": 167,
+        "range_text": "157~167 : 상대성의 세계와 상대성이론"
+      },
+      {
+        "title": "양자의 세계와 양자역학",
+        "start_page": 168,
+        "end_page": 178,
+        "range_text": "168~178 : 양자의 세계와 양자역학"
+      },
+      {
+        "title": "DNA를 향한 여정",
+        "start_page": 179,
+        "end_page": 192,
+        "range_text": "179~192 : DNA를 향한 여정"
+      },
+      {
+        "title": "핵물리학의 발자취",
+        "start_page": 193,
+        "end_page": 195,
+        "range_text": "193~195 : 핵물리학의 발자취"
+      },
+      {
+        "title": "제국주의와 아시아의 과학",
+        "start_page": 196,
+        "end_page": 200,
+        "range_text": "196~200 : 제국주의와 아시아의 과학"
+      },
+      {
+        "title": "병원에서",
+        "start_page": 201,
+        "end_page": 203,
+        "range_text": "201~203 : 병원에서"
+      },
+      {
+        "title": "비행기에서",
+        "start_page": 204,
+        "end_page": 205,
+        "range_text": "204~205 : 비행기에서"
+      },
+      {
+        "title": "전자 제품 매장에서",
+        "start_page": 206,
+        "end_page": 209,
+        "range_text": "206~209 : 전자 제품 매장에서"
+      },
+      {
+        "title": "자기 파괴적이고 지구 파괴적인",
+        "start_page": 210,
+        "end_page": 214,
+        "range_text": "210~214 : 자기 파괴적이고 지구 파괴적인"
+      },
+      {
+        "title": "SF로 본 미래의 과학",
+        "start_page": 215,
+        "end_page": 220,
+        "range_text": "215~220 : SF로 본 미래의 과학"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '과학과 기술의 혁명'",
+        "start_page": 221,
+        "end_page": 225,
+        "range_text": "221~225 : 빅히스토리의 관점으로 본 '과학과 기술의 혁명'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 226,
+        "end_page": 226,
+        "range_text": "226~226 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 227,
+        "end_page": 237,
+        "range_text": "227~237 : 찾아보기"
+      }
+    ]
+  },
+  "19-Content.pdf": {
+    "filename": "19-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/19-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "엔진을 장착한 세계",
+        "start_page": 21,
+        "end_page": 28,
+        "range_text": "21~28 : 엔진을 장착한 세계"
+      },
+      {
+        "title": "먹이그물과 에너지의 이동",
+        "start_page": 29,
+        "end_page": 31,
+        "range_text": "29~31 : 먹이그물과 에너지의 이동"
+      },
+      {
+        "title": "에너지를 이용하는 종",
+        "start_page": 32,
+        "end_page": 34,
+        "range_text": "32~34 : 에너지를 이용하는 종"
+      },
+      {
+        "title": "에너지 혁신, 불의 사용",
+        "start_page": 35,
+        "end_page": 37,
+        "range_text": "35~37 : 에너지 혁신, 불의 사용"
+      },
+      {
+        "title": "새로운 시대, 농경 사회",
+        "start_page": 38,
+        "end_page": 49,
+        "range_text": "38~49 : 새로운 시대, 농경 사회"
+      },
+      {
+        "title": "몸으로 쓴 문명의 질주",
+        "start_page": 50,
+        "end_page": 54,
+        "range_text": "50~54 : 몸으로 쓴 문명의 질주"
+      },
+      {
+        "title": "시·공간을 뛰어넘는 의사 전달 도구",
+        "start_page": 55,
+        "end_page": 64,
+        "range_text": "55~64 : 시·공간을 뛰어넘는 의사 전달 도구"
+      },
+      {
+        "title": "기계는 지치지 않는다",
+        "start_page": 65,
+        "end_page": 73,
+        "range_text": "65~73 : 기계는 지치지 않는다"
+      },
+      {
+        "title": "땅을 파면 돈이 나온다",
+        "start_page": 74,
+        "end_page": 82,
+        "range_text": "74~82 : 땅을 파면 돈이 나온다"
+      },
+      {
+        "title": "흥선대원군과 증기선",
+        "start_page": 83,
+        "end_page": 87,
+        "range_text": "83~87 : 흥선대원군과 증기선"
+      },
+      {
+        "title": "가까워진 세계, 늘어나는 교역",
+        "start_page": 88,
+        "end_page": 92,
+        "range_text": "88~92 : 가까워진 세계, 늘어나는 교역"
+      },
+      {
+        "title": "통신 기술의 혁신적 발달",
+        "start_page": 93,
+        "end_page": 97,
+        "range_text": "93~97 : 통신 기술의 혁신적 발달"
+      },
+      {
+        "title": "산업도시의 출현과 달라진 세계",
+        "start_page": 98,
+        "end_page": 100,
+        "range_text": "98~100 : 산업도시의 출현과 달라진 세계"
+      },
+      {
+        "title": "인구의 변화와 에너지 소비의 폭발적 증가",
+        "start_page": 101,
+        "end_page": 105,
+        "range_text": "101~105 : 인구의 변화와 에너지 소비의 폭발적 증가"
+      },
+      {
+        "title": "세계를 주도하는 세력",
+        "start_page": 106,
+        "end_page": 108,
+        "range_text": "106~108 : 세계를 주도하는 세력"
+      },
+      {
+        "title": "러다이트운동",
+        "start_page": 109,
+        "end_page": 110,
+        "range_text": "109~110 : 러다이트운동"
+      },
+      {
+        "title": "전쟁이 만들어 낸 에너지 기술",
+        "start_page": 111,
+        "end_page": 112,
+        "range_text": "111~112 : 전쟁이 만들어 낸 에너지 기술"
+      },
+      {
+        "title": "누구나, 언제나, 어디서나 스마트 세상",
+        "start_page": 113,
+        "end_page": 116,
+        "range_text": "113~116 : 누구나, 언제나, 어디서나 스마트 세상"
+      },
+      {
+        "title": "치열한 경쟁으로 시작된 전기의 시대",
+        "start_page": 117,
+        "end_page": 119,
+        "range_text": "117~119 : 치열한 경쟁으로 시작된 전기의 시대"
+      },
+      {
+        "title": "전기로 움직이는 세계",
+        "start_page": 120,
+        "end_page": 123,
+        "range_text": "120~123 : 전기로 움직이는 세계"
+      },
+      {
+        "title": "엄청난 효율의 에너지원, 원자력",
+        "start_page": 124,
+        "end_page": 128,
+        "range_text": "124~128 : 엄청난 효율의 에너지원, 원자력"
+      },
+      {
+        "title": "불을 붙이지 않아도 되는 신재생에너지",
+        "start_page": 129,
+        "end_page": 134,
+        "range_text": "129~134 : 불을 붙이지 않아도 되는 신재생에너지"
+      },
+      {
+        "title": "기술이 좌우하는 시대",
+        "start_page": 135,
+        "end_page": 139,
+        "range_text": "135~139 : 기술이 좌우하는 시대"
+      },
+      {
+        "title": "바이오 연료의 명암",
+        "start_page": 140,
+        "end_page": 143,
+        "range_text": "140~143 : 바이오 연료의 명암"
+      },
+      {
+        "title": "4차 산업혁명, 인공지능의 시대",
+        "start_page": 144,
+        "end_page": 151,
+        "range_text": "144~151 : 4차 산업혁명, 인공지능의 시대"
+      },
+      {
+        "title": "숨가빠진 지구",
+        "start_page": 152,
+        "end_page": 156,
+        "range_text": "152~156 : 숨가빠진 지구"
+      },
+      {
+        "title": "오염은 대상을 가리지 않는다",
+        "start_page": 157,
+        "end_page": 161,
+        "range_text": "157~161 : 오염은 대상을 가리지 않는다"
+      },
+      {
+        "title": "환경의 부메랑",
+        "start_page": 162,
+        "end_page": 167,
+        "range_text": "162~167 : 환경의 부메랑"
+      },
+      {
+        "title": "공존하기 위하여",
+        "start_page": 168,
+        "end_page": 173,
+        "range_text": "168~173 : 공존하기 위하여"
+      },
+      {
+        "title": "구슬이 서말이라도 꿰어야 보배",
+        "start_page": 174,
+        "end_page": 179,
+        "range_text": "174~179 : 구슬이 서말이라도 꿰어야 보배"
+      },
+      {
+        "title": "많아도 탈, 적어도 탈",
+        "start_page": 180,
+        "end_page": 197,
+        "range_text": "180~197 : 많아도 탈, 적어도 탈"
+      },
+      {
+        "title": "세계는 한 지붕 아래",
+        "start_page": 198,
+        "end_page": 198,
+        "range_text": "198~198 : 세계는 한 지붕 아래"
+      },
+      {
+        "title": "뭉치면 살고 흩어지면 죽는다",
+        "start_page": 199,
+        "end_page": 206,
+        "range_text": "199~206 : 뭉치면 살고 흩어지면 죽는다"
+      },
+      {
+        "title": "변종 바이러스의 위협",
+        "start_page": 207,
+        "end_page": 208,
+        "range_text": "207~208 : 변종 바이러스의 위협"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 ‘산업화와 인류세’",
+        "start_page": 209,
+        "end_page": 215,
+        "range_text": "209~215 : 빅히스토리의 관점으로 본 ‘산업화와 인류세’"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 216,
+        "end_page": 217,
+        "range_text": "216~217 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 218,
+        "end_page": 228,
+        "range_text": "218~228 : 찾아보기"
+      }
+    ]
+  },
+  "20-Content.pdf": {
+    "filename": "20-Content.pdf",
+    "gcs_uri": "gs://20set-bighistory-raw/20-Content.pdf",
+    "toc": [
+      {
+        "title": "서문",
+        "start_page": 5,
+        "end_page": 10,
+        "range_text": "5~10 : 서문"
+      },
+      {
+        "title": "추천사",
+        "start_page": 11,
+        "end_page": 13,
+        "range_text": "11~13 : 추천사"
+      },
+      {
+        "title": "타임라인",
+        "start_page": 14,
+        "end_page": 20,
+        "range_text": "14~20 : 타임라인"
+      },
+      {
+        "title": "앞으로 일어날 일들을 미리 알 수 있다면",
+        "start_page": 21,
+        "end_page": 29,
+        "range_text": "21~29 : 앞으로 일어날 일들을 미리 알 수 있다면"
+      },
+      {
+        "title": "우리는 왜 미래를 궁금해할까?",
+        "start_page": 30,
+        "end_page": 41,
+        "range_text": "30~41 : 우리는 왜 미래를 궁금해할까?"
+      },
+      {
+        "title": "미래를 예측하는 방법은 무엇일까?",
+        "start_page": 42,
+        "end_page": 59,
+        "range_text": "42~59 : 미래를 예측하는 방법은 무엇일까?"
+      },
+      {
+        "title": "불확실한 미래를 상상하다",
+        "start_page": 60,
+        "end_page": 67,
+        "range_text": "60~67 : 불확실한 미래를 상상하다"
+      },
+      {
+        "title": "급속도로 증가한 에너지 소비가 만든 인류세",
+        "start_page": 68,
+        "end_page": 89,
+        "range_text": "68~89 : 급속도로 증가한 에너지 소비가 만든 인류세"
+      },
+      {
+        "title": "신재생에너지 시대는 과연 열릴 것인가?",
+        "start_page": 90,
+        "end_page": 103,
+        "range_text": "90~103 : 신재생에너지 시대는 과연 열릴 것인가?"
+      },
+      {
+        "title": "새로운 커뮤니케이션과 사회의 진화",
+        "start_page": 104,
+        "end_page": 112,
+        "range_text": "104~112 : 새로운 커뮤니케이션과 사회의 진화"
+      },
+      {
+        "title": "야누스의 얼굴을 한 생명과학 기술",
+        "start_page": 113,
+        "end_page": 121,
+        "range_text": "113~121 : 야누스의 얼굴을 한 생명과학 기술"
+      },
+      {
+        "title": "인간 vs 인공지능",
+        "start_page": 122,
+        "end_page": 129,
+        "range_text": "122~129 : 인간 vs 인공지능"
+      },
+      {
+        "title": "사물 인터넷 세상",
+        "start_page": 130,
+        "end_page": 134,
+        "range_text": "130~134 : 사물 인터넷 세상"
+      },
+      {
+        "title": "인간은 점점 기계가 되고 기계는 점점 인간이 된다",
+        "start_page": 135,
+        "end_page": 147,
+        "range_text": "135~147 : 인간은 점점 기계가 되고 기계는 점점 인간이 된다"
+      },
+      {
+        "title": "자연의 이름으로 문명의 이름으로",
+        "start_page": 148,
+        "end_page": 172,
+        "range_text": "148~172 : 자연의 이름으로 문명의 이름으로"
+      },
+      {
+        "title": "예고 없이 지구로 돌진하는 외부의 위협",
+        "start_page": 173,
+        "end_page": 187,
+        "range_text": "173~187 : 예고 없이 지구로 돌진하는 외부의 위협"
+      },
+      {
+        "title": "지구가 파괴되는 방법",
+        "start_page": 188,
+        "end_page": 191,
+        "range_text": "188~191 : 지구가 파괴되는 방법"
+      },
+      {
+        "title": "태양의 운명",
+        "start_page": 192,
+        "end_page": 196,
+        "range_text": "192~196 : 태양의 운명"
+      },
+      {
+        "title": "붉은 태양이 집어삼킨 지구",
+        "start_page": 197,
+        "end_page": 200,
+        "range_text": "197~200 : 붉은 태양이 집어삼킨 지구"
+      },
+      {
+        "title": "태양의 후예",
+        "start_page": 201,
+        "end_page": 204,
+        "range_text": "201~204 : 태양의 후예"
+      },
+      {
+        "title": "우리 은하와 안드로메다 은하의 충돌",
+        "start_page": 205,
+        "end_page": 213,
+        "range_text": "205~213 : 우리 은하와 안드로메다 은하의 충돌"
+      },
+      {
+        "title": "우주의 피날레",
+        "start_page": 214,
+        "end_page": 222,
+        "range_text": "214~222 : 우주의 피날레"
+      },
+      {
+        "title": "또 다른 우주에서",
+        "start_page": 223,
+        "end_page": 226,
+        "range_text": "223~226 : 또 다른 우주에서"
+      },
+      {
+        "title": "빅히스토리의 관점으로 본 '인류의 미래와 우주의 최후'",
+        "start_page": 227,
+        "end_page": 233,
+        "range_text": "227~233 : 빅히스토리의 관점으로 본 '인류의 미래와 우주의 최후'"
+      },
+      {
+        "title": "더 읽어보기",
+        "start_page": 234,
+        "end_page": 235,
+        "range_text": "234~235 : 더 읽어보기"
+      },
+      {
+        "title": "찾아보기",
+        "start_page": 236,
+        "end_page": 246,
+        "range_text": "236~246 : 찾아보기"
+      }
+    ]
+  }
+}

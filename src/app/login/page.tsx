@@ -8,6 +8,7 @@ import { Bot, Loader2 } from 'lucide-react'
 export default function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [name, setName] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [isSignUp, setIsSignUp] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -26,6 +27,9 @@ export default function LoginPage() {
                     password,
                     options: {
                         emailRedirectTo: `${location.origin}/auth/callback`,
+                        data: {
+                            full_name: name,
+                        },
                     },
                 })
                 if (error) throw error
@@ -66,12 +70,25 @@ export default function LoginPage() {
                 </div>
 
                 <form onSubmit={handleAuth} className="space-y-4">
+                    {isSignUp && (
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700">이름</label>
+                            <input
+                                type="text"
+                                required
+                                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-gray-900"
+                                placeholder="홍길동"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </div>
+                    )}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-gray-700">이메일</label>
                         <input
                             type="email"
                             required
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-gray-900"
                             placeholder="name@example.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -82,7 +99,7 @@ export default function LoginPage() {
                         <input
                             type="password"
                             required
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-gray-900"
                             placeholder="••••••••"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}

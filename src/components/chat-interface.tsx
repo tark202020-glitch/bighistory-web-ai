@@ -8,6 +8,9 @@ import { getBookTitle } from '@/lib/book-titles';
 import { CanvasPanel } from '@/components/canvas-panel';
 import { CanvasCard } from '@/components/canvas-card';
 import { CitationDisplay } from '@/components/citation-display';
+import { UserSettingsDialog } from '@/components/user-settings-dialog';
+import { getRandomTopics } from '@/lib/topic-suggestions';
+import { createClient } from '@/lib/supabase/client';
 
 interface Document {
     id: string;
@@ -41,6 +44,16 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
     const [isLoading, setIsLoading] = useState(false);
     const [savedItems, setSavedItems] = useState<SavedItem[]>([]);
 
+    // User Settings State
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [userName, setUserName] = useState('User');
+
+    // Suggestions State
+    const [exampleQuestions, setExampleQuestions] = useState<string[]>([]);
+
+    // Supabase Client
+    const supabase = createClient();
+
     const [subjectTarget] = useState('초등 고학년 / 흥미 유발');
     const [selectedGrade, setSelectedGrade] = useState<string | null>(null);
     const [isLibraryOpen, setIsLibraryOpen] = useState(false);
@@ -52,10 +65,21 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    }, [messages, isLoading]);
 
     useEffect(() => {
         fetchSavedItems();
+
+        const getUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+                setUserName(name);
+            }
+        };
+        getUser();
+
+        setExampleQuestions(getRandomTopics(3));
     }, []);
 
     const fetchSavedItems = async () => {
@@ -73,12 +97,29 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
     const [mode, setMode] = useState<'qa' | 'lecture'>('qa');
     const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
 
-    const handleSaveMessage = async (content: string) => {
+    const handleSaveMessage = async (messageId: string, content: string) => {
         try {
+            // Find the message index
+            const msgIndex = messages.findIndex(m => m.id === messageId);
+            let titlePrefix = "";
+
+            // Try to find the preceding user message to use as title
+            if (msgIndex > 0) {
+                const prevMsg = messages[msgIndex - 1];
+                if (prevMsg.role === 'user') {
+                    // Extract title from user message, removing any system prefixes if present
+                    const userContent = prevMsg.content;
+                    // Format: # [Target] Prompt content
+                    titlePrefix = `# ${userContent}\n\n`;
+                }
+            }
+
+            const finalContent = titlePrefix + content;
+
             const res = await fetch('/api/saved-items', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ content })
+                body: JSON.stringify({ content: finalContent })
             });
 
             if (!res.ok) {
@@ -176,29 +217,38 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
 
     return (
         <div className="flex flex-col h-screen bg-[#f8fafc] text-slate-900 overflow-hidden selection:bg-blue-100 font-sans">
+            <UserSettingsDialog
+                isOpen={isSettingsOpen}
+                onClose={() => setIsSettingsOpen(false)}
+                onNameChange={setUserName}
+            />
+
             {/* Top Header */}
-            <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shadow-sm z-30 shrink-0">
-                <div className="flex items-center gap-6">
+            <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-6 shadow-sm z-30 shrink-0">
+                <div className="flex items-center gap-4 md:gap-6">
                     <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
                             <Bot size={20} className="text-white" />
                         </div>
-                        <h1 className="text-xl font-bold font-heading tracking-tight text-slate-900">BigHistory AI</h1>
+                        <h1 className="text-xl font-bold font-heading tracking-tight text-slate-900 hidden md:block">BigHistory AI</h1>
                     </div>
-                    <div className="h-6 w-px bg-slate-200" />
-                    <div className="flex flex-col">
+                    <div className="h-6 w-px bg-slate-200 hidden md:block" />
+                    <div className="flex flex-col hidden md:flex">
                         <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none mb-0.5">Architecture</span>
                         <span className="text-[11px] text-slate-600 font-medium">GCP: rag-bighistory</span>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-full border border-slate-100">
+                <div className="flex items-center gap-3 md:gap-4">
+                    <button
+                        onClick={() => setIsSettingsOpen(true)}
+                        className="flex items-center gap-2 px-2 py-1.5 md:px-3 md:py-1.5 bg-slate-50 hover:bg-slate-100 rounded-full border border-slate-100 transition-colors"
+                    >
                         <div className="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center">
                             <User size={14} className="text-slate-500" />
                         </div>
-                        <span className="text-xs font-semibold text-slate-600">User</span>
-                    </div>
+                        <span className="text-xs font-semibold text-slate-600 max-w-[80px] truncate md:max-w-none">{userName}</span>
+                    </button>
                     <button
                         onClick={() => setIsLibraryOpen(!isLibraryOpen)}
                         className={cn(
@@ -214,11 +264,15 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
 
             <div className="flex flex-1 overflow-hidden relative">
                 {/* Main Chat Area */}
-                <main className="flex-1 flex h-full bg-white relative z-0 overflow-hidden">
+                <main className={cn(
+                    "flex-1 flex h-full bg-white relative z-0 overflow-hidden",
+                    // Mobile: Hide Chat Main if Canvas or Library is open
+                    (canvasState.isOpen || isLibraryOpen) ? "hidden md:flex" : "flex"
+                )}>
                     {/* Messages Container */}
                     <div className={cn(
-                        "flex flex-col h-full bg-white transition-all duration-300 ease-in-out pt-8 pb-32 overflow-y-auto custom-scrollbar",
-                        canvasState.isOpen ? "w-[45%] border-r border-slate-200" : "flex-1"
+                        "flex flex-col h-full bg-white transition-all duration-300 ease-in-out pt-8 pb-32 md:pb-64 overflow-y-auto custom-scrollbar",
+                        canvasState.isOpen ? "w-full border-r border-slate-200" : "flex-1"
                     )}>
                         {messages.length === 0 ? (
                             <div className="flex flex-col items-center justify-center h-full text-center px-8 animate-fade-in">
@@ -229,12 +283,12 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                                 <p className="text-slate-500 max-w-sm text-sm leading-relaxed font-medium">
                                     도서 20권의 핵심 지식을 바탕으로<br />완벽하게 검증된 답변을 제공합니다.
                                 </p>
-                                <div className="flex flex-wrap gap-2.5 mt-10 justify-center">
-                                    {["빅히스토리가 뭐야?", "우주의 시작", "지구 탄생과정"].map(hint => (
+                                <div className="grid grid-cols-3 gap-3 mt-10 w-full max-w-4xl px-4">
+                                    {exampleQuestions.map((hint, idx) => (
                                         <button
-                                            key={hint}
+                                            key={idx}
                                             onClick={() => setInputValue(hint)}
-                                            className="px-5 py-2.5 rounded-2xl border border-slate-200 text-[11px] font-bold text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all hover:scale-105 active:scale-95"
+                                            className="px-5 py-4 h-full flex items-center justify-center rounded-2xl border border-slate-200 text-[13px] font-bold text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all hover:scale-[1.02] active:scale-95 text-center leading-relaxed break-keep"
                                         >
                                             {hint}
                                         </button>
@@ -305,12 +359,15 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                                                     <CitationDisplay citations={m.citations} references={m.references} />
                                                 )}
 
-                                                {!isLoading && (
+                                                {/* Edit/Save Buttons - HIDDEN for Q&A Mode per Request (only show generally if needed, but request says remove) */}
+                                                {/* If mode is qa, do not show these. Even if mode switched, message type 'text' implies Q&A usually. */}
+                                                {/* Assuming we only want these for maybe Curriculum mode text fallbacks? But user said delete for General Chat. */}
+                                                {!isLoading && m.type !== 'text' && ( // Hiding for 'text' type entirely as requested for "General Chat"
                                                     <div className="flex gap-4 mt-8 opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
                                                         <button onClick={() => startEditing(m.id)} className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest flex items-center gap-2 group/btn transition-colors">
                                                             <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover/btn:bg-blue-600 transition-all" /> 수정
                                                         </button>
-                                                        <button onClick={() => handleSaveMessage(m.content)} className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest flex items-center gap-2 group/btn transition-colors">
+                                                        <button onClick={() => handleSaveMessage(m.id, m.content)} className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest flex items-center gap-2 group/btn transition-colors">
                                                             <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover/btn:bg-blue-600 transition-all" /> 라이브러리에 저장
                                                         </button>
                                                     </div>
@@ -348,15 +405,37 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                                         </div>
                                     );
                                 })}
+
+                                {/* Loading Indicator MOVED HERE */}
+                                {isLoading && (
+                                    <div className="flex flex-col animate-fade-in group items-start w-full">
+                                        <div className="flex items-center gap-2.5 mb-5">
+                                            <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center border border-blue-100 shadow-sm">
+                                                <Bot size={14} className="text-blue-600" />
+                                            </div>
+                                            <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] animate-pulse">Consulting Knowledge Base</span>
+                                        </div>
+                                        <div className="flex gap-1.5 pl-2">
+                                            <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                                            <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                                            <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></span>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
                         <div ref={messagesEndRef} />
                     </div>
 
+                    {/* Check if loading indicator was removed from input area - handled by overwriting the return */}
+
+
                     {/* Floating Navigation & Input Area Container - Width Controlled */}
                     <div className={cn(
                         "absolute bottom-0 z-20 transition-all duration-300 pointer-events-none",
-                        canvasState.isOpen ? "w-[45%]" : "w-full"
+                        "w-full", // Always full width of parent 'main'
+                        // Mobile: Hide input area if Canvas OR Library is open
+                        (canvasState.isOpen || isLibraryOpen) ? "hidden md:block" : "block"
                     )}>
                         {/* Floating Navigation & Input Area */}
                         <div className="px-6 pb-10 bg-transparent pointer-events-auto">
@@ -426,33 +505,21 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                                         <Send size={20} fill="currentColor" />
                                     </button>
                                 </form>
-
-                                {/* Loading Indicator */}
-                                {isLoading && (
-                                    <div className="mt-4 flex items-center justify-center gap-3 animate-fade-in">
-                                        <div className="flex gap-1.5">
-                                            <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                                            <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                                            <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce"></span>
-                                        </div>
-                                        <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] animate-pulse">Consulting Knowledge Base</span>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>
-
-                    <CanvasPanel
-                        isOpen={canvasState.isOpen}
-                        title={canvasState.title}
-                        content={canvasState.content}
-                        citations={canvasState.citations}
-                        references={canvasState.references}
-                        onClose={() => setCanvasState(prev => ({ ...prev, isOpen: false }))}
-                        onDelete={canvasState.itemId ? () => handleDeleteSavedItem(canvasState.itemId!) : undefined}
-                        onSave={fetchSavedItems}
-                    />
                 </main>
+
+                <CanvasPanel
+                    isOpen={canvasState.isOpen}
+                    title={canvasState.title}
+                    content={canvasState.content}
+                    citations={canvasState.citations}
+                    references={canvasState.references}
+                    onClose={() => setCanvasState(prev => ({ ...prev, isOpen: false }))}
+                    onDelete={canvasState.itemId ? () => handleDeleteSavedItem(canvasState.itemId!) : undefined}
+                    onSave={fetchSavedItems}
+                />
 
 
                 {/* Right Sidebar - Library (Toggleable) */}
@@ -510,7 +577,7 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                         </div>
                     </div>
                 </aside>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };

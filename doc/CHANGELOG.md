@@ -1,0 +1,147 @@
+# Changelog
+
+All notable changes to the **Big History AI Platform** will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [Alpha V1.013] - 2026-01-04 17:54:30
+
+### 🔄 Build Update
+- **Summary**: Documentation: Created User Manual Draft
+- **Build Time**: 2026-01-04 17:54:30
+
+## [Alpha V1.012] - 2026-01-04 17:08:41
+
+### 🔄 Build Update
+- **Summary**: Content Update: Target Audience & Roadmap Sections
+- **Build Time**: 2026-01-04 17:08:41
+
+## [Alpha V1.011] - 2026-01-04 17:07:14
+
+### 🔄 Build Update
+- **Summary**: Content Update: Landing Page Comparison Table
+- **Build Time**: 2026-01-04 17:07:14
+
+## [Alpha V1.010] - 2026-01-04 17:02:44
+
+### 🔄 Build Update
+- **Summary**: Visual Update: Landing Page Theme Harmonization (Blue/Slate)
+- **Build Time**: 2026-01-04 17:02:44
+
+## [Alpha V1.009] - 2026-01-04 16:57:56
+
+### 🔄 Build Update
+- **Summary**: Visual Update: App Interface Mockup on Landing Page
+- **Build Time**: 2026-01-04 16:57:56
+
+## [Alpha V1.008] - 2026-01-04 16:50:38
+
+### 🔄 Build Update
+- **Summary**: Fix: Chat Layout Gap & Landing Page Text
+- **Build Time**: 2026-01-04 16:50:38
+
+## [Alpha V1.007] - 2026-01-04 16:41:02
+
+### 🔄 Build Update
+- **Summary**: Specific Content Refinements (10s Claim, Visual Timeline)
+- **Build Time**: 2026-01-04 16:41:02
+
+## [Alpha V1.006] - 2026-01-04 16:32:36
+
+### 🔄 Build Update
+- **Summary**: MagicSchool AI Concept Redesign
+- **Build Time**: 2026-01-04 16:32:36
+
+## [Alpha V1.005] - 2026-01-04 16:24:26
+
+### 🔄 Build Update
+- **Summary**: Refined Landing Page (Text Swap & Removed Hero Image)
+- **Build Time**: 2026-01-04 16:24:26
+
+## [Alpha V1.004] - 2026-01-04 16:10:21
+
+### 🔄 Build Update
+- **Summary**: Landing Page Redesign (PRODUCT_PITCH.md aligned)
+- **Build Time**: 2026-01-04 16:10:21
+
+## [Alpha V1.003] - 2026-01-04 16:09:58
+
+### 🔄 Build Update
+- **Summary**: Auto-generated build update.
+- **Build Time**: 2026-01-04 16:09:58
+
+## [Alpha V1.002] - 2026-01-04 15:35:39
+
+### 🔄 Build Update
+- **Summary**: Auto-generated build update.
+- **Build Time**: 2026-01-04 15:35:39
+
+## [Alpha V1.001] - 2026-01-04 15:35:20
+
+### 🔄 Build Update
+- **Summary**: $npm_config_msg
+- **Build Time**: 2026-01-04 15:35:20
+
+## [Alpha V1.101] - 2026-01-05
+
+### 📱 Mobile Experience (모바일 최적화)
+- **Exclusive View Mode**: 
+  - 모바일 환경에서 채팅창, 강의노트, 라이브러리가 겹치지 않고 한 번에 하나씩 온전히 보이도록 개선.
+  - 강의노트(Canvas)가 열리면 채팅창이 숨겨지고 독립적인 영역 확보.
+- **Header Simplification**: 모바일에서 로고만 깔끔하게 표시되도록 헤더 UI 단순화.
+- **Input Area Fix**: 플로팅 입력창이 컨텐츠를 가리거나 겹치는 현상 해결.
+
+### 👤 User Management (사용자 관리)
+- **Supabase Integration**: 
+  - 기존 로컬 스토리지 방식을 Supabase Auth & DB로 전면 교체.
+  - 이름 설정, 비밀번호 변경, 로그인 상태 유지가 기기 간 동기화됨.
+- **Sign-Up Flow**: 회원가입 시 '이름(Display Name)' 입력 필드 추가.
+
+### 🐛 Bug Fixes & Improvements (개선사항)
+- **Canvas Visibility**: 모바일에서 강의노트가 렌더링되지 않던 치명적 버그 수정.
+- **Library Titles**: 
+  - 강의노트 저장 시, '질문 내용(Prompt)'을 자동으로 제목으로 추출하여 저장.
+  - 제목이 길어도 잘리지 않도록 UI 레이아웃 개선.
+- **Reliability**: Google Vertex AI 검색/응답 실패 시 3회 자동 재시도(Retry) 로직 추가 (500 오류 방지).
+
+## [Alpha V1.0] - 2026-01-04
+
+### 🚀 Major Features (주요 기능)
+- **Vertex AI RAG Integration**: 구글 Vertex AI Search 기반의 RAG(검색 증강 생성) 챗봇 엔진 구축.
+- **Dual Mode Interface**:
+  - **Q&A Mode**: 일반적인 빅헤스토리 지식 질문 및 답변.
+  - **Curriculum Generation Mode**: "빅히스토리 전문가" 페르소나를 통한 맞춤형 강의 노트 생성.
+- **Library System**: 생성된 답변 및 강의 노트를 로컬 데이터베이스(Supabase 연동 예정/현재 Mock)에 저장 및 삭제.
+
+### 🎨 UI/UX Improvements (디자인 및 경험)
+- **"Textbook" Style Optimization**:
+  - 강의 노트 가독성을 위한 **Noto Serif KR (본문명조)** 폰트 적용.
+  - 공무서 스타일(1., 가.)을 배제하고, 세련된 서적 스타일의 줄글 및 제목 포맷 적용.
+- **Interactive Answer Box**:
+  - 핵심 질문의 '답변' 버튼 클릭 시, 부드러운 애니메이션과 함께 박스 형태의 상세 답변으로 전환.
+  - 직관적인 사용자 경험(UX) 제공.
+- **Glassmorphism Design**: 최신 트렌드를 반영한 반투명 유리 질감의 모던한 UI 디자인.
+
+### 🛠 Tools & Utilities (도구)
+- **PDF Export**:
+  - 강의 노트를 즉시 A4 규격의 PDF로 변환하여 저장하는 기능 탑재.
+  - 인쇄 시 불필요한 UI(버튼 등)를 자동 숨김 처리하여 깔끔한 출력물 제공.
+- **Edit Mode**:
+  - 생성된 강의 노트를 사용자가 직접 수정할 수 있는 Markdown 에디터 제공.
+
+---
+*Created by Antigravity Team*

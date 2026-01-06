@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
@@ -17,6 +17,7 @@
   --color-foreground: var(--foreground);
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-heading: 'Outfit', sans-serif;
+  --font-serif: 'Noto Serif KR', serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -46,12 +47,31 @@ h4,
   font-family: var(--font-heading);
 }
 
+.font-serif {
+  font-family: var(--font-serif);
+}
+
 /* Glassmorphism Utilities */
 .glass-effect {
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
+}
+
+/* Print Style for Lecture Notes */
+.print-style {
+  font-family: var(--font-serif);
+  line-height: 1.8;
+  color: #1e293b;
+}
+
+.print-style h1,
+.print-style h2,
+.print-style h3 {
+  font-family: var(--font-heading);
+  /* Or keep serif for pure book look, but heading font is nice contrast */
+  letter-spacing: -0.02em;
 }
 
 /* Custom Scrollbar */
@@ -89,6 +109,13 @@ h4,
 }
 
 /* Custom Details/Summary Styles for Answer Button */
+/* Custom Details/Summary Styles for Answer Button */
+details {
+  display: block;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 details>summary {
   list-style: none;
   cursor: pointer;
@@ -113,29 +140,82 @@ details>summary:hover {
   color: #0f172a;
 }
 
+/* Hide summary when opened (User Request: "답변 버튼은 사라지고") */
 details[open]>summary {
-  background-color: #3b82f6;
-  color: white;
-  border-color: #3b82f6;
+  display: none;
 }
 
 details>summary::-webkit-details-marker {
   display: none;
 }
 
+/* User Request: 답변 내용이 박스 형태로 */
+/* When open, the details element itself becomes the box */
 details[open] {
   margin-bottom: 1.5rem;
-  animation: fadeIn 0.3s ease-out;
-}
-
-/* Apply specific styling to content inside details */
-details>*:not(summary) {
-  margin-top: 0.5rem;
-  padding: 1rem;
-  background-color: #f8fafc;
+  /* User Request: 답변 버튼의 배경 컬러(#f1f5f9)를 사용한 사각 블록 */
+  background-color: #f1f5f9;
   border-radius: 0.75rem;
   border: 1px solid #e2e8f0;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  padding: 1.25rem;
+  /* Add padding to wrapper */
+  animation: fadeIn 0.3s ease-out;
+
+  /* User Request: 제목 부분에서 사용하고 있는 폰트(Outfit/Heading) */
+  font-family: var(--font-heading);
+  /* User Request: 폰트는 질문보다 작고 */
+  font-size: 0.85rem;
   color: #334155;
+  line-height: 1.6;
+}
+
+/* Reset child styling so they don't look like separate boxes */
+details[open]>* {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+/* Add spacing between paragraphs inside the answer box */
+details[open] p+p {
+  margin-top: 0.8rem;
+}
+
+/* Print Specific Styles */
+@media print {
+  @page {
+    margin: 20mm;
+    /* Standard margin for A4 */
+    size: A4;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-style {
+    font-size: 11pt;
+    /* Optimal for print */
+    line-height: 1.6;
+  }
+
+  /* Ensure background colors print for the answer boxes */
+  details[open] {
+    background-color: #f1f5f9 !important;
+    border: 1pt solid #e2e8f0 !important;
+    break-inside: avoid;
+    /* Prevent split across pages */
+  }
+
+  /* Hide UI elements */
+  header,
+  aside,
+  button,
+  form,
+  input,
+  .no-print {
+    display: none !important;
+  }
 }

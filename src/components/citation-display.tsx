@@ -46,15 +46,15 @@ export function CitationDisplay({ citations, references }: CitationDisplayProps)
 
     return (
         <div className="mt-8 pt-6 border-t border-slate-100 animate-fade-in">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Verification Sources</p>
+            <div className="flex items-center gap-2 mb-3">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Verification Sources</p>
+                {displayCitations.length > 0 && (
+                    <span className="px-1.5 py-0.5 rounded-full bg-slate-100 text-[10px] font-bold text-slate-500">
+                        +{displayCitations.length}
+                    </span>
+                )}
+            </div>
             <div className="flex flex-col gap-3 mb-2">
-                <div className="flex items-center gap-2 mb-3 -mt-6">
-                    {displayCitations.length > 0 && (
-                        <span className="px-1.5 py-0.5 rounded-full bg-slate-100 text-[10px] font-bold text-slate-500">
-                            +{displayCitations.length}
-                        </span>
-                    )}
-                </div>
 
                 {visibleCitations.map((cite: any) => (
                     <div key={cite.idx} className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1.5 hover:border-blue-200 transition-all overflow-hidden group">

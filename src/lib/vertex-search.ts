@@ -78,39 +78,63 @@ export async function answerQuery(query: string, customPreamble?: string) {
 
         const defaultPreamble = "당신은 '빅히스토리' 전문가입니다. 제공된 검색 결과(Context)를 바탕으로 사용자의 질문에 친절하고 정확하게 답변해주세요. 만약 검색 결과에 답이 없다면, 다른 외부 지식을 사용하지 말고 솔직하게 모른다고 답변해주세요.";
 
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                query: { text: query },
-                answerGenerationSpec: {
-                    ignoreAdversarialQuery: true,
-                    includeCitations: true,
-                    promptSpec: {
-                        preamble: customPreamble || defaultPreamble
-                    },
-                    modelSpec: {
-                        // Using default best model for Answer API
-                    }
-                }
-            })
-        });
+        let lastError;
+        const maxRetries = 3;
 
-        if (!response.ok) {
-            const err = await response.text();
-            throw new Error(`Answer API failed (${response.status}): ${err}`);
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        query: { text: query },
+                        answerGenerationSpec: {
+                            ignoreAdversarialQuery: true,
+                            includeCitations: true,
+                            promptSpec: {
+                                preamble: customPreamble || defaultPreamble
+                            },
+                            modelSpec: {}
+                        }
+                    })
+                });
+
+                if (!response.ok) {
+                    const errText = await response.text();
+                    // 5xx errors are worth retrying
+                    if (response.status >= 500 && response.status < 600) {
+                        throw new Error(`Server Error (${response.status}): ${errText}`);
+                    }
+                    // 4xx errors usually shouldn't be retried (client error)
+                    throw new Error(`Answer API failed (${response.status}): ${errText}`);
+                }
+
+                // Success
+                const data = await response.json();
+                return {
+                    answerText: data.answer?.answerText || "답변을 생성할 수 없습니다.",
+                    citations: data.answer?.citations || [],
+                    references: data.answer?.references || [],
+                    steps: data.answer?.steps || []
+                };
+
+            } catch (error: any) {
+                lastError = error;
+                console.warn(`Vertex AI Attempt ${attempt} failed:`, error.message);
+
+                if (attempt < maxRetries) {
+                    // Exponential backoff: 1s, 2s, 4s...
+                    const delay = Math.pow(2, attempt - 1) * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
         }
 
-        const data = await response.json();
-        return {
-            answerText: data.answer?.answerText || "답변을 생성할 수 없습니다.",
-            citations: data.answer?.citations || [],
-            references: data.answer?.references || [],
-            steps: data.answer?.steps || []
-        };
+        throw lastError || new Error("Vertex AI request failed after retries.");
+
     } catch (error) {
         console.error('Vertex AI Answer Error:', error);
         throw error;

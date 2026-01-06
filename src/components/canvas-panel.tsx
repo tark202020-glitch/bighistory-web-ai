@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
-import { X, Save, Edit3, FileText, Trash2 } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { X, Save, Edit3, FileText, Trash2, Printer } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import { useReactToPrint } from 'react-to-print';
 import { CitationDisplay } from '@/components/citation-display';
 
 interface CanvasPanelProps {
@@ -20,10 +21,16 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
     const [isEditing, setIsEditing] = useState(false);
     const [currentContent, setCurrentContent] = useState(content);
     const [isSaving, setIsSaving] = useState(false);
+    const printRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setCurrentContent(content);
     }, [content]);
+
+    const handlePrint = useReactToPrint({
+        contentRef: printRef,
+        documentTitle: title || 'Lecture Note',
+    });
 
     const handleSave = async () => {
         setIsSaving(true);
@@ -55,7 +62,7 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
                     <div className="p-1.5 rounded-lg bg-blue-50 text-blue-600">
                         <FileText className="w-4 h-4" />
                     </div>
-                    <h2 className="text-sm font-bold text-slate-700 truncate max-w-[200px]">{title || "Untitled Document"}</h2>
+                    <h2 className="text-sm font-bold text-slate-700">{title || "Untitled Document"}</h2>
                 </div>
                 <div className="flex items-center gap-1">
                     <button
@@ -64,6 +71,13 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
                         title="Edit Mode"
                     >
                         <Edit3 className="w-4 h-4" />
+                    </button>
+                    <button
+                        onClick={() => handlePrint && handlePrint()}
+                        className="p-2 text-slate-400 hover:text-blue-600 hover:bg-slate-50 rounded-lg transition-colors"
+                        title="Export PDF"
+                    >
+                        <Printer className="w-4 h-4" />
                     </button>
                     <button
                         onClick={handleSave}
@@ -90,7 +104,7 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 bg-white/50">
-                <div className="max-w-4xl mx-auto bg-white p-12 rounded-xl shadow-sm border border-slate-100 min-h-full flex flex-col">
+                <div ref={printRef} className="max-w-4xl mx-auto bg-white p-12 rounded-xl shadow-sm border border-slate-100 min-h-full flex flex-col print:shadow-none print:border-none print:p-0">
                     {isEditing ? (
                         <textarea
                             className="w-full h-full min-h-[500px] resize-none focus:outline-none text-slate-700 font-mono text-sm leading-relaxed"
@@ -101,11 +115,12 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
                         <>
                             <div className="prose prose-slate max-w-none 
                                 prose-headings:font-heading prose-headings:font-bold prose-headings:tracking-tight 
-                                prose-p:leading-8 prose-p:text-slate-700 prose-p:my-2
-                                prose-li:my-1 prose-li:leading-7
+                                prose-p:leading-loose prose-p:text-slate-800 prose-p:my-4
+                                prose-li:my-2 prose-li:leading-7
                                 prose-strong:text-slate-900 prose-strong:font-bold
                                 prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
-                                prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6">
+                                prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
+                                font-serif print-style">
                                 <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
                                     {currentContent}
                                 </ReactMarkdown>
