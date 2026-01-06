@@ -553,16 +553,19 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                                         let type = "질문";
                                         let grades = "";
 
-                                        // Check for Lecture format
+                                        // Check for Lecture format in the first few lines
                                         // Format: [강의 대상: ...]\n[강의자료 생성 요청] ...
-                                        if (lines[0].startsWith('[강의 대상:')) {
-                                            const match = lines[0].match(/\[강의 대상: (.*?)\]/);
+                                        // Scan first 5 lines for the header
+                                        const headerLineIndex = lines.slice(0, 5).findIndex(line => line.trim().startsWith('[강의 대상:'));
+
+                                        if (headerLineIndex !== -1) {
+                                            const match = lines[headerLineIndex].match(/\[강의 대상: (.*?)\]/);
                                             if (match) {
                                                 type = "강의";
                                                 grades = match[1];
                                             }
                                             // Title is usually after the prefix or just the first non-empty line after prefix
-                                            const contentStartLine = lines.findIndex((l, i) => i > 0 && l.trim() !== '' && !l.startsWith('[강의자료 생성 요청]'));
+                                            const contentStartLine = lines.findIndex((l, i) => i > headerLineIndex && l.trim() !== '' && !l.startsWith('[강의자료 생성 요청]'));
                                             if (contentStartLine !== -1) {
                                                 title = lines[contentStartLine].replace(/^#+\s*/, '');
                                             }
