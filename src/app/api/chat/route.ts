@@ -49,13 +49,36 @@ export async function POST(req: Request) {
         const searchResults = await searchStore(lastUserMessage);
 
         if (searchResults.length > 0) {
-          context = searchResults.map((result, index) =>
-            `[Result ${index + 1}]
+          // Collect available images based on retrieved documents
+          const availableImages: string[] = [];
+
+          context = searchResults.map((result, index) => {
+            // Attempt to extract page number from metadata or snippet if available
+            // Note: This relies on how Vertex AI indexes the data. 
+            // For now, we search for images that might match this document.
+            // Assuming result.title or result.link contains the book ID (e.g., '15-Main')
+
+            // Logic: If we find a page mapping, we add image URLs.
+            // Since we don't have precise page metadata from the snippet here, 
+            // we will provide a GENERIC instruction to the model to use images if it knows the page.
+            // BUT, to make this work, we'll try to find matching images in the 'extracted_images' bucket 
+            // that match keywords or book IDs. (Simplification for MVP)
+
+            return `[Result ${index + 1}]
 Title: ${result.title}
 Content: ${result.snippet}
 Link: ${result.link || 'N/A'}
----`
-          ).join('\n');
+---`;
+          }).join('\n');
+
+          // [IMAGE INJECTION LOGIC]
+          // Since we can't easily map snippets to exact pages without page metadata in the search result,
+          // We will inject a list of "Representative Images" for the book if possible, 
+          // or instruct the model to use placeholders if it identifies a page number.
+
+          // For this MVP, let's inject a static instruction about where images live.
+          context += `\n\n[Available Media Library]\nBase URL: https://storage.googleapis.com/20set-bighistory-raw/extracted_images/\nNaming Convention: {BookID}_p{PageNum}_{Index}.jpeg (e.g., 15-Main_p123_01.jpeg)\nIf you identify a specific page number in the content, you may construct and reference the image URL.`;
+
           console.log(`Found ${searchResults.length} results from Vertex AI`);
         } else {
           console.log("No results found in Vertex AI");
