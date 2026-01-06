@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { Send, Bot, ChevronUp, Menu, User, X } from 'lucide-react';
+import { Send, Bot, ChevronUp, Menu, User, X, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MessageEditor } from '@/components/message-editor';
 import { getBookTitle } from '@/lib/book-titles';
@@ -389,6 +389,9 @@ export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Do
                                         );
                                     }
 
+                                    // User Message Styling Logic
+                                    const isLectureRequest = m.role === 'user' && m.content.includes('[강의 대상:');
+
                                     return (
                                         <div
                                             key={m.id}
@@ -399,16 +402,32 @@ export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Do
                                             )}
                                         >
                                             {m.role === 'user' ? (
-                                                <div className="px-6 py-3.5 rounded-2xl bg-slate-900 text-white shadow-xl shadow-slate-200/50 text-sm font-semibold tracking-tight">
+                                                <div className={cn(
+                                                    "px-6 py-3.5 rounded-2xl text-white shadow-xl shadow-slate-200/50 text-sm font-semibold tracking-tight",
+                                                    isLectureRequest ? "bg-blue-600 shadow-blue-500/30" : "bg-slate-900"
+                                                )}>
                                                     {m.content}
                                                 </div>
                                             ) : (
                                                 <div className="w-full">
                                                     <div className="flex items-center gap-2.5 mb-5">
-                                                        <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center border border-blue-100 shadow-sm">
-                                                            <Bot size={14} className="text-blue-600" />
+                                                        <div className={cn(
+                                                            "w-7 h-7 rounded-lg flex items-center justify-center border shadow-sm",
+                                                            m.type === 'curriculum'
+                                                                ? "bg-indigo-50 border-indigo-100"
+                                                                : "bg-blue-50 border-blue-100"
+                                                        )}>
+                                                            {m.type === 'curriculum'
+                                                                ? <Sparkles size={14} className="text-indigo-600" />
+                                                                : <Bot size={14} className="text-blue-600" />
+                                                            }
                                                         </div>
-                                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Research Logic</span>
+                                                        <span className={cn(
+                                                            "text-[10px] font-black uppercase tracking-[0.2em]",
+                                                            m.type === 'curriculum' ? "text-indigo-500" : "text-slate-400"
+                                                        )}>
+                                                            {m.type === 'curriculum' ? "Curriculum Engine" : "Research Logic"}
+                                                        </span>
                                                     </div>
 
                                                     <div className="text-slate-800 leading-[1.7] text-[15px] space-y-5 font-medium">
