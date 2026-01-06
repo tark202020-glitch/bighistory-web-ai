@@ -21,6 +21,9 @@ export interface SearchResult {
     title: string;
     snippet: string;
     link?: string;
+    id?: string;
+    page?: number;     // Added page number
+    sourceUri?: string; // Added source URI for file parsing
 }
 
 export async function searchStore(query: string): Promise<SearchResult[]> {
@@ -47,10 +50,25 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
 
         return response.map(result => {
             const data = result.document?.derivedStructData as any;
+            const structData = result.document?.structData as any;
+
+            // Try to find page number in various common fields
+            let page = data?.snippets?.[0]?.pageNumber ||
+                data?.extractive_answers?.[0]?.pageNumber ||
+                structData?.page_number ||
+                structData?.page ||
+                undefined;
+
+            // Normalize page to number
+            if (page) page = parseInt(page, 10);
+
             return {
-                title: data?.title || 'No Title',
+                title: data?.title || structData?.title || 'No Title',
                 snippet: data?.snippets?.[0]?.snippet || data?.extractive_answers?.[0]?.content || 'No content',
                 link: data?.link || '',
+                id: result.document?.id || '',
+                sourceUri: data?.link || structData?.uri || '', // Capture URI to parse Book ID
+                page: page
             };
         });
     } catch (error) {

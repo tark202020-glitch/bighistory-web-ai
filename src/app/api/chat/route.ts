@@ -1,6 +1,7 @@
 import { createVertex } from '@ai-sdk/google-vertex';
 import { streamText } from 'ai';
 import { searchStore, answerQuery } from '@/lib/vertex-search';
+import { getMatchingImages } from '@/lib/gcs-info';
 import fs from 'fs';
 import path from 'path';
 
@@ -49,37 +50,39 @@ export async function POST(req: Request) {
         const searchResults = await searchStore(lastUserMessage);
 
         if (searchResults.length > 0) {
-          // Collect available images based on retrieved documents
-          const availableImages: string[] = [];
+          console.log(`Found ${searchResults.length} results from Vertex AI`);
 
-          context = searchResults.map((result, index) => {
-            // Attempt to extract page number from metadata or snippet if available
-            // Note: This relies on how Vertex AI indexes the data. 
-            // For now, we search for images that might match this document.
-            // Assuming result.title or result.link contains the book ID (e.g., '15-Main')
+          // Build context with Async Image Fetching
+          const contextPromises = searchResults.map(async (result, index) => {
+            let imageContext = "";
 
-            // Logic: If we find a page mapping, we add image URLs.
-            // Since we don't have precise page metadata from the snippet here, 
-            // we will provide a GENERIC instruction to the model to use images if it knows the page.
-            // BUT, to make this work, we'll try to find matching images in the 'extracted_images' bucket 
-            // that match keywords or book IDs. (Simplification for MVP)
+            // Extract Book ID (e.g. "15" from "15_Main.pdf" or "gs://.../15-Main.pdf")
+            let bookId: string | null = null;
+            const sourceName = result.sourceUri || result.title || "";
+            const match = sourceName.split('/').pop()?.match(/^(\d+)/);
+            if (match) bookId = match[1];
+
+            // If we have Book ID and Page, fetch images
+            if (bookId && result.page) {
+              const images = await getMatchingImages(bookId, result.page);
+              if (images.length > 0) {
+                imageContext = `\n[Available Image for Page ${result.page}]: ${images[0]} (Use this image if relevant)`;
+              }
+            }
 
             return `[Result ${index + 1}]
 Title: ${result.title}
-Content: ${result.snippet}
+Page: ${result.page || 'Unknown'}
+Content: ${result.snippet}${imageContext}
 Link: ${result.link || 'N/A'}
 ---`;
-          }).join('\n');
+          });
 
-          // [IMAGE INJECTION LOGIC]
-          // Since we can't easily map snippets to exact pages without page metadata in the search result,
-          // We will inject a list of "Representative Images" for the book if possible, 
-          // or instruct the model to use placeholders if it identifies a page number.
+          const contextArray = await Promise.all(contextPromises);
+          context = contextArray.join('\n');
 
-          // For this MVP, let's inject a static instruction about where images live.
-          context += `\n\n[Available Media Library]\nBase URL: https://storage.googleapis.com/20set-bighistory-raw/extracted_images/\nNaming Convention: {BookID}_p{PageNum}_{Index}.jpeg (e.g., 15-Main_p123_01.jpeg)\nIf you identify a specific page number in the content, you may construct and reference the image URL.`;
-
-          console.log(`Found ${searchResults.length} results from Vertex AI`);
+          // Add global instruction for images
+          context += `\n\n[Display Instructions]\nIf you see an "[Available Image...]" URL in the context proving a relevant visual, YOU MUST insert it into your response using markdown: \n![Figure Description](URL)\nPlace it near the relevant text.`;
         } else {
           console.log("No results found in Vertex AI");
         }
@@ -93,7 +96,7 @@ Link: ${result.link || 'N/A'}
     let preamble = "";
     if (mode === 'lecture') {
       console.log("Using Course-prompt for Curriculum Generation");
-      preamble = COURSE_GENERATION_PROMPT;
+      preamble = COURSE_GENERATION_PROMPT + (context ? `\n\n[Reference Material with Images]\n${context}` : "");
     } else {
       const configPath = path.join(process.cwd(), 'config', 'ai-character.md');
       try {
@@ -101,11 +104,26 @@ Link: ${result.link || 'N/A'}
           preamble = fs.readFileSync(configPath, 'utf-8');
         }
       } catch (e) { /* ignore */ }
+
+      // Also inject context into standard chat prompt if available (optional, but good for consistency)
+      // Actually, for standard chat, 'answerQuery' might handle retrieval internally? 
+      // Wait, 'answerQuery' uses its own retrieval if using Managed RAG.
+      // But here we are manually retrieving to get images context.
+      // If we pass 'context' string into 'answerQuery', it might ignore it unless it's in the preamble.
+
+      // Let's modify the preamble to include our manually retrieved context WITH IMAGES.
+      if (context) {
+        preamble += `\n\n[Retrieved Context with Images]\n${context}`;
+      }
     }
 
     // 3. Generate Answer using Managed RAG
     console.log("Starting Managed Answer API...");
     try {
+      // NOTE: We are doing double retrieval here potentially (once by us, once by answerQuery). 
+      // But answerQuery's automated retrieval doesn't give us image URLs.
+      // So ensuring our manual context is in the preamble is vital.
+
       const { answerText, citations, references } = await answerQuery(lastUserMessage, preamble || undefined);
 
       console.log("Answer generated successfully.");
@@ -130,4 +148,3 @@ Link: ${result.link || 'N/A'}
     });
   }
 }
-
