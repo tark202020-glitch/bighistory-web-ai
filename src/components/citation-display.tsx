@@ -43,7 +43,7 @@ export function CitationDisplay({ citations, references }: CitationDisplayProps)
             page: reference?.chunkInfo?.pageSpan?.start || reference?.chunkInfo?.documentMetadata?.page,
             bookId: bookId
         };
-    }).filter(Boolean);
+    }).filter((c): c is NonNullable<typeof c> => c !== null);
 
     // Effect to fetch images for displayed citations
     useEffect(() => {
@@ -53,6 +53,7 @@ export function CitationDisplay({ citations, references }: CitationDisplayProps)
             const imagesMap: { [key: number]: string[] } = {};
 
             for (const cite of displayCitations) {
+                if (!cite) continue;
                 if (cite.idx === undefined || !cite.bookId || !cite.page) continue;
 
                 try {
