@@ -37,7 +37,7 @@ interface Message {
     type?: 'text' | 'curriculum';
 }
 
-export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) => {
+export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Document[], lastModified?: string }) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [canvasState, setCanvasState] = useState<{ isOpen: boolean; content: string; title: string; citations?: any[]; references?: any[]; itemId?: string }>({ isOpen: false, content: '', title: '' });
     const [inputValue, setInputValue] = useState('');
@@ -235,7 +235,7 @@ export const ChatInterface = ({ sources: _sources }: { sources: Document[] }) =>
                     <div className="h-6 w-px bg-slate-200 hidden md:block" />
                     <div className="flex flex-col hidden md:flex">
                         <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none mb-0.5">Architecture</span>
-                        <span className="text-[11px] text-slate-600 font-medium">GCP: rag-bighistory</span>
+                        <span className="text-[11px] text-slate-600 font-medium">{lastModified || "GCP: rag-bighistory"}</span>
                     </div>
                 </div>
 

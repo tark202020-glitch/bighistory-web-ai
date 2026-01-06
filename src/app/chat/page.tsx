@@ -1,9 +1,10 @@
 import { ChatInterface } from '@/components/chat-interface';
-// import { getDocuments } from '@/lib/pdf-loader';
+import { getBucketLastModified } from '@/lib/gcs-info';
 
 export default async function ChatPage() {
     // const documents = await getDocuments();
     const documents: any[] = [];
+    const lastModified = await getBucketLastModified();
 
     // Convert raw documents to the format expected by UI
     // Note: getDocuments now returns [] in the new RAG implementation, 
@@ -21,5 +22,5 @@ export default async function ChatPage() {
         title: doc.title || doc.id
     }));
 
-    return <ChatInterface sources={sources} />;
+    return <ChatInterface sources={sources} lastModified={lastModified} />;
 }

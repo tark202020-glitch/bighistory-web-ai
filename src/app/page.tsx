@@ -1,7 +1,10 @@
 import Link from 'next/link'
 import { Bot, Sparkles, Printer, BookOpen, Clock, Zap, MessageCircle, FileText, CheckCircle2, ArrowRight, ShieldCheck, Brain, PenTool, Layers } from 'lucide-react'
+import { getBucketLastModified } from '@/lib/gcs-info';
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const lastModified = await getBucketLastModified();
+
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-blue-100 selection:text-blue-900">
       {/* Header */}
@@ -85,7 +88,7 @@ export default function LandingPage() {
                   <div className="h-5 w-px bg-slate-200 hidden sm:block"></div>
                   <div className="flex flex-col hidden sm:flex">
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none mb-0.5">Architecture</span>
-                    <span className="text-[10px] text-slate-600 font-medium">GCP: rag-bighistory</span>
+                    <span className="text-[10px] text-slate-600 font-medium">{lastModified}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
