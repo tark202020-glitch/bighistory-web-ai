@@ -19,6 +19,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [Alpha V1.102] - 2026-01-07
+
+### 🖼️ Multimodal & Image Features (이미지 기능강화)
+- **Context-Aware Image Injection**:
+  - Vertex AI Search 결과에서 검색된 문서의 '페이지 번호(Page)'를 추출.
+  - 해당 페이지와 일치하는 이미지(도표, 삽화 등)를 GCS 버킷에서 찾아 LLM Context에 주입.
+  - 강의자료 생성 시 본문에 관련 이미지가 자동으로 삽입되도록 구현 (현재 데이터 Import 이슈로 일시 지연).
+
+### 🎨 Visual & UI UX (사용자 경험)
+- **Mode-Specific Styling (채팅 모드 시각적 구분)**:
+  - **Curriculum Generation Mode**:
+    - 사용자 메시지 버블을 **파란색(Brand Blue)**으로 변경하여 모드 인지 강화.
+    - AI 응답 헤더를 `✨ Curriculum Engine` + **Sparkles 아이콘**으로 변경.
+  - **Detailed Q&A Mode**:
+    - 기존의 검정색 메시지 및 `🤖 Research Logic` 헤더 유지.
+
+### 🐛 Infrastructure & Debugging (인프라)
+- **Vertex AI Data Store ID Verification**:
+  - 검색 기능 중단 문제 디버깅 수행 (`scripts/debug-injection-logic.js`).
+  - 원인: Vertex AI Console 상의 **대량 데이터 가져오기(Import) 작업**으로 인한 인덱스 Lock/지연 현상 확인.
+  - 조치: 데이터 업로드 주기를 서비스 비가동 시간으로 조정 권고.
 
 ## [Alpha V1.015] - 2026-01-06 13:03:40
 
