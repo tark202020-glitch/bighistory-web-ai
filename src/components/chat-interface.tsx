@@ -216,10 +216,11 @@ export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Do
             setMessages(prev => [...prev, {
                 id: Date.now().toString(),
                 role: 'assistant',
-                content: data.content,
+                content: data.answer,
                 citations: data.annotations?.find((a: any) => a.type === 'citations')?.data || data.citations,
                 references: data.references || [],
-                type: mode === 'lecture' ? 'curriculum' : 'text'
+                type: mode === 'lecture' ? 'curriculum' : 'text',
+                estimatedCost: data.estimatedCost
             }]);
 
         } catch (error: unknown) {

@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Alpha V1.103] - 2026-01-09
 
+### 🐛 Bug Fixes (버그 수정)
+- **API Response Mapping**: `answer` 필드 매핑 오류로 인한 강의자료 내용 누락 현상 수정.
+- **Cost Display**: 프론트엔드 상태 업데이트에서 누락된 `estimatedCost` 연결 복구.
+
 ### 💰 Cost Management (비용 관리)
 - **Real-time Cost Estimation**:
   - Vertex AI Search 및 Gemini 토큰 사용량을 기반으로 한 **질문당 예상 비용($)** 표시 기능 추가.
