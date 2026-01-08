@@ -64,11 +64,11 @@ export function UpdateNotificationDialog() {
                             <Bell size={18} />
                         </div>
                         <div>
-                            <h2 className="text-base font-bold text-slate-800 tracking-tight">새로운 업데이트</h2>
+                            <h2 className="text-base font-bold text-slate-800 tracking-tight">최근 업데이트 (Last 3 Days)</h2>
                             <p className="text-[11px] font-medium text-slate-500 flex items-center gap-1.5">
                                 <span className="bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">{data.version}</span>
                                 <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-                                <Calendar size={10} /> {data.date}
+                                <Calendar size={10} /> {data.date} ~
                             </p>
                         </div>
                     </div>

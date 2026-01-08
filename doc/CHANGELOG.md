@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 📢 User Engagement (사용자 소통)
 - **Update Notification Modal**:
-  - 접속 시 최신 업데이트 내역(`CHANGELOG.md`)을 팝업으로 안내합니다.
+  - 접속 시 **최근 3일간**의 업데이트 내역을 모두 통합하여 팝업으로 안내합니다.
   - **오늘 하루 보지 않기** 기능을 제공하여 사용자 경험을 방해하지 않도록 설계했습니다.
 
 ## [Alpha V1.103] - 2026-01-09
