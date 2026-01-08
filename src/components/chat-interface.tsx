@@ -28,13 +28,20 @@ interface Citation {
     [key: string]: unknown;
 }
 
+interface Reference {
+    id: string;
+    title: string;
+    uri: string;
+}
+
 interface Message {
     id: string;
     role: string;
     content: string;
     citations?: Citation[];
-    references?: any[];
-    type?: 'text' | 'curriculum';
+    references?: Reference[];
+    type?: 'text' | 'curriculum'; // text: default QA, curriculum: lecture generation
+    estimatedCost?: number;
 }
 
 export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Document[], lastModified?: string }) => {
@@ -432,6 +439,21 @@ export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Do
 
                                                     <div className="text-slate-800 leading-[1.7] text-[15px] space-y-5 font-medium">
                                                         {messageContent}
+                                                        {/* Citations Footer */}
+                                                        {(m.citations && m.citations.length > 0) && (
+                                                            <div className="mt-6 pt-4 border-t border-slate-100">
+                                                                <CitationDisplay citations={m.citations} />
+                                                            </div>
+                                                        )}
+
+                                                        {/* Cost Estimation Display */}
+                                                        {m.estimatedCost !== undefined && (
+                                                            <div className="mt-2 flex justify-end">
+                                                                <span className="text-[10px] text-slate-400 font-mono bg-slate-50 px-2 py-1 rounded">
+                                                                    Est. Cost: ${m.estimatedCost.toFixed(4)}
+                                                                </span>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </div>
                                             )}

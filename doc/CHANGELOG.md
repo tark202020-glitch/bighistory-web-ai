@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [Alpha V1.103] - 2026-01-09
+
+### 💰 Cost Management (비용 관리)
+- **Real-time Cost Estimation**:
+  - Vertex AI Search 및 Gemini 토큰 사용량을 기반으로 한 **질문당 예상 비용($)** 표시 기능 추가.
+  - 답변 하단에 `Est. Cost: $0.0105` 형태로 투명하게 정보 제공.
+
 ## [Alpha V1.102] - 2026-01-07
 
 ### 🖼️ Multimodal & Image Features (이미지 기능강화)

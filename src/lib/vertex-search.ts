@@ -132,11 +132,19 @@ export async function answerQuery(query: string, customPreamble?: string) {
 
                 // Success
                 const data = await response.json();
+
+                // Cost Estimation Logic
+                // Base Query Cost: ~$0.01 (Vertex AI Search Standard)
+                // Output Token Cost: ~$0.000375 / 1k characters (approx Gemini Pro pricing)
+                const answerLength = data.answer?.answerText?.length || 0;
+                const estimatedCost = 0.01 + ((answerLength / 4) * 0.000000375);
+
                 return {
                     answerText: data.answer?.answerText || "답변을 생성할 수 없습니다.",
                     citations: data.answer?.citations || [],
                     references: data.answer?.references || [],
-                    steps: data.answer?.steps || []
+                    steps: data.answer?.steps || [],
+                    estimatedCost: parseFloat(estimatedCost.toFixed(6))
                 };
 
             } catch (error: any) {

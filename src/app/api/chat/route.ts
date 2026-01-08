@@ -1,5 +1,6 @@
 import { createVertex } from '@ai-sdk/google-vertex';
 import { streamText } from 'ai';
+import { NextResponse } from 'next/server';
 import { searchStore, answerQuery } from '@/lib/vertex-search';
 import { getMatchingImages } from '@/lib/gcs-info';
 import fs from 'fs';
@@ -124,16 +125,16 @@ Link: ${result.link || 'N/A'}
       // But answerQuery's automated retrieval doesn't give us image URLs.
       // So ensuring our manual context is in the preamble is vital.
 
-      const { answerText, citations, references } = await answerQuery(lastUserMessage, preamble || undefined);
+      const result = await answerQuery(lastUserMessage, preamble || undefined);
 
       console.log("Answer generated successfully.");
 
       // Return as JSON for now (most robust)
-      return Response.json({
-        role: 'assistant',
-        content: answerText,
-        citations: citations,
-        references: references
+      return NextResponse.json({
+        answer: result.answerText,
+        citations: result.citations,
+        references: result.references,
+        estimatedCost: result.estimatedCost
       });
     } catch (error: any) {
       console.error("Error in Answer API:", error);
