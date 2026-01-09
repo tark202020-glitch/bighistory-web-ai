@@ -19,6 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [Alpha V1.105] - 2026-01-10
+
+### 🧠 AI Logic & Prompt Engineering
+- **Prompt Logic Update (`src/lib/prompts.ts`)**:
+  - **Textbook Style Enforcement**: 공문서 스타일을 배제하고, 전문 서적/인쇄물 스타일의 답변 형식을 강제 적용했습니다.
+  - **HTML Structuring**: 핵심 질문 및 개념 설명에 `<details>` 태그를 사용하여 가독성과 상호작용성을 높였습니다.
+  - **Metadata Guide**: `Metadata.json1`의 구조(Grade, Type, Unit)를 AI가 이해하고 활용할 수 있도록 가이드를 추가했습니다.
+
 ## [Alpha V1.104] - 2026-01-09
 
 ### 📢 User Engagement (사용자 소통)
