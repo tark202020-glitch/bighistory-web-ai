@@ -19,7 +19,12 @@
     *   `CHANGELOG.md` 자동 파싱 시스템 구축 (`/api/latest-update`).
 *   **User Option**: "오늘 하루 보지 않기" (LocalStorage 연동) 기능 구현.
 
-### 3. 🐛 Bug Fixes & Refactoring
+### 3. 🧠 Prompt Engineering (프롬프트 고도화)
+*   **Textbook Style**: 공문서 예시를 제거하고 교과서/전문서적 스타일 강제 적용.
+*   **Metadata Guide**: `Metadata.json1` 기반의 분류 가이드(Grade, Type, Unit) 추가.
+*   **HTML Structure**: `<details>` 태그를 활용한 계층적 정보 표시 구현.
+
+### 4. 🐛 Bug Fixes & Refactoring
 *   **Build Error**: `chat-interface.tsx`의 import 구문 위치 오류 수정.
 *   **Rendering Issue**: `answer` vs `content` 필드 매핑 오류로 인한 강의자료 미출력 수정.
 
