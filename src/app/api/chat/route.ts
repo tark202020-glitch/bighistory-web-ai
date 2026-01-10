@@ -83,7 +83,7 @@ Link: ${result.link || 'N/A'}
           context = contextArray.join('\n');
 
           // Add global instruction for images
-          context += `\n\n[Display Instructions]\nIf you see an "[Available Image...]" URL in the context proving a relevant visual, YOU MUST insert it into your response using markdown: \n![Figure Description](URL)\nPlace it near the relevant text.`;
+          context += `\n\n[Display Instructions]\nIf you see an "[Available Image...]" URL in the context proving a relevant visual, YOU MUST insert it into your response using markdown: \n![Figure Description](URL)\nPlace it near the relevant text.\nCRITICAL: If NO "[Available Image...]" is provided in the context, DO NOT generate any image markdown (e.g. ![...]). Text description only.`;
         } else {
           console.log("No results found in Vertex AI");
         }
