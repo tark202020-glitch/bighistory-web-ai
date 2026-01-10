@@ -16,17 +16,6 @@ export const maxDuration = 60;
 const project = process.env.GOOGLE_CLOUD_PROJECT_ID || 'rag-bighistory';
 const location = 'us-central1'; // Vertex AI typically uses us-central1 for Gemini
 
-const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
-  ? JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
-  : undefined;
-
-const vertex = createVertex({
-  project,
-  location,
-  googleAuthOptions: {
-    credentials,
-  },
-});
 
 // Ensure RAG is initialized (lazy load)
 let isRagInitialized = false;

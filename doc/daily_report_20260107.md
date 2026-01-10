@@ -33,6 +33,13 @@
     *   이로 인해 검색 인덱스에 **Lock**이 걸리거나 **일시적 일관성 부족** 상태가 됨을 확인.
 *   **운영 정책 제안**: 데이터 업로드 작업은 **사용자가 적은 심야 시간대** 또는 **점검 시간**에 수행하도록 가이드라인 수립 필요.
 
+### d. metadata.json 파일 정리
+{"id": "BH_34_BY", "structData": {"grade": "2", "type": "EBS"}, "content": {"mimeType": "application/pdf", "uri": "gs://20set-bighistory-raw/34_BY.pdf"}}
+{"id": "BH_33_BY", "structData": {"grade": "2", "type": "EBS"}, "content": {"mimeType": "application/pdf", "uri": "gs://20set-bighistory-raw/33_BY.pdf"}}
+{"id": "BH_32_BY", "structData": {"grade": "2", "type": "EBS"}, "content": {"mimeType": "application/pdf", "uri": "gs://20set-bighistory-raw/32_BY.pdf"}}
+{"id": "BH_31_BY", "structData": {"grade": "2", "type": "EBS"}, "content": {"mimeType": "application/pdf", "uri": "gs://20set-bighistory-raw/31_BY.pdf"}}
+
+
 ## 3. 기술적 변경 사항
 *   `src/app/api/chat/route.ts`: 이미지 주입 로직(`getMatchingImages`) 통합.
 *   `src/components/chat-interface.tsx`: 모드별 조건부 스타일링(`Sparkles` 아이콘 등) 추가.

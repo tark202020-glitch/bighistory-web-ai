@@ -4,20 +4,17 @@ import { searchStore } from '@/lib/vertex-search';
 import { GoogleAuth } from 'google-auth-library';
 
 // Configure Vertex AI
+// Configure Vertex AI
 const project = process.env.GOOGLE_CLOUD_PROJECT_ID || 'rag-bighistory';
 const location = 'us-central1';
-const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
-    ? JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
-    : undefined;
 
-const vertex = createVertex({
-    project,
-    location,
-    googleAuthOptions: { credentials },
-});
 
 export async function GET() {
     try {
+        const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
+            ? JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
+            : undefined;
+
         const results = [];
         let searchError = null;
 

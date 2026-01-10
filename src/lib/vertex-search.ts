@@ -2,20 +2,24 @@ import { SearchServiceClient } from '@google-cloud/discoveryengine';
 import { GoogleAuth } from 'google-auth-library';
 
 // Configuration
+// Configuration
 const PROJECT_ID = process.env.GOOGLE_CLOUD_PROJECT_ID || 'rag-bighistory';
 const LOCATION = 'global'; // or 'us', 'eu' etc. usually 'global' for basic setups
 const DATA_STORE_ID = 'bighistory-set-raw-chunking-20260110_1768030786251'; // Updated 2026-01-10 (Chunking Enabled & New App)
 const COLLECTION_ID = 'default_collection'; // Default collection
 
-// If using a raw JSON string in env var (common in Vercel)
-const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
-    ? JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
-    : undefined;
+// Lazy initialization helper
+function getClient() {
+    const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
+        ? JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
+        : undefined;
 
-const client = new SearchServiceClient({
-    apiEndpoint: 'discoveryengine.googleapis.com',
-    credentials
-});
+    return new SearchServiceClient({
+        apiEndpoint: 'discoveryengine.googleapis.com',
+        credentials
+    });
+}
+
 
 export interface SearchResult {
     title: string;
@@ -27,6 +31,7 @@ export interface SearchResult {
 }
 
 export async function searchStore(query: string): Promise<SearchResult[]> {
+    const client = getClient();
     const servingConfig = client.projectLocationCollectionDataStoreServingConfigPath(
         PROJECT_ID,
         LOCATION,
@@ -40,10 +45,9 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
         query: query,
         servingConfig: servingConfig,
         searchResultMode: 'CHUNKS', // Explicitly request chunks
-        contentSearchSpec: {
-            snippetSpec: { returnSnippet: true },
-            extractiveContentSpec: { maxExtractiveAnswerCount: 1 }
-        }
+        // contentSearchSpec: {
+        //    snippetSpec: { returnSnippet: true },
+        // }
     };
 
     try {
@@ -53,10 +57,13 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
             return [];
         }
 
-        return response.map(result => {
+        return response.map((result, index) => {
+            // console.log("DEBUG RAW RESULT:", JSON.stringify(result, null, 2)); // Removed verbose log
+
             // Handle CHUNK mode response
             if (result.chunk) {
                 const chunk = result.chunk;
+                console.log("DEBUG CHUNK:", JSON.stringify(chunk, null, 2)); // Temporary Debug
                 return {
                     title: chunk.documentMetadata?.title || 'No Title',
                     snippet: chunk.content || 'No content',
@@ -67,26 +74,56 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
                 };
             }
 
-            // Fallback to Document mode (existing logic)
+            // Fallback to Document mode
             const data = result.document?.derivedStructData as any;
             const structData = result.document?.structData as any;
 
-            // Try to find page number in various common fields
-            let page = data?.snippets?.[0]?.pageNumber ||
-                data?.extractive_answers?.[0]?.pageNumber ||
-                structData?.page_number ||
-                structData?.page ||
-                undefined;
+            // Helper to get value from Struct or Object
+            const getField = (obj: any, field: string) => {
+                if (!obj) return undefined;
+                if (obj[field] && typeof obj[field] !== 'object') return obj[field]; // Plain access (primitive)
+                if (obj[field]?.kind) { // Direct ProtoValue
+                    return obj[field].stringValue || obj[field].numberValue;
+                }
+                if (obj.fields && obj.fields[field]) { // Proto Struct access
+                    return obj.fields[field].stringValue || obj.fields[field].numberValue;
+                }
+                return undefined;
+            };
+
+            // Get URI and Title
+            const title = getField(data, 'title') || getField(structData, 'title') || 'No Title';
+            const uri = getField(data, 'link') || getField(data, 'uri') || getField(structData, 'uri') || getField(structData, 'link') || '';
+
+            // Try to find page number
+            // Note: data (derivedStructData) is also a formatting Struct in this environment
+            let page = getField(data, 'page_number') ||
+                getField(data, 'page') ||
+                getField(structData, 'page_number') ||
+                getField(structData, 'page');
+
+            // Heuristic: Extract page from Title or URI if metadata is missing
+            // Looks for patterns like "_p023_", "Page 23", etc.
+            if (!page) {
+                const titleMatch = title.match(/_p(\d+)/i) || title.match(/Page\s?(\d+)/i);
+                const uriMatch = uri.match(/_p(\d+)/i) || uri.match(/Page\s?(\d+)/i);
+
+                if (titleMatch) {
+                    page = titleMatch[1];
+                } else if (uriMatch) {
+                    page = uriMatch[1];
+                }
+            }
 
             // Normalize page to number
             if (page) page = parseInt(page, 10);
 
             return {
-                title: data?.title || structData?.title || 'No Title',
-                snippet: data?.snippets?.[0]?.snippet || data?.extractive_answers?.[0]?.content || 'No content',
-                link: data?.link || '',
+                title: title,
+                snippet: 'Content available in chunks or metadata', // Simplification as snippets are deeply nested in Proto
+                link: uri,
                 id: result.document?.id || '',
-                sourceUri: data?.link || structData?.uri || '', // Capture URI to parse Book ID
+                sourceUri: uri,
                 page: page
             };
         });
@@ -101,6 +138,10 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
  */
 export async function answerQuery(query: string, customPreamble?: string) {
     try {
+        const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
+            ? JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
+            : undefined;
+
         const auth = new GoogleAuth({
             credentials,
             scopes: ['https://www.googleapis.com/auth/cloud-platform']

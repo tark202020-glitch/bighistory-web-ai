@@ -49,7 +49,7 @@
 1.  Vercel 대시보드에서 **[Add New Project]** 클릭.
 2.  **[Import]** 할 때 정확한 Repository 선택 (`GoogleAntiGravity-Bighistory`).
 
-### ⚠️ 중요: Root Directory 설정 (Mistake #3)
+### ⚠️ 중요:  
 **문제 상황**: 배포를 했는데 `404 Not Found`가 뜨거나, 빌드가 아예 시작되지 않음.
 **원인**: 코드가 최상위 폴더가 아니라 `big-history-platform`이라는 **하위 폴더**에 들어있는데, Vercel은 기본적으로 최상위만 보기 때문.
 **해결책**:
