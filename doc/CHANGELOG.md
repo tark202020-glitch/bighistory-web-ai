@@ -21,6 +21,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [Alpha V1.111] - 2026-01-11
+
+### 🧠 Prompt Engineering (프롬프트 개선)
+- **Strict Image Formatting**:
+  - 이미지가 코드 블록처럼 보이거나 텍스트로만 렌더링되는 문제(Markdown syntax error) 해결.
+  - 프롬프트(`prompts.ts`)에 이미지를 반드시 **독립된 문단(Separate Paragraph)**에 배치하고, `!` 기호를 빠뜨리지 않도록 강제하는 규칙 추가.
+  - `<details>` 태그 내부나 인용문(`>`) 안에 이미지를 넣지 않도록 명시하여 렌더링 오류 방지.
+
 ## [Alpha V1.110] - 2026-01-11
 
 ### �️ Image Architecture (Backend Proxy)
