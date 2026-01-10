@@ -19,6 +19,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [Alpha V1.109] - 2026-01-11
+
+### � Security & Infrastructure (보안 및 인프라 중요 수정)
+- **Robust Credential Parsing (PEM Key Reconstruction)**:
+  - Vercel 환경 변수에서 `private_key`의 개행 문자가 손상되거나 잘못 파싱될 경우 발생하는 `ERR_OSSL_UNSUPPORTED` 치명적 오류 해결.
+  - JSON 파싱 실패 시, 손상된 포맷(Pretty-printed 등)을 자동으로 감지하고 **올바른 PEM 키 형식으로 재조립**하는 로직 구현.
+  - 이를 통해 GCS 이미지 접근 시 500 에러를 방지하고 정상적인 Signed URL 발급 보장.
+
+### 🐛 Debugging Tool (디버깅 도구)
+- **Debug Page Added (`/debug-image`)**:
+  - 이미지 로딩 문제를 시각적으로 진단할 수 있는 전용 페이지 추가.
+  - Signed URL 생성, Direct Image Tag 렌더링, Markdown 렌더링 테스트 지원.
+
 ## [Alpha V1.108] - 2026-01-11
 
 ### �️ Infrastructure & Build (인프라 및 빌드)

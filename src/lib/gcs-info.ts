@@ -7,12 +7,43 @@ export async function getBucketLastModified(bucketName: string = '20set-bighisto
 
         const storageOptions: any = { projectId };
         if (credentialsJson) {
-            const credentials = JSON.parse(credentialsJson);
-            // Handle private_key newlines if they are escaped literal \n
-            if (credentials.private_key) {
-                credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+            try {
+                // Sanitize: Vercel/System envs might accidentally have preserved newlines in the string
+                // confusing JSON.parse. simple replace of \n with nothing might break keys.
+                // But usually, credentials JSON has explicit \n in private_key.
+                // Let's try standard parse first, if fail, try to clean.
+
+                let credentials;
+                try {
+                    credentials = JSON.parse(credentialsJson);
+                } catch (e) {
+                    // Fallback: Replace newlines with spaces (for pretty-printed JSON)
+                    console.log("Initial JSON parse failed, attempting cleanup with spaces...");
+                    const cleaned = credentialsJson.replace(/\r?\n/g, ' ');
+                    credentials = JSON.parse(cleaned);
+                }
+
+                // Handle private_key newlines
+                if (credentials.private_key) {
+                    const rawKey = credentials.private_key.replace(/\\n/g, '\n');
+
+                    // Check if key is mangled (missing newlines in PEM header/footer)
+                    if (!rawKey.includes('\n') && rawKey.includes('PRIVATE KEY')) {
+                        // Attempt to reconstruct PEM
+                        const body = rawKey.replace(/-----BEGIN PRIVATE KEY-----/g, '')
+                            .replace(/-----END PRIVATE KEY-----/g, '')
+                            .replace(/\s+/g, ''); // Remove all spaces
+
+                        const chunked = body.match(/.{1,64}/g)?.join('\n') || body;
+                        credentials.private_key = `-----BEGIN PRIVATE KEY-----\n${chunked}\n-----END PRIVATE KEY-----\n`;
+                    } else {
+                        credentials.private_key = rawKey;
+                    }
+                }
+                storageOptions.credentials = credentials;
+            } catch (e) {
+                console.error("Failed to parse GOOGLE_APPLICATION_CREDENTIALS_JSON", e);
             }
-            storageOptions.credentials = credentials;
         }
 
         const storage = new Storage(storageOptions);
@@ -65,11 +96,36 @@ export async function getMatchingImages(bookId: string, page: number): Promise<s
 
         const storageOptions: any = { projectId };
         if (credentialsJson) {
-            const credentials = JSON.parse(credentialsJson);
-            if (credentials.private_key) {
-                credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+            try {
+                let credentials;
+                try {
+                    credentials = JSON.parse(credentialsJson);
+                } catch (e) {
+                    // Fallback: Replace newlines with spaces (for pretty-printed JSON)
+                    console.log("Initial JSON parse failed in getMatchingImages, attempting cleanup with spaces...");
+                    const cleaned = credentialsJson.replace(/\r?\n/g, ' ');
+                    credentials = JSON.parse(cleaned);
+                }
+
+                // Handle private_key newlines
+                if (credentials.private_key) {
+                    const rawKey = credentials.private_key.replace(/\\n/g, '\n');
+
+                    // Check if key is mangled
+                    if (!rawKey.includes('\n') && rawKey.includes('PRIVATE KEY')) {
+                        const body = rawKey.replace(/-----BEGIN PRIVATE KEY-----/g, '')
+                            .replace(/-----END PRIVATE KEY-----/g, '')
+                            .replace(/\s+/g, '');
+                        const chunked = body.match(/.{1,64}/g)?.join('\n') || body;
+                        credentials.private_key = `-----BEGIN PRIVATE KEY-----\n${chunked}\n-----END PRIVATE KEY-----\n`;
+                    } else {
+                        credentials.private_key = rawKey;
+                    }
+                }
+                storageOptions.credentials = credentials;
+            } catch (e) {
+                console.error("Failed to parse Creds in getMatchingImages", e);
             }
-            storageOptions.credentials = credentials;
         }
 
         const storage = new Storage(storageOptions);
