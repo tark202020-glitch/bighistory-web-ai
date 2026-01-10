@@ -19,6 +19,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [Alpha V1.106] - 2026-01-10
+
+### 🧠 Prompt Engineering (프롬프트 확장)
+- **Prompt Logic Update (`src/lib/prompts.ts`)**:
+  - **Further Reading (더 읽어보기)**: `ReferenceBooks` 데이터를 기반으로 관련 도서 추천 섹션 추가.
+  - **Supplementary Materials (보조자료)**: 연계 진로 및 국내 견학 프로그램 소개 섹션 추가.
+
+### 📚 Documentation (문서화)
+- **Topic Selection Process (`doc/주제선정.md`)**: RAG 검색부터 프롬프트 해석, 단원 목표/핵심 질문 생성까지의 기술적 프로세스 정의 문서 추가.
+
 ## [Alpha V1.105] - 2026-01-10
 
 ### 🧠 AI Logic & Prompt Engineering
