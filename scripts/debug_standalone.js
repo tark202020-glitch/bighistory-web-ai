@@ -36,7 +36,7 @@ async function run() {
 
     const request = {
         pageSize: 1,
-        query: '데이비드 크리스천 교수는 빅뱅 이론이 20세기에 어떻게 발전하였는지를 설명한다', // Very specific query from snippet
+        query: '바닷길과 비단길',
         servingConfig: servingConfig,
         autoPaginate: false,
         searchResultMode: 'CHUNKS', // Request Chunks explicitly
