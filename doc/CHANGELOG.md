@@ -18,6 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [Alpha V1.107] - 2026-01-10
+
+### 🖼️ Image Integration Fix (이미지 연동 수정)
+- **Data Store Update**:
+  - Vertex AI Data Store를 **Layout-based Chunking** 설정이 적용된 신규 스토어로 교체 (`bighistory-set-raw-chunking...`).
+  - 검색 결과에서 **페이지 번호(Page Number)** 메타데이터를 정상적으로 추출할 수 있도록 인프라 및 코드 `DATA_STORE_ID` 업데이트.
+  - 이를 통해 GCS에 저장된 강의자료 이미지와 검색 내용 간의 매칭 정확도 확보.
+
 
 ## [Alpha V1.106] - 2026-01-10
 

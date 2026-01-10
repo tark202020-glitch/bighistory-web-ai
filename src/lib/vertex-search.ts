@@ -4,7 +4,7 @@ import { GoogleAuth } from 'google-auth-library';
 // Configuration
 const PROJECT_ID = process.env.GOOGLE_CLOUD_PROJECT_ID || 'rag-bighistory';
 const LOCATION = 'global'; // or 'us', 'eu' etc. usually 'global' for basic setups
-const DATA_STORE_ID = '20set-bighistory-20260102_1767348297906';
+const DATA_STORE_ID = 'bighistory-set-raw-chunking-20260110_1768030786251'; // Updated 2026-01-10 (Chunking Enabled)
 const COLLECTION_ID = 'default_collection'; // Default collection
 
 // If using a raw JSON string in env var (common in Vercel)
