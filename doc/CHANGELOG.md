@@ -23,6 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [Alpha V1.113] - 2026-01-10 19:29:28
+
+### 🔄 Build Update
+- **Summary**: Fix: Lecture Title extraction logic and H1 rendering
+- **Build Time**: 2026-01-10 19:29:28
+
 ## [Alpha V1.112] - 2026-01-10 19:16:08
 
 ### 🔄 Build Update

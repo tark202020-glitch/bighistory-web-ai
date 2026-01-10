@@ -332,9 +332,20 @@ export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Do
                                         );
                                     } else if (m.type === 'curriculum') {
                                         const previousMessage = messages[i - 1];
-                                        const cardTitle = previousMessage?.role === 'user'
-                                            ? previousMessage.content.replace('[강의자료 생성 요청] ', '')
-                                            : '맞춤형 커리큘럼';
+                                        let cardTitle = '맞춤형 커리큘럼';
+
+                                        if (previousMessage?.role === 'user') {
+                                            // Robustly extract topic from multiline input
+                                            // Format: [강의 대상: ...]\n[강의자료 생성 요청] TOPIC
+                                            const lines = previousMessage.content.split('\n');
+                                            const topicLine = lines.find(line => line.includes('[강의자료 생성 요청]'));
+                                            if (topicLine) {
+                                                cardTitle = topicLine.replace('[강의자료 생성 요청]', '').trim();
+                                            } else {
+                                                // Fallback if format doesn't match
+                                                cardTitle = previousMessage.content.replace(/\[.*?\]/g, '').trim() || previousMessage.content;
+                                            }
+                                        }
 
                                         messageContent = (
                                             <CanvasCard

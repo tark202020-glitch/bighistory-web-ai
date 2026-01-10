@@ -138,6 +138,11 @@ export function CanvasPanel({ isOpen, title, content, citations, references, onC
                         />
                     ) : (
                         <>
+                            {/* Document Title (Explicit H1) */}
+                            <h1 className="text-3xl md:text-4xl font-bold font-serif text-slate-900 mb-8 leading-tight border-b pb-6 border-slate-100">
+                                {title}
+                            </h1>
+
                             <div className="prose prose-slate max-w-none 
                                 prose-headings:font-heading prose-headings:font-bold prose-headings:tracking-tight 
                                 prose-p:leading-loose prose-p:text-slate-800 prose-p:my-4
