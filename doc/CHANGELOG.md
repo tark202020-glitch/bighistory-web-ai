@@ -20,6 +20,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [Alpha V1.110] - 2026-01-11
+
+### �️ Image Architecture (Backend Proxy)
+- **Implemented `/api/proxy-image` Endpoint**:
+  - GCS Signed URL의 길이가 너무 길어 AI가 링크를 생성할 때 파라미터가 잘리거나 손상되는 문제(Broken Image) 해결.
+  - 이제 AI에게는 짧고 안전한 Proxy URL (`/api/proxy-image?bookId=...`)만 제공하며, 실제 인증/리다이렉트는 백엔드에서 전담 처리.
+  - **결과**: 채팅창에서 이미지가 안정적으로 표시됨.
+
 ## [Alpha V1.109] - 2026-01-11
 
 ### � Security & Infrastructure (보안 및 인프라 중요 수정)

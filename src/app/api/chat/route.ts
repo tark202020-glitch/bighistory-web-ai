@@ -52,11 +52,14 @@ export async function POST(req: Request) {
             const match = sourceName.split('/').pop()?.match(/^(\d+)/);
             if (match) bookId = match[1];
 
-            // If we have Book ID and Page, fetch images
+            // If we have Book ID and Page, fetch images to verify existence, then provide PROXY URL
             if (bookId && result.page) {
               const images = await getMatchingImages(bookId, result.page);
               if (images.length > 0) {
-                imageContext = `\n[Available Image for Page ${result.page}]: ${images[0]} (Use this image if relevant)`;
+                // Use a clean local proxy URL to avoid token limit and LLM hallucination issues with long URLs
+                // The LLM sees: /api/proxy-image?bookId=15&page=23
+                const proxyUrl = `/api/proxy-image?bookId=${bookId}&page=${result.page}&index=0`;
+                imageContext = `\n[Available Image for Page ${result.page}]: ${proxyUrl} (Use this EXACT URL for the image)`;
               }
             }
 
