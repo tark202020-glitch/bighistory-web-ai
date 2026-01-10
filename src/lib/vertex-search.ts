@@ -39,6 +39,11 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
         pageSize: 5,
         query: query,
         servingConfig: servingConfig,
+        searchResultMode: 'CHUNKS', // Explicitly request chunks
+        contentSearchSpec: {
+            snippetSpec: { returnSnippet: true },
+            extractiveContentSpec: { maxExtractiveAnswerCount: 1 }
+        }
     };
 
     try {
@@ -49,6 +54,20 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
         }
 
         return response.map(result => {
+            // Handle CHUNK mode response
+            if (result.chunk) {
+                const chunk = result.chunk;
+                return {
+                    title: chunk.documentMetadata?.title || 'No Title',
+                    snippet: chunk.content || 'No content',
+                    link: chunk.documentMetadata?.uri || '', // Use URI as link
+                    id: chunk.id || '',
+                    sourceUri: chunk.documentMetadata?.uri || '',
+                    page: chunk.pageSpan?.pageStart || undefined
+                };
+            }
+
+            // Fallback to Document mode (existing logic)
             const data = result.document?.derivedStructData as any;
             const structData = result.document?.structData as any;
 
