@@ -18,6 +18,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [Alpha V1.108] - 2026-01-11
+
+### �️ Infrastructure & Build (인프라 및 빌드)
+- **Deployment Fix**:
+  - Vercel 빌드 시 발생하는 `SyntaxError: Bad control character` 에러 해결 (환경변수 JSON 파싱 로직 개선).
+  - API 라우트(`vertex-search.ts`, `api/chat`, `api/test-vertex`)의 중복/잘못된 Credential 초기화 코드 정리.
+
+### 🖼️ Image Integration (이미지 연동 복구)
+- **Heuristic Page Extraction**:
+  - Vertex AI Search 결과에서 메타데이터가 없는 경우, 파일명(`..._p023_...`)에서 페이지 번호를 자동 추출하는 로직 구현.
+  - "실크로드 지도" 등 청크 단위 검색 시 이미지가 누락되던 문제 해결.
+
 ## [Alpha V1.107] - 2026-01-10
 
 ### 🖼️ Image Integration Fix (이미지 연동 수정)
