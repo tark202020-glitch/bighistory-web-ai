@@ -377,28 +377,7 @@ export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Do
                                                     }
 
 
-                                                    // Image rendering support
-                                                    if (line.trim().startsWith('![')) {
-                                                        const match = line.match(/!\[(.*?)\]\((.*?)\)/);
-                                                        if (match) {
-                                                            const [_, alt, src] = match;
-                                                            return (
-                                                                <div key={i} className="my-6">
-                                                                    {/* Use a normal img tag for simplicity, or Next.js Image if preferred (but remote patterns need config) */}
-                                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                                    <img
-                                                                        src={src}
-                                                                        alt={alt}
-                                                                        className="rounded-xl shadow-md border border-slate-200 w-full max-w-lg mx-auto object-cover hover:scale-[1.02] transition-transform duration-300"
-                                                                        onError={(e) => {
-                                                                            e.currentTarget.style.display = 'none';
-                                                                            // Optional: show a fallback text
-                                                                        }}
-                                                                    />
-                                                                </div>
-                                                            );
-                                                        }
-                                                    }
+
 
                                                     const boldRegex = /\*\*(.*?)\*\*/g;
                                                     const parts = line.split(boldRegex);

@@ -62,6 +62,8 @@ export async function POST(req: Request) {
             }
 
             // If we have Book ID and Page, fetch images to verify existence, then provide PROXY URL
+            // [DISABLED per User Request] - 2026-01-11
+            /*
             if (bookId && result.page) {
               const images = await getMatchingImages(bookId, result.page);
               if (images.length > 0) {
@@ -71,6 +73,7 @@ export async function POST(req: Request) {
                 imageContext = `\n[Available Image for Page ${result.page}]: ${proxyUrl} (Use this EXACT URL for the image)`;
               }
             }
+            */
 
             return `[Result ${index + 1}]
 Title: ${result.title}
@@ -83,8 +86,8 @@ Link: ${result.link || 'N/A'}
           const contextArray = await Promise.all(contextPromises);
           context = contextArray.join('\n');
 
-          // Add global instruction for images
-          context += `\n\n[Display Instructions]\nIf you see an "[Available Image...]" URL in the context, YOU MUST insert it into your response using markdown:\n![Figure Description](URL)\n\n**IMMEDIATELY BELOW the image, you MUST write the Source Page Number like this:**\n*그림: 이미지 설명 (출처: Page ${searchResults[0].page || 'X'})*\n\nPlace it near the relevant text.\n\n[CRITICAL WARNING]\nIf the context does NOT contain a line starting with "[Available Image...]", you are STRICTLY FORBIDDEN from generating any image markdown (e.g. ![...]).\nDO NOT make up URLs. DO NOT link to external sites like Wikipedia.\nIf no image is available, just simply do not show any image.`;
+          // [DISABLED] - Image Display Instructions
+          // context += `\n\n[Display Instructions]\nIf you see an ...`;
         } else {
           console.log("No results found in Vertex AI");
         }
