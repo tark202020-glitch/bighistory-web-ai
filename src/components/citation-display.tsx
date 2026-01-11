@@ -45,36 +45,6 @@ export function CitationDisplay({ citations, references }: CitationDisplayProps)
         };
     }).filter((c): c is NonNullable<typeof c> => c !== null);
 
-    // Effect to fetch images for displayed citations
-    useEffect(() => {
-        if (!displayCitations.length) return;
-
-        const fetchImages = async () => {
-            const imagesMap: { [key: number]: string[] } = {};
-
-            for (const cite of displayCitations) {
-                if (!cite) continue;
-                if (cite.idx === undefined || !cite.bookId || !cite.page) continue;
-
-                try {
-                    const res = await fetch(`/api/images?bookId=${cite.bookId}&page=${cite.page}`);
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (data.images && data.images.length > 0) {
-                            imagesMap[cite.idx] = data.images;
-                        }
-                    }
-                } catch (e) {
-                    console.error('Failed to fetch image for citation', cite.idx, e);
-                }
-            }
-
-            setCitationImages(prev => ({ ...prev, ...imagesMap }));
-        };
-
-        fetchImages();
-    }, [citations]); // Re-run when citations change
-
     if (displayCitations.length === 0) return null;
 
     const visibleCitations = isExpanded ? displayCitations : displayCitations.slice(0, 3);
@@ -102,26 +72,6 @@ export function CitationDisplay({ citations, references }: CitationDisplayProps)
                         <p className="text-[11px] text-slate-500 pl-3.5 border-l-2 border-slate-100 leading-relaxed break-keep">
                             {cite.snippet}
                         </p>
-
-                        {/* Image Display Section */}
-                        {citationImages[cite.idx] && citationImages[cite.idx].length > 0 && (
-                            <div className="pl-3.5 mt-1 animate-fade-in">
-                                <div className="flex gap-2 overflow-x-auto pb-2">
-                                    {citationImages[cite.idx].map((url, i) => (
-                                        <div key={i} className="relative rounded-lg overflow-hidden border border-slate-100 shadow-sm shrink-0">
-                                            <img
-                                                src={url}
-                                                alt={`Reference Page ${cite.page}`}
-                                                className="h-32 w-auto object-cover hover:scale-105 transition-transform duration-300"
-                                            />
-                                            <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[10px] text-white px-2 py-0.5 backdrop-blur-sm">
-                                                p.{cite.page} 참고
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
                 ))}
 
@@ -133,12 +83,12 @@ export function CitationDisplay({ citations, references }: CitationDisplayProps)
                         {isExpanded ? (
                             <>
                                 <ChevronUp className="w-3 h-3" />
-                                <span>Show less</span>
+                                <span className="text-xs">Show less</span>
                             </>
                         ) : (
                             <>
                                 <span className="text-lg leading-3 mb-1">...</span>
-                                <span>View {remainingCount} more</span>
+                                <span className="text-xs">View {remainingCount} more</span>
                             </>
                         )}
                     </button>

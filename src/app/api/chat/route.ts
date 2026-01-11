@@ -116,10 +116,13 @@ Link: ${result.link || 'N/A'}
       // But here we are manually retrieving to get images context.
       // If we pass 'context' string into 'answerQuery', it might ignore it unless it's in the preamble.
 
-      // Let's modify the preamble to include our manually retrieved context WITH IMAGES.
+      // Let's modify the preamble to include our manually retrieved context (disabled images)
       if (context) {
-        preamble += `\n\n[Retrieved Context with Images]\n${context}`;
+        preamble += `\n\n[Retrieved Context]\n${context}`;
       }
+
+      // [STRICT NO-IMAGE INSTRUCTION] - 2026-01-11
+      preamble += `\n\n[CRITICAL INSTRUCTION]\nDO NOT generate any images or image markdown codes (e.g. ![...]).\nThe system's image display feature is currently DISABLED.\nProvide your answer in PURE TEXT only. Focus on clear explanations without visual aids.`;
     }
 
     // 3. Generate Answer using Managed RAG
