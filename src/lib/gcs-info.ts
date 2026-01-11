@@ -131,9 +131,12 @@ export async function getMatchingImages(bookId: string, page: number): Promise<s
         const storage = new Storage(storageOptions);
         const bucket = storage.bucket(bucketName);
 
-        // Construct prefix: extracted_images/{bookId}/images/p{page}_
+        // Normalize bookId: "02" -> "2" to match folder structure
+        const normalizedBookId = parseInt(bookId, 10).toString();
+
+        // Construct prefix: extracted_images/{normalizedBookId}/images/p{page}_
         // Upload structure is: extracted_images/1/images/p1_1.png (No zero padding on page)
-        const prefix = `extracted_images/${bookId}/images/p${page}_`;
+        const prefix = `extracted_images/${normalizedBookId}/images/p${page}_`;
 
         console.log(`Searching images with prefix: ${prefix}`);
 

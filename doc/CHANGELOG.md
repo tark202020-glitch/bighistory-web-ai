@@ -26,6 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [Alpha V1.116] - 2026-01-11 06:23:11
+
+### 🔄 Build Update
+- **Summary**: Fix: Normalize Book ID to handle zero-padding (e.g. '02' -> '2') for image lookup (V1.116)
+- **Build Time**: 2026-01-11 06:23:11
+
 ## [Alpha V1.115] - 2026-01-11 04:07:16
 
 ### 🔄 Build Update
