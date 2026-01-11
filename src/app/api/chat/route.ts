@@ -46,11 +46,20 @@ export async function POST(req: Request) {
           const contextPromises = searchResults.map(async (result, index) => {
             let imageContext = "";
 
-            // Extract Book ID (e.g. "15" from "15_Main.pdf" or "gs://.../15-Main.pdf")
+            // Extract Book ID
+            // 1. Try to find in path: .../extracted_images/2/images/...
+            // 2. Try filenames: 15-Main.pdf
             let bookId: string | null = null;
             const sourceName = result.sourceUri || result.title || "";
-            const match = sourceName.split('/').pop()?.match(/^(\d+)/);
-            if (match) bookId = match[1];
+
+            const pathMatch = sourceName.match(/extracted_images\/(\d+)\//);
+            if (pathMatch) {
+              bookId = pathMatch[1];
+            } else {
+              // Fallback to filename start
+              const match = sourceName.split('/').pop()?.match(/^(\d+)/);
+              if (match) bookId = match[1];
+            }
 
             // If we have Book ID and Page, fetch images to verify existence, then provide PROXY URL
             if (bookId && result.page) {

@@ -10,9 +10,34 @@ const COLLECTION_ID = 'default_collection'; // Default collection
 
 // Lazy initialization helper
 function getClient() {
-    const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
-        ? JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
-        : undefined;
+    let credentials;
+    const credentialsJson = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON;
+
+    if (credentialsJson) {
+        try {
+            try {
+                credentials = JSON.parse(credentialsJson);
+            } catch (e) {
+                const cleaned = credentialsJson.replace(/\r?\n/g, ' ');
+                credentials = JSON.parse(cleaned);
+            }
+
+            if (credentials.private_key) {
+                const rawKey = credentials.private_key.replace(/\\n/g, '\n');
+                if (!rawKey.includes('\n') && rawKey.includes('PRIVATE KEY')) {
+                    const body = rawKey.replace(/-----BEGIN PRIVATE KEY-----/g, '')
+                        .replace(/-----END PRIVATE KEY-----/g, '')
+                        .replace(/\s+/g, '');
+                    const chunked = body.match(/.{1,64}/g)?.join('\n') || body;
+                    credentials.private_key = `-----BEGIN PRIVATE KEY-----\n${chunked}\n-----END PRIVATE KEY-----\n`;
+                } else {
+                    credentials.private_key = rawKey;
+                }
+            }
+        } catch (e) {
+            console.error("Failed to parse Creds in Vertex getClient", e);
+        }
+    }
 
     return new SearchServiceClient({
         apiEndpoint: 'discoveryengine.googleapis.com',
@@ -105,8 +130,9 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
             // Heuristic: Extract page from Title or URI if metadata is missing
             // Looks for patterns like "_p023_", "Page 23", etc.
             if (!page) {
-                const titleMatch = title.match(/_p(\d+)/i) || title.match(/Page\s?(\d+)/i);
-                const uriMatch = uri.match(/_p(\d+)/i) || uri.match(/Page\s?(\d+)/i);
+                // Heuristic: Matches "_p123", "Page 123", "p123" (at start), "page123"
+                const titleMatch = title.match(/(?:^|[_\s])p(?:age)?\s?(\d+)/i);
+                const uriMatch = uri.match(/(?:^|[_\s])p(?:age)?\s?(\d+)/i);
 
                 if (titleMatch) {
                     page = titleMatch[1];
@@ -138,9 +164,34 @@ export async function searchStore(query: string): Promise<SearchResult[]> {
  */
 export async function answerQuery(query: string, customPreamble?: string) {
     try {
-        const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
-            ? JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
-            : undefined;
+        let credentials;
+        const credentialsJson = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON;
+
+        if (credentialsJson) {
+            try {
+                try {
+                    credentials = JSON.parse(credentialsJson);
+                } catch (e) {
+                    const cleaned = credentialsJson.replace(/\r?\n/g, ' ');
+                    credentials = JSON.parse(cleaned);
+                }
+
+                if (credentials.private_key) {
+                    const rawKey = credentials.private_key.replace(/\\n/g, '\n');
+                    if (!rawKey.includes('\n') && rawKey.includes('PRIVATE KEY')) {
+                        const body = rawKey.replace(/-----BEGIN PRIVATE KEY-----/g, '')
+                            .replace(/-----END PRIVATE KEY-----/g, '')
+                            .replace(/\s+/g, '');
+                        const chunked = body.match(/.{1,64}/g)?.join('\n') || body;
+                        credentials.private_key = `-----BEGIN PRIVATE KEY-----\n${chunked}\n-----END PRIVATE KEY-----\n`;
+                    } else {
+                        credentials.private_key = rawKey;
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to parse Creds in Vertex answerQuery", e);
+            }
+        }
 
         const auth = new GoogleAuth({
             credentials,
