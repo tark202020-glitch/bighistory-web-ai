@@ -375,17 +375,41 @@ export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Do
                                                             {line.replace(/^##\s+/, '')}
                                                         </h2>;
                                                     }
+                                                }
 
-                                                    const boldRegex = /\*\*(.*?)\*\*/g;
-                                                    const parts = line.split(boldRegex);
+                                                    // Image rendering support
+                                                    if (line.trim().startsWith('![')) {
+                                                        const match = line.match(/!\[(.*?)\]\((.*?)\)/);
+                                                if (match) {
+                                                            const [_, alt, src] = match;
+                                                return (
+                                                <div key={i} className="my-6">
+                                                    {/* Use a normal img tag for simplicity, or Next.js Image if preferred (but remote patterns need config) */}
+                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                    <img
+                                                        src={src}
+                                                        alt={alt}
+                                                        className="rounded-xl shadow-md border border-slate-200 w-full max-w-lg mx-auto object-cover hover:scale-[1.02] transition-transform duration-300"
+                                                        onError={(e) => {
+                                                            e.currentTarget.style.display = 'none';
+                                                            // Optional: show a fallback text
+                                                        }}
+                                                    />
+                                                </div>
+                                                );
+                                                        }
+                                                    }
 
-                                                    return (
-                                                        <p key={i} className="mb-4 text-slate-700">
-                                                            {parts.map((part, pIdx) =>
-                                                                pIdx % 2 === 1 ? <strong key={pIdx} className="text-blue-700 font-bold bg-blue-50 px-1 rounded mx-0.5">{part}</strong> : part
-                                                            )}
-                                                        </p>
-                                                    );
+                                                const boldRegex = /\*\*(.*?)\*\*/g;
+                                                const parts = line.split(boldRegex);
+
+                                                return (
+                                                <p key={i} className="mb-4 text-slate-700">
+                                                    {parts.map((part, pIdx) =>
+                                                        pIdx % 2 === 1 ? <strong key={pIdx} className="text-blue-700 font-bold bg-blue-50 px-1 rounded mx-0.5">{part}</strong> : part
+                                                    )}
+                                                </p>
+                                                );
                                                 })}
 
                                                 {/* Citations Section */}
