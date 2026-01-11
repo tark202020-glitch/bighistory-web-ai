@@ -1,53 +1,95 @@
-import { getMatchingImages } from '@/lib/gcs-info';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
-export const dynamic = 'force-dynamic';
+"use client";
 
-export default async function DebugImagePage() {
-    const bookId = '15';
-    const page = 23;
-    let images: string[] = [];
-    let log = '';
+import { useState } from 'react';
 
-    try {
-        images = await getMatchingImages(bookId, page);
-        log += `Found ${images.length} images.\n`;
-    } catch (e: any) {
-        log += `Error: ${e.message}\n`;
-    }
+export default function DebugImagePage() {
+    const [bookId, setBookId] = useState("1"); // Default to Big Bang
+    const [page, setPage] = useState("12");
+    const [resultUrl, setResultUrl] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
-    const markdown = images.length > 0
-        ? `![Test Image](${images[0]})`
-        : 'No image found.';
+    const handleTest = () => {
+        // Construct the Proxy URL directly
+        // The app uses: /api/proxy-image?bookId={id}&page={page}&index=0
+        const url = `/api/proxy-image?bookId=${bookId}&page=${page}&index=0`;
+        setResultUrl(url);
+        setError(null);
+    };
 
     return (
         <div className="p-10 max-w-4xl mx-auto space-y-8">
-            <h1 className="text-2xl font-bold">Debug GCS Image Rendering</h1>
+            <h1 className="text-2xl font-bold">Debug Image Proxy (Client Side)</h1>
 
-            <div className="bg-slate-100 p-4 rounded">
-                <h2 className="font-bold">Backend Log</h2>
-                <pre>{log}</pre>
-                <div className="mt-2">
-                    <strong>Generated URL:</strong>
-                    <div className="break-all text-xs font-mono">{images[0] || 'None'}</div>
+            <div className="space-y-4 p-4 border rounded bg-slate-50">
+                <div className="flex gap-4">
+                    <div>
+                        <label className="block text-sm font-bold">Book ID</label>
+                        <input
+                            value={bookId}
+                            onChange={e => setBookId(e.target.value)}
+                            className="border p-2 rounded w-24"
+                        />
+                        <span className="text-xs text-gray-400 ml-2">(e.g. 1, 2, 15)</span>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-bold">Page</label>
+                        <input
+                            value={page}
+                            onChange={e => setPage(e.target.value)}
+                            className="border p-2 rounded w-24"
+                        />
+                    </div>
+                    <div className="flex items-end">
+                        <button
+                            onClick={handleTest}
+                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                        >
+                            Test Image
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div className="bg-white border p-6 rounded shadow">
-                <h2 className="font-bold mb-4">1. Direct Img Tag</h2>
-                {images[0] && (
-                    <img src={images[0]} alt="Direct Test" className="max-w-full border border-red-500" />
-                )}
-            </div>
+            {resultUrl && (
+                <div className="space-y-4">
+                    <div className="bg-slate-100 p-4 rounded text-xs break-all">
+                        <strong>Proxy URL:</strong> {resultUrl}
+                    </div>
 
-            <div className="bg-white border p-6 rounded shadow">
-                <h2 className="font-bold mb-4">2. ReactMarkdown Rendering</h2>
-                <div className="prose border border-blue-500 p-4">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {markdown}
-                    </ReactMarkdown>
+                    <div className="border border-gray-300 p-4 rounded min-h-[300px] flex items-center justify-center bg-gray-50">
+                        <img
+                            src={resultUrl}
+                            alt="Debug Target"
+                            className="max-w-full max-h-[500px] shadow-lg"
+                            onError={(e) => {
+                                setError("Failed to load image (404/500/403)");
+                            }}
+                            onLoad={() => {
+                                setError(null);
+                            }}
+                        />
+                    </div>
+                    {error && (
+                        <div className="text-red-600 font-bold bg-red-50 p-4 rounded">
+                            ❌ {error}
+                        </div>
+                    )}
+                    {!error && (
+                        <div className="text-green-600 font-bold bg-green-50 p-4 rounded">
+                            ✅ Image loaded successfully!
+                        </div>
+                    )}
                 </div>
+            )}
+
+            <div className="text-sm text-gray-500">
+                <h3>Common Pages to Test:</h3>
+                <ul className="list-disc pl-5">
+                    <li>Book 1 Page 12 (Big Bang)</li>
+                    <li>Book 2 Page 100 (Star Formation)</li>
+                    <li>Book 15 Page 23 (Silk Road)</li>
+                </ul>
             </div>
         </div>
     );
