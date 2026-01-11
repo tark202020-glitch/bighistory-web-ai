@@ -84,7 +84,7 @@ Link: ${result.link || 'N/A'}
           context = contextArray.join('\n');
 
           // Add global instruction for images
-          context += `\n\n[Display Instructions]\nIf you see an "[Available Image...]" URL in the context, YOU MUST insert it into your response using markdown:\n![Figure Description](URL)\n\n**IMMEDIATELY BELOW the image, you MUST write the Source Page Number like this:**\n*그림: 이미지 설명 (출처: Page ${searchResults[0].page || 'X'})*\n\nPlace it near the relevant text.`;
+          context += `\n\n[Display Instructions]\nIf you see an "[Available Image...]" URL in the context, YOU MUST insert it into your response using markdown:\n![Figure Description](URL)\n\n**IMMEDIATELY BELOW the image, you MUST write the Source Page Number like this:**\n*그림: 이미지 설명 (출처: Page ${searchResults[0].page || 'X'})*\n\nPlace it near the relevant text.\n\n[CRITICAL WARNING]\nIf the context does NOT contain a line starting with "[Available Image...]", you are STRICTLY FORBIDDEN from generating any image markdown (e.g. ![...]).\nDO NOT make up URLs. DO NOT link to external sites like Wikipedia.\nIf no image is available, just simply do not show any image.`;
         } else {
           console.log("No results found in Vertex AI");
         }
