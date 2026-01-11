@@ -25,6 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [Alpha V1.115] - 2026-01-11 04:07:16
+
+### 🔄 Build Update
+- **Summary**: Fix: Update GCS image search path to match universal upload structure (V1.115)
+- **Build Time**: 2026-01-11 04:07:16
+
 ## [Alpha V1.114] - 2026-01-10 19:35:32
 
 ### 🔄 Build Update

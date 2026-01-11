@@ -131,10 +131,9 @@ export async function getMatchingImages(bookId: string, page: number): Promise<s
         const storage = new Storage(storageOptions);
         const bucket = storage.bucket(bucketName);
 
-        // Construct prefix: extracted_images/15-Main_p001
-        // Need to pad page number to 3 digits
-        const pageStr = page.toString().padStart(3, '0');
-        const prefix = `extracted_images/${bookId}-Main_p${pageStr}`;
+        // Construct prefix: extracted_images/{bookId}/images/p{page}_
+        // Upload structure is: extracted_images/1/images/p1_1.png (No zero padding on page)
+        const prefix = `extracted_images/${bookId}/images/p${page}_`;
 
         console.log(`Searching images with prefix: ${prefix}`);
 
