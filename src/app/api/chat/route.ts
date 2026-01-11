@@ -58,7 +58,7 @@ export async function POST(req: Request) {
               if (images.length > 0) {
                 // Use a clean local proxy URL to avoid token limit and LLM hallucination issues with long URLs
                 // The LLM sees: /api/proxy-image?bookId=15&page=23
-                const proxyUrl = `/api/proxy-image?bookId=${bookId}&page=${result.page}&index=0`;
+                const proxyUrl = `/api/proxy-image?bookId=${bookId}&page=${result.page}&index=0&t=${Date.now()}`;
                 imageContext = `\n[Available Image for Page ${result.page}]: ${proxyUrl} (Use this EXACT URL for the image)`;
               }
             }
