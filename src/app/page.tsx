@@ -398,7 +398,7 @@ export default async function LandingPage() {
                   <div className="absolute -left-[41px] top-1.5 w-6 h-6 rounded-full bg-slate-200 border-4 border-white"></div>
                   <h3 className="font-bold text-slate-400 text-lg mb-2">V3.0</h3>
                   <p className="text-slate-400 text-sm leading-relaxed">
-                    선생님들 간의 자료 공유 커뮤니티 및 '나만의 교과서' 출판 기능.
+                    전국민 대상 표준 교육 모델로 정착.
                   </p>
                 </div>
               </div>
@@ -420,7 +420,7 @@ export default async function LandingPage() {
             "지식은 연결될 때 가장 빛납니다. BigHistory AI가 그 연결의 시작이 되겠습니다."
           </p>
           <div className="text-slate-400 text-xs">
-            © 2025 BigHistory AI Platform. All rights reserved.
+            © 2025 Goraebang BigHistory AI Platform. All rights reserved.
           </div>
         </div>
       </footer>
