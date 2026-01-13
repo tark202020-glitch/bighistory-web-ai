@@ -251,7 +251,7 @@ export default async function LandingPage() {
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">핵심 요약</h3>
               <p className="text-sm text-slate-500">
-                복잡한 역사적 사건과 과학적 개념을 수업 시간에 맞게 핵심만 요약합니다.
+                각차시 수업에 필요한 역사적 사건과 과학적 개념을 용어중심으로제공합니다.
               </p>
             </div>
 
@@ -260,9 +260,9 @@ export default async function LandingPage() {
               <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-blue-600 mb-6 shadow-sm group-hover:scale-110 transition-transform border border-slate-100">
                 <Brain size={24} />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">5분 퀴즈 생성</h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">학습 활동</h3>
               <p className="text-sm text-slate-500">
-                수업 마무리용 O/X 퀴즈나 객관식 문제를 자동으로 만들어줍니다.
+                수업 주제에 맞는 모둠 활동 메뉴얼과 활동지를 제공합니다
               </p>
             </div>
 
@@ -273,7 +273,7 @@ export default async function LandingPage() {
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">수업 활동지 (PDF)</h3>
               <p className="text-sm text-slate-500">
-                생성된 모든 자료는 클릭 한 번으로 인쇄 가능한 A4 활동지로 변환됩니다.
+                생성된 모든 자료는 클릭한번으로 인쇄가능한 PDF로 변환하여 저장됩니다
               </p>
             </div>
           </div>
