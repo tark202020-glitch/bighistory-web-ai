@@ -540,7 +540,7 @@ export const ChatInterface = ({ sources: _sources, lastModified }: { sources: Do
                                     {/* Grade Selection Buttons (Only in Lecture Mode) */}
                                     {mode === 'lecture' && (
                                         <div className="flex gap-2 mt-4 animate-fade-in-up">
-                                            {['초등 고학년', '중학교 1학년', '중학교 2-3학년'].map((grade) => (
+                                            {['초등', '중등', '성인'].map((grade) => (
                                                 <button
                                                     key={grade}
                                                     onClick={() => setSelectedGrade(grade)}
